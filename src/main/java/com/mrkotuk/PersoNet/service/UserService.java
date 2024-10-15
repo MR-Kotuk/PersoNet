@@ -22,10 +22,13 @@ public class UserService {
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(7);
 
     public ResponseEntity<String> register(User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        repo.save(user);
+        if (repo.findByUsername(user.getUsername()) == null) {
+            user.setPassword(encoder.encode(user.getPassword()));
+            repo.save(user);
 
-        return new ResponseEntity<>(jwtService.generateToken(user.getUsername()), HttpStatus.OK);
+            return new ResponseEntity<>(jwtService.generateToken(user.getUsername()), HttpStatus.OK);
+        } else
+            return new ResponseEntity<>("Username has already been used!", HttpStatus.CONFLICT);
     }
 
     public ResponseEntity<String> verify(User user) {
