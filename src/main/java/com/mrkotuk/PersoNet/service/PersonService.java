@@ -16,12 +16,13 @@ import lombok.AllArgsConstructor;
 public class PersonService {
     private final PersonRepo repo;
 
-    public void addPerson(Person customPerson) {
-        repo.save(customPerson);
+    public void addPerson(Person person, String username) {
+        person.setUsername(username);
+        repo.save(person);
     }
 
-    public ResponseEntity<List<Person>> getPerson() {
-        List<Person> persons = repo.findAll();
+    public ResponseEntity<List<Person>> getPerson(String username) {
+        List<Person> persons = repo.findByUsername(username);
 
         return persons != null
                 ? new ResponseEntity<>(persons, HttpStatus.FOUND)
