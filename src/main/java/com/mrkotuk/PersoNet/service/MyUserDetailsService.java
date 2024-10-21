@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.mrkotuk.PersoNet.model.User;
 import com.mrkotuk.PersoNet.model.UserPrincipals;
 import com.mrkotuk.PersoNet.repo.UserRepo;
+
 import lombok.AllArgsConstructor;
 
 @Service
@@ -17,7 +18,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = repo.findByUsername(username);
+        User user = repo.findByUsername(username).get();
 
         if (user == null)
             throw new UsernameNotFoundException("User not found");

@@ -46,7 +46,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         String username = oAuth2User.getAttribute("name");
         String googleId = oAuth2User.getAttribute("sub");
 
-        User user = repo.findByUsername(username);
+        User user = repo.findByUsername(username).orElse(null);
 
         if (user == null) {
             user = new User();

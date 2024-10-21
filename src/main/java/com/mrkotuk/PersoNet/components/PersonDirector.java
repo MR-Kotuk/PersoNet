@@ -1,10 +1,13 @@
 package com.mrkotuk.PersoNet.components;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.mrkotuk.PersoNet.model.LineTemplate;
 import com.mrkotuk.PersoNet.model.Person;
 
 import lombok.AllArgsConstructor;
@@ -12,9 +15,22 @@ import lombok.AllArgsConstructor;
 @Component
 @AllArgsConstructor
 public class PersonDirector {
-    private final IPersonBuilder builder;
+    private Map<PersonType, Person> persons = new HashMap<>();
 
-    public List<Person> createAll() {
+    public PersonDirector() {
+        for (Person person : createAll())
+            persons.put(person.getPersonType(), person);
+    }
+
+    public Person getPerson(PersonType type) {
+        return persons.get(type);
+    }
+
+    public List<Person> getAllPersons() {
+        return new ArrayList<>(persons.values());
+    }
+
+    private List<Person> createAll() {
         List<Person> persons = new ArrayList<>();
         persons.add(createGeneralPerson());
         persons.add(createFriendPerson());
@@ -26,101 +42,110 @@ public class PersonDirector {
         return persons;
     }
 
-    public Person createCustomPerson() {
-        Person person = builder
+    private Person createCustomPerson() {
+        Person person = Person.builder()
+                .personType(PersonType.CUSTOM)
                 .build();
 
-        person.setPersonType(PersonType.CUSTOM);
-        builder.reset();
         return person;
     }
 
-    public Person createGeneralPerson() {
-        Person person = builder
-                .addAttribute("First Name", "string")
-                .addAttribute("Last Name", "string")
-                .addAttribute("Phone Number", "string")
-                .addAttribute("Email", "string")
-                .addAttribute("Birthday", "string")
-                .addAttribute("Age", "int")
-                .addAttribute("Address", "string")
-                .addAttribute("Social Media", "string")
-                .addAttribute("Notes", "string")
+    private Person createGeneralPerson() {
+        List<LineTemplate> lines = new ArrayList<>();
+        lines.add(new LineTemplate("First Name", "string"));
+        lines.add(new LineTemplate("Last Name", "string"));
+        lines.add(new LineTemplate("Phone Number", "string"));
+        lines.add(new LineTemplate("Email", "string"));
+        lines.add(new LineTemplate("Birthday", "string"));
+        lines.add(new LineTemplate("Age", "int"));
+        lines.add(new LineTemplate("Address", "string"));
+        lines.add(new LineTemplate("Social Media", "string"));
+        lines.add(new LineTemplate("Notes", "string"));
+
+        Person person = Person.builder()
+                .lineTemplates(lines)
+                .personType(PersonType.GENERAL)
                 .build();
 
-        person.setPersonType(PersonType.GENERAL);
-        builder.reset();
         return person;
     }
 
-    public Person createFriendPerson() {
-        Person person = builder
-                .addAttribute("First Name", "string")
-                .addAttribute("Last Name", "string")
-                .addAttribute("Nickname", "string")
-                .addAttribute("Phone Number", "string")
-                .addAttribute("Email", "string")
-                .addAttribute("Birthday", "string")
-                .addAttribute("Age", "int")
-                .addAttribute("Address", "string")
-                .addAttribute("Is Best Friend", "boolean")
+    private Person createFriendPerson() {
+        List<LineTemplate> lines = new ArrayList<>();
+        lines.add(new LineTemplate("First Name", "string"));
+        lines.add(new LineTemplate("Last Name", "string"));
+        lines.add(new LineTemplate("Nickname", "string"));
+        lines.add(new LineTemplate("Phone Number", "string"));
+        lines.add(new LineTemplate("Email", "string"));
+        lines.add(new LineTemplate("Birthday", "string"));
+        lines.add(new LineTemplate("Age", "int"));
+        lines.add(new LineTemplate("Address", "string"));
+        lines.add(new LineTemplate("Is Best Friend", "boolean"));
+
+        Person person = Person.builder()
+                .lineTemplates(lines)
+                .personType(PersonType.FRIEND)
                 .build();
 
-        person.setPersonType(PersonType.FRIEND);
-        builder.reset();
         return person;
     }
 
-    public Person createColleaguePerson() {
-        Person person = builder
-                .addAttribute("First Name", "string")
-                .addAttribute("Last Name", "string")
-                .addAttribute("Company", "string")
-                .addAttribute("Position", "string")
-                .addAttribute("Work Email", "string")
-                .addAttribute("Work Phone", "string")
-                .addAttribute("Department", "string")
-                .addAttribute("Years Worked", "int")
-                .addAttribute("Is Remote Worker", "boolean")
+    private Person createColleaguePerson() {
+        List<LineTemplate> lines = new ArrayList<>();
+        lines.add(new LineTemplate("First Name", "string"));
+        lines.add(new LineTemplate("Last Name", "string"));
+        lines.add(new LineTemplate("Company", "string"));
+        lines.add(new LineTemplate("Position", "string"));
+        lines.add(new LineTemplate("Work Email", "string"));
+        lines.add(new LineTemplate("Work Phone", "string"));
+        lines.add(new LineTemplate("Department", "string"));
+        lines.add(new LineTemplate("Years Worked", "int"));
+        lines.add(new LineTemplate("Is Remote Worker", "boolean"));
+
+        Person person = Person.builder()
+                .lineTemplates(lines)
+                .personType(PersonType.COLLEAGUE)
                 .build();
 
-        person.setPersonType(PersonType.COLLEAGUE);
-        builder.reset();
         return person;
     }
 
-    public Person createFamilyPerson() {
-        Person person = builder
-                .addAttribute("First Name", "string")
-                .addAttribute("Last Name", "string")
-                .addAttribute("Relation", "string")
-                .addAttribute("Phone Number", "string")
-                .addAttribute("Email", "string")
-                .addAttribute("Birthday", "string")
-                .addAttribute("Is Emergency Contact", "boolean")
-                .addAttribute("Address", "string")
+    private Person createFamilyPerson() {
+        List<LineTemplate> lines = new ArrayList<>();
+        lines.add(new LineTemplate("First Name", "string"));
+        lines.add(new LineTemplate("Last Name", "string"));
+        lines.add(new LineTemplate("Relation", "string"));
+        lines.add(new LineTemplate("Phone Number", "string"));
+        lines.add(new LineTemplate("Email", "string"));
+        lines.add(new LineTemplate("Birthday", "string"));
+        lines.add(new LineTemplate("Is Emergency Contact", "boolean"));
+        lines.add(new LineTemplate("Address", "string"));
+
+        Person person = Person.builder()
+                .lineTemplates(lines)
+                .personType(PersonType.FAMILY)
                 .build();
 
-        person.setPersonType(PersonType.FAMILY);
-        builder.reset();
         return person;
     }
 
-    public Person createClientPerson() {
-        Person person = builder
-                .addAttribute("First Name", "string")
-                .addAttribute("Last Name", "string")
-                .addAttribute("Company", "string")
-                .addAttribute("Purchase Count", "int")
-                .addAttribute("Last Purchase Date", "string")
-                .addAttribute("Preferred Contact Method", "string")
-                .addAttribute("Is VIP", "boolean")
-                .addAttribute("Phone Number", "string")
-                .addAttribute("Email", "string")
+    private Person createClientPerson() {
+        List<LineTemplate> lines = new ArrayList<>();
+        lines.add(new LineTemplate("First Name", "string"));
+        lines.add(new LineTemplate("Last Name", "string"));
+        lines.add(new LineTemplate("Company", "string"));
+        lines.add(new LineTemplate("Purchase Count", "int"));
+        lines.add(new LineTemplate("Last Purchase Date", "string"));
+        lines.add(new LineTemplate("Preferred Contact Method", "string"));
+        lines.add(new LineTemplate("Is VIP", "boolean"));
+        lines.add(new LineTemplate("Phone Number", "string"));
+        lines.add(new LineTemplate("Email", "string"));
+
+        Person person = Person.builder()
+                .lineTemplates(lines)
+                .personType(PersonType.CLIENT)
                 .build();
 
-        person.setPersonType(PersonType.CLIENT);
-        builder.reset();
         return person;
     }
 }

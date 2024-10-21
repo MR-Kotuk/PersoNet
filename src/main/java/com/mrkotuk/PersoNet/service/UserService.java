@@ -1,7 +1,5 @@
 package com.mrkotuk.PersoNet.service;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,22 +19,22 @@ public class UserService {
     private final JWTService jwtService;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(7);
 
-    public ResponseEntity<String> register(User user) {
-        if (repo.findByUsername(user.getUsername()) == null) {
+    public String register(User user) {
+        if (!repo.findByUsername(user.getUsername()).isPresent()) {
             user.setPassword(encoder.encode(user.getPassword()));
             repo.save(user);
 
-            return new ResponseEntity<>(jwtService.generateToken(user.getUsername()), HttpStatus.OK);
+            return jwtService.generateToken(user.getUsername());
         } else
-            return new ResponseEntity<>("Username has already been used!", HttpStatus.CONFLICT);
+            return "Username has already been used!";
     }
 
-    public ResponseEntity<String> verify(User user) {
+    public String verify(User user) {
         Authentication authentication = authManager
                 .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 
         return authentication.isAuthenticated()
-                ? new ResponseEntity<>(jwtService.generateToken(user.getUsername()), HttpStatus.OK)
-                : new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
+                ? jwtService.generateToken(user.getUsername())
+                : "Invalid credentials";
     }
 }

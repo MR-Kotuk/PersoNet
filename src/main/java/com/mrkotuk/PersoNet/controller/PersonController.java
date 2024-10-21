@@ -27,7 +27,11 @@ public class PersonController {
     @GetMapping("/")
     public ResponseEntity<List<Person>> getPersons() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return service.getPerson(authentication.getName());
+        List<Person> persons = service.getPerson(authentication.getName());
+
+        return persons != null
+                ? new ResponseEntity<>(persons, HttpStatus.FOUND)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/add")
@@ -39,11 +43,15 @@ public class PersonController {
 
     @GetMapping("/templates")
     public ResponseEntity<List<Person>> getPersonTemplates() {
-        return service.getPersonTemplates();
+        return new ResponseEntity<>(service.getPersonTemplates(), HttpStatus.CREATED);
     }
 
     @GetMapping("/templates/{personType}")
     public ResponseEntity<Person> getPersonTemplate(@PathVariable String personType) {
-        return service.getPersonTemplate(personType);
+        Person person = service.getPersonTemplate(personType);
+
+        return person != null
+                ? new ResponseEntity<>(person, HttpStatus.CREATED)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
