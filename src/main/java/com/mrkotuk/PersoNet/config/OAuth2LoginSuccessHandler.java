@@ -32,17 +32,15 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
         OAuth2User oAuth2User = oauthToken.getPrincipal();
 
-        User user = processOAuth2User(oAuth2User);
-        String jwtToken = jwtService.generateToken(user.getUsername());
+        String jwtToken = processOAuth2User(oAuth2User);
 
-        if (jwtToken != null) {
-            response.setContentType("application/json");
-            response.getWriter().write(jwtToken);
-        } else
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "JWT Token generation failed");
+        response.setContentType("application/json");
+        response.getWriter().write(jwtToken != null
+                ? jwtToken
+                : "Username has already been used!: " + oAuth2User.getAttribute("sub"));
     }
 
-    public User processOAuth2User(OAuth2User oAuth2User) {
+    public String processOAuth2User(OAuth2User oAuth2User) {
         String username = oAuth2User.getAttribute("name");
         String googleId = oAuth2User.getAttribute("sub");
 
@@ -53,8 +51,9 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
             user.setUsername(username);
             user.setPassword(encoder.encode(googleId));
             repo.save(user);
-        }
+        } else if (user != null && !encoder.matches(googleId, user.getPassword()))
+            return null;
 
-        return user;
+        return jwtService.generateToken(user.getUsername());
     }
 }

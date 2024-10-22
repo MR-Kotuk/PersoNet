@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mrkotuk.PersoNet.components.PersonType;
 
 import jakarta.persistence.CascadeType;
@@ -28,15 +29,16 @@ import lombok.Setter;
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int personId;
+    private Integer personId;
     private String username;
 
     private PersonType personType;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "person_id")
-    private List<LineTemplate> lineTemplates = new ArrayList<>();
+    private List<LineTemplate> lineTemplates;
 }
