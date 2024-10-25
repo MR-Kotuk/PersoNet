@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import com.mrkotuk.PersoNet.model.LineTemplate;
 import com.mrkotuk.PersoNet.model.Person;
 
+import io.jsonwebtoken.lang.Arrays;
+
 @Component
 public class PersonDirector {
     private final Map<PersonType, Person> persons = new HashMap<>();
@@ -24,20 +26,18 @@ public class PersonDirector {
     }
 
     public List<Person> getAllPersons() {
-        System.out.println(persons.values());
         return new ArrayList<>(persons.values());
     }
 
     private List<Person> createAll() {
-        List<Person> persons = new ArrayList<>();
-        persons.add(createGeneralPerson());
-        persons.add(createFriendPerson());
-        persons.add(createColleaguePerson());
-        persons.add(createFamilyPerson());
-        persons.add(createClientPerson());
-        persons.add(createCustomPerson());
-
-        return persons;
+        return new ArrayList<>(Arrays.asList(new Person[] {
+                createGeneralPerson(),
+                createFriendPerson(),
+                createColleaguePerson(),
+                createFamilyPerson(),
+                createClientPerson(),
+                createCustomPerson()
+        }));
     }
 
     private Person createCustomPerson() {
@@ -49,101 +49,86 @@ public class PersonDirector {
     }
 
     private Person createGeneralPerson() {
-        List<LineTemplate> lines = new ArrayList<>();
-        lines.add(new LineTemplate("First Name", "string"));
-        lines.add(new LineTemplate("Last Name", "string"));
-        lines.add(new LineTemplate("Phone Number", "string"));
-        lines.add(new LineTemplate("Email", "string"));
-        lines.add(new LineTemplate("Birthday", "string"));
-        lines.add(new LineTemplate("Age", "int"));
-        lines.add(new LineTemplate("Address", "string"));
-        lines.add(new LineTemplate("Social Media", "string"));
-        lines.add(new LineTemplate("Notes", "string"));
-
-        Person person = Person.builder()
-                .lineTemplates(lines)
+        return Person.builder()
+                .lineTemplates(new ArrayList<>(Arrays.asList(new LineTemplate[] {
+                        new LineTemplate("First Name", "string"),
+                        new LineTemplate("Last Name", "string"),
+                        new LineTemplate("Phone Number", "string"),
+                        new LineTemplate("Email", "string"),
+                        new LineTemplate("Birthday", "string"),
+                        new LineTemplate("Age", "int"),
+                        new LineTemplate("Address", "string"),
+                        new LineTemplate("Social Media", "string"),
+                        new LineTemplate("Notes", "string")
+                })))
                 .personType(PersonType.GENERAL)
                 .build();
-
-        return person;
     }
 
     private Person createFriendPerson() {
-        List<LineTemplate> lines = new ArrayList<>();
-        lines.add(new LineTemplate("First Name", "string"));
-        lines.add(new LineTemplate("Last Name", "string"));
-        lines.add(new LineTemplate("Nickname", "string"));
-        lines.add(new LineTemplate("Phone Number", "string"));
-        lines.add(new LineTemplate("Email", "string"));
-        lines.add(new LineTemplate("Birthday", "string"));
-        lines.add(new LineTemplate("Age", "int"));
-        lines.add(new LineTemplate("Address", "string"));
-        lines.add(new LineTemplate("Is Best Friend", "boolean"));
-
-        Person person = Person.builder()
-                .lineTemplates(lines)
+        return Person.builder()
+                .lineTemplates(new ArrayList<>(Arrays.asList(new LineTemplate[] {
+                        new LineTemplate("First Name", "string"),
+                        new LineTemplate("Last Name", "string"),
+                        new LineTemplate("Nickname", "string"),
+                        new LineTemplate("Phone Number", "string"),
+                        new LineTemplate("Email", "string"),
+                        new LineTemplate("Birthday", "string"),
+                        new LineTemplate("Age", "int"),
+                        new LineTemplate("Address", "string"),
+                        new LineTemplate("Is Best Friend", "boolean")
+                })))
                 .personType(PersonType.FRIEND)
                 .build();
-
-        return person;
     }
 
     private Person createColleaguePerson() {
-        List<LineTemplate> lines = new ArrayList<>();
-        lines.add(new LineTemplate("First Name", "string"));
-        lines.add(new LineTemplate("Last Name", "string"));
-        lines.add(new LineTemplate("Company", "string"));
-        lines.add(new LineTemplate("Position", "string"));
-        lines.add(new LineTemplate("Work Email", "string"));
-        lines.add(new LineTemplate("Work Phone", "string"));
-        lines.add(new LineTemplate("Department", "string"));
-        lines.add(new LineTemplate("Years Worked", "int"));
-        lines.add(new LineTemplate("Is Remote Worker", "boolean"));
-
-        Person person = Person.builder()
-                .lineTemplates(lines)
+        return Person.builder()
+                .lineTemplates(new ArrayList<>(Arrays.asList(new LineTemplate[] {
+                        new LineTemplate("First Name", "string"),
+                        new LineTemplate("Last Name", "string"),
+                        new LineTemplate("Company", "string"),
+                        new LineTemplate("Position", "string"),
+                        new LineTemplate("Work Email", "string"),
+                        new LineTemplate("Work Phone", "string"),
+                        new LineTemplate("Department", "string"),
+                        new LineTemplate("Years Worked", "int"),
+                        new LineTemplate("Is Remote Worker", "boolean")
+                })))
                 .personType(PersonType.COLLEAGUE)
                 .build();
-
-        return person;
     }
 
     private Person createFamilyPerson() {
-        List<LineTemplate> lines = new ArrayList<>();
-        lines.add(new LineTemplate("First Name", "string"));
-        lines.add(new LineTemplate("Last Name", "string"));
-        lines.add(new LineTemplate("Relation", "string"));
-        lines.add(new LineTemplate("Phone Number", "string"));
-        lines.add(new LineTemplate("Email", "string"));
-        lines.add(new LineTemplate("Birthday", "string"));
-        lines.add(new LineTemplate("Is Emergency Contact", "boolean"));
-        lines.add(new LineTemplate("Address", "string"));
-
-        Person person = Person.builder()
-                .lineTemplates(lines)
+        return Person.builder()
+                .lineTemplates(new ArrayList<>(Arrays.asList(new LineTemplate[] {
+                        new LineTemplate("First Name", "string"),
+                        new LineTemplate("Last Name", "string"),
+                        new LineTemplate("Relation", "string"),
+                        new LineTemplate("Phone Number", "string"),
+                        new LineTemplate("Email", "string"),
+                        new LineTemplate("Birthday", "string"),
+                        new LineTemplate("Is Emergency Contact", "boolean"),
+                        new LineTemplate("Address", "string")
+                })))
                 .personType(PersonType.FAMILY)
                 .build();
-
-        return person;
     }
 
     private Person createClientPerson() {
-        List<LineTemplate> lines = new ArrayList<>();
-        lines.add(new LineTemplate("First Name", "string"));
-        lines.add(new LineTemplate("Last Name", "string"));
-        lines.add(new LineTemplate("Company", "string"));
-        lines.add(new LineTemplate("Purchase Count", "int"));
-        lines.add(new LineTemplate("Last Purchase Date", "string"));
-        lines.add(new LineTemplate("Preferred Contact Method", "string"));
-        lines.add(new LineTemplate("Is VIP", "boolean"));
-        lines.add(new LineTemplate("Phone Number", "string"));
-        lines.add(new LineTemplate("Email", "string"));
-
-        Person person = Person.builder()
-                .lineTemplates(lines)
+        return Person.builder()
+                .lineTemplates(new ArrayList<>(Arrays.asList(new LineTemplate[] {
+                        new LineTemplate("First Name", "string"),
+                        new LineTemplate("Last Name", "string"),
+                        new LineTemplate("Company", "string"),
+                        new LineTemplate("Purchase Count", "int"),
+                        new LineTemplate("Last Purchase Date", "string"),
+                        new LineTemplate("Preferred Contact Method", "string"),
+                        new LineTemplate("Is VIP", "boolean"),
+                        new LineTemplate("Phone Number", "string"),
+                        new LineTemplate("Email", "string")
+                })))
                 .personType(PersonType.CLIENT)
                 .build();
-
-        return person;
     }
 }

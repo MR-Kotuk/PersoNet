@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
     @GetMapping("/")
-    public ResponseEntity<String> greed() {
+    public ResponseEntity<String> greet() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return new ResponseEntity<>("Welcome " + authentication.getName() + " to Perso|||et!", HttpStatus.OK);
     }

@@ -6,3 +6,113 @@ The best way to manage and organize your contacts effortlessly.
 
 # Technologies Used
 Backend: Java, Spring Boot
+
+Database: MySQL
+
+# Backend API
+
+## Home Page
+#### Get a welcome message
+
+```
+  GET /
+```
+
+## User
+
+### Username/Password
+#### Register
+```
+  POST /register
+```
+| POST Parameter | Type     |
+| :-------- | :------- |
+| `User` | `class` |
+
+#### Login
+```
+  POST /login
+```
+| POST Parameter | Type     |
+| :-------- | :------- |
+| `User` | `class` |
+
+### OAuth2
+
+You can use **Google** or **GitHub** for Register/Login
+
+If when you Register you get message:
+```
+Username has already been used!: {your googleId}
+```
+Try use [Username/Password](https://github.com/MR-Kotuk/PersoNet?tab=readme-ov-file#usernamepassword) for Register, with:
+
+    1. Another username
+    2. Use your googleId as password
+
+After that you will be able to login using **Google** or **GitHub**.
+
+## Person
+
+### Analytic
+#### Get Person Analytic
+```
+  GET /person/analytic
+```
+
+### Templates
+#### Get Templates
+```
+  GET /person/templates
+```
+
+#### Get Template
+```
+  GET /person/template/{personType}
+```
+| Path Parameter | Type     | Types of PersonType                |
+| :-------- | :------- | :------------------------- |
+| `personType` | `String` | `general/friend/colleague/family/client/custom` |
+
+### Person
+#### Get list of Person
+```
+  GET /person/
+```
+
+#### Get Person
+```
+  GET /person/{personId}
+```
+| Path Parameter | Type     |
+| :-------- | :------- |
+| `personId` | `int` |
+
+#### Add Person
+```
+  POST /person/
+```
+| POST Parameter | Type     |
+| :-------- | :------- |
+| `Person` | `class` |
+
+#### Update Person
+```
+  PUT /person/
+```
+| PUT Parameter | Type     |
+| :-------- | :------- |
+| `Person` | `class` |
+
+#### Delete Person
+```
+  DELETE /person/{personId}
+```
+| Path Parameter | Type     |
+| :-------- | :------- |
+| `personId` | `int` |
+
+
+## Authors
+
+[MR_Kotuk](https://github.com/MR-Kotuk)

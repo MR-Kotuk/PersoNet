@@ -44,16 +44,21 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         String username = oAuth2User.getAttribute("name");
         String googleId = oAuth2User.getAttribute("sub");
 
-        User user = repo.findByUsername(username).orElse(null);
+        User userByUsername = repo.findByUsername(username).orElse(null);
+        User userByPassword = repo.findAll()
+                .stream()
+                .filter(users -> encoder.matches(googleId, users.getPassword()))
+                .findFirst().orElse(null);
 
-        if (user == null) {
-            user = new User();
+        if (userByUsername == null && userByPassword == null) {
+            User user = new User();
             user.setUsername(username);
             user.setPassword(encoder.encode(googleId));
             repo.save(user);
-        } else if (user != null && !encoder.matches(googleId, user.getPassword()))
-            return null;
+            return jwtService.generateToken(user.getUsername());
+        } else if (userByPassword != null)
+            return jwtService.generateToken(userByPassword.getUsername());
 
-        return jwtService.generateToken(user.getUsername());
+        return null;
     }
 }

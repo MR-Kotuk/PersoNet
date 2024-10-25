@@ -26,6 +26,27 @@ import lombok.AllArgsConstructor;
 public class PersonController {
     private final PersonService service;
 
+    @GetMapping("/analytic")
+    public ResponseEntity<String> getPersonAnalytic() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        return new ResponseEntity<>(service.getPersonAnalytic(authentication.getName()), HttpStatus.OK);
+    }
+
+    @GetMapping("/templates")
+    public ResponseEntity<List<Person>> getPersonTemplates() {
+        return new ResponseEntity<>(service.getPersonTemplates(), HttpStatus.FOUND);
+    }
+
+    @GetMapping("/template/{personType}")
+    public ResponseEntity<Person> getPersonTemplate(@PathVariable String personType) {
+        Person person = service.getPersonTemplate(personType);
+
+        return person != null
+                ? new ResponseEntity<>(person, HttpStatus.FOUND)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @GetMapping("/")
     public ResponseEntity<List<Person>> getPersons() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -34,13 +55,6 @@ public class PersonController {
         return persons != null
                 ? new ResponseEntity<>(persons, HttpStatus.FOUND)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @GetMapping("/analytic")
-    public ResponseEntity<String> getPersonAnalytic() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        return new ResponseEntity<>(service.getPersonAnalytic(authentication.getName()), HttpStatus.OK);
     }
 
     @GetMapping("/{personId}")
@@ -56,27 +70,15 @@ public class PersonController {
     public ResponseEntity<Void> addPerson(@RequestBody Person person) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         service.addPerson(person, authentication.getName());
+
         return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @GetMapping("/templates")
-    public ResponseEntity<List<Person>> getPersonTemplates() {
-        return new ResponseEntity<>(service.getPersonTemplates(), HttpStatus.CREATED);
-    }
-
-    @GetMapping("/templates/{personType}")
-    public ResponseEntity<Person> getPersonTemplate(@PathVariable String personType) {
-        Person person = service.getPersonTemplate(personType);
-
-        return person != null
-                ? new ResponseEntity<>(person, HttpStatus.CREATED)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/")
     public ResponseEntity<List<Person>> updatePerson(@RequestBody Person person) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         service.updatePerson(person);
+
         return new ResponseEntity<>(service.getPersons(authentication.getName()), HttpStatus.OK);
     }
 
@@ -84,6 +86,7 @@ public class PersonController {
     public ResponseEntity<List<Person>> deletePerson(@PathVariable int personId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         service.deletePerson(personId);
+
         return new ResponseEntity<>(service.getPersons(authentication.getName()), HttpStatus.OK);
     }
 }
