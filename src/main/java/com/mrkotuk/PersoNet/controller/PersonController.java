@@ -36,6 +36,13 @@ public class PersonController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/analytic")
+    public ResponseEntity<String> getPersonAnalytic() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        return new ResponseEntity<>(service.getPersonAnalytic(authentication.getName()), HttpStatus.OK);
+    }
+
     @GetMapping("/{personId}")
     public ResponseEntity<Person> getPerson(@PathVariable int personId) {
         Person persons = service.getPerson(personId);

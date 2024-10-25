@@ -10,12 +10,9 @@ import org.springframework.stereotype.Component;
 import com.mrkotuk.PersoNet.model.LineTemplate;
 import com.mrkotuk.PersoNet.model.Person;
 
-import lombok.AllArgsConstructor;
-
 @Component
-@AllArgsConstructor
 public class PersonDirector {
-    private Map<PersonType, Person> persons = new HashMap<>();
+    private final Map<PersonType, Person> persons = new HashMap<>();
 
     public PersonDirector() {
         for (Person person : createAll())
@@ -27,6 +24,7 @@ public class PersonDirector {
     }
 
     public List<Person> getAllPersons() {
+        System.out.println(persons.values());
         return new ArrayList<>(persons.values());
     }
 

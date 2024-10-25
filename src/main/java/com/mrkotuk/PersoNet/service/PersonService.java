@@ -1,6 +1,8 @@
 package com.mrkotuk.PersoNet.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,16 @@ public class PersonService {
         return repo.findById(personId).isPresent()
                 ? repo.findById(personId).get()
                 : null;
+    }
+
+    public String getPersonAnalytic(String username) {
+        List<PersonType> persons = repo.findPersonTypesByUsername(username);
+        Map<PersonType, Integer> analytic = new HashMap<>();
+
+        for (PersonType person : PersonType.values())
+            analytic.put(person, (int) persons.stream().filter(type -> type == person).count());
+
+        return analytic.toString();
     }
 
     public List<Person> getPersonTemplates() {
