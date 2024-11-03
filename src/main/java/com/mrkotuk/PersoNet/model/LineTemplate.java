@@ -29,4 +29,10 @@ public class LineTemplate {
         this.lineName = lineName;
         this.lineType = lineType;
     }
+
+    public LineTemplate(String lineName, String lineType, String lineValue) {
+        this.lineName = lineName;
+        this.lineType = lineType;
+        this.lineValue = lineValue;
+    }
 }

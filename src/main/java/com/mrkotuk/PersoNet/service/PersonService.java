@@ -1,12 +1,14 @@
 package com.mrkotuk.PersoNet.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.mrkotuk.PersoNet.components.PersonDirector;
+import com.mrkotuk.PersoNet.components.PersonStatus;
 import com.mrkotuk.PersoNet.components.PersonType;
 import com.mrkotuk.PersoNet.model.Person;
 import com.mrkotuk.PersoNet.repo.PersonRepo;
@@ -17,10 +19,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class PersonService {
     private final PersonRepo repo;
-    private final PersonDirector director;
 
     public String getPersonAnalytic(String username) {
-        List<PersonType> persons = repo.findPersonTypesByUsername(username);
+        List<PersonType> persons = repo.findPersonTypesByStatusAndUsername(PersonStatus.ACTIVE, username);
         Map<PersonType, Integer> analytic = new HashMap<>();
 
         for (PersonType person : PersonType.values())
@@ -29,22 +30,16 @@ public class PersonService {
         return analytic.toString();
     }
 
-    public List<Person> getPersonTemplates() {
-        return director.getAllPersons();
-    }
-
-    public Person getPersonTemplate(String personType) {
-        return director.getPerson(PersonType.valueOf(personType.toUpperCase()));
+    public List<Person> searchPersons(String username, String keyword) {
+        return repo.findByUsernameAndStatusAndLineValue(username, PersonStatus.ACTIVE, keyword);
     }
 
     public List<Person> getPersons(String username) {
-        return repo.findByUsername(username);
+        return repo.findByStatusAndUsername(PersonStatus.ACTIVE, username);
     }
 
     public Person getPerson(int personId) {
-        return repo.findById(personId).isPresent()
-                ? repo.findById(personId).get()
-                : null;
+        return repo.findByStatusAndId(PersonStatus.ACTIVE, personId).get();
     }
 
     public void addPerson(Person person, String username) {
@@ -52,6 +47,8 @@ public class PersonService {
             person.getLineTemplates().get(i).setOrderId(i + 1);
 
         person.setUsername(username);
+        person.setPersonStatus(PersonStatus.ACTIVE);
+        person.setCreationDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         repo.save(person);
     }
 
@@ -59,7 +56,10 @@ public class PersonService {
         repo.save(person);
     }
 
-    public void deletePerson(int personId) {
-        repo.deleteById(personId);
+    public void deletePersons(List<Person> persons) {
+        for (Person person : persons) {
+            person.setPersonStatus(PersonStatus.DELETED);
+            repo.save(person);
+        }
     }
 }

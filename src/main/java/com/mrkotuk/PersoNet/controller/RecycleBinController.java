@@ -8,32 +8,24 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mrkotuk.PersoNet.model.Person;
-import com.mrkotuk.PersoNet.service.PersonService;
+import com.mrkotuk.PersoNet.service.RecycleBinService;
 
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/recyclebin")
 @AllArgsConstructor
-public class PersonController {
-    private final PersonService service;
-
-    @GetMapping("/analytic")
-    public ResponseEntity<String> getPersonAnalytic() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.getPersonAnalytic(authentication.getName()), HttpStatus.OK);
-    }
+public class RecycleBinController {
+    private final RecycleBinService service;
 
     @GetMapping("/search")
-    public ResponseEntity<List<Person>> searchPerson(@RequestBody String keyword) {
+    public ResponseEntity<List<Person>> searchPerson(String keyword) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return new ResponseEntity<>(service.searchPersons(authentication.getName(), keyword), HttpStatus.FOUND);
     }
@@ -48,36 +40,23 @@ public class PersonController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/{personId}")
-    public ResponseEntity<Person> getPerson(@PathVariable int personId) {
-        Person persons = service.getPerson(personId);
-
-        return persons != null
-                ? new ResponseEntity<>(persons, HttpStatus.FOUND)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
     @PostMapping("/")
-    public ResponseEntity<Void> addPerson(@RequestBody Person person) {
+    public ResponseEntity<List<Person>> returnFromRecycleBin(@RequestBody List<Person> persons) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        service.addPerson(person, authentication.getName());
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @PutMapping("/")
-    public ResponseEntity<List<Person>> updatePerson(@RequestBody Person person) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        service.updatePerson(person);
-
-        return new ResponseEntity<>(service.getPersons(authentication.getName()), HttpStatus.OK);
+        return new ResponseEntity<>(service.returnFromRecycleBin(persons, authentication.getName()), HttpStatus.OK);
     }
 
     @DeleteMapping("/")
-    public ResponseEntity<List<Person>> deletePerson(@RequestBody List<Person> persons) {
+    public ResponseEntity<List<Person>> removeFromRecycleBin(@RequestBody List<Person> persons) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        service.deletePersons(persons);
+        return new ResponseEntity<>(service.removeFromRecycleBin(persons, authentication.getName()), HttpStatus.OK);
+    }
 
-        return new ResponseEntity<>(service.getPersons(authentication.getName()), HttpStatus.OK);
+    @DeleteMapping("/clean")
+    public ResponseEntity<Void> cleanRecycleBin() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        service.cleanRecycleBin(authentication.getName());
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
