@@ -63,18 +63,26 @@ After that you will be able to login using **Google** or **GitHub**.
 ### Templates
 #### Get Templates
 ```
-  GET /person/templates
+  GET /person/templates/
 ```
 
 #### Get Template
 ```
-  GET /person/template/{personType}
+  GET /person/templates/{personType}
 ```
 | Path Parameter | Type     | Types of PersonType                |
 | :-------- | :------- | :------------------------- |
 | `personType` | `String` | `general/friend/colleague/family/client/custom` |
 
 ### Person
+#### Search person by keyword
+```
+  GET /person/search
+```
+| Parameter | Type     |
+| :-------- | :------- |
+| `keyword` | `String` |
+
 #### Get list of Person
 ```
   GET /person/
@@ -104,14 +112,49 @@ After that you will be able to login using **Google** or **GitHub**.
 | :-------- | :------- |
 | `Person` | `class` |
 
-#### Delete Person
+#### Delete Persons
 ```
-  DELETE /person/{personId}
+  DELETE /person/
 ```
-| Path Parameter | Type     |
+| DELETE Parameter | Type     |
 | :-------- | :------- |
-| `personId` | `int` |
+| `persons` | `List<Person>` |
 
+
+### Recycle Bin
+#### Search person by keyword
+```
+  GET /recyclebin/search
+```
+| Parameter | Type     |
+| :-------- | :------- |
+| `keyword` | `String` |
+
+#### Get list of Persons in Recycle Bin
+```
+  GET /recyclebin/
+```
+
+#### Return from Recycle Bin
+```
+  POST /recyclebin/
+```
+| Parameter | Type     |
+| :-------- | :------- |
+| `persons` | `List<Person>` |
+
+#### Remove from Recycle Bin
+```
+  DELETE /recyclebin/
+```
+| Parameter | Type     |
+| :-------- | :------- |
+| `persons` | `List<Person>` |
+
+#### Clean Recycle Bin
+```
+  DELETE /recyclebin/clean
+```
 
 ## Authors
 
