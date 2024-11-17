@@ -1,0 +1,51 @@
+.person-table-wrapper {
+  width: 700px;
+  min-height: 60px;
+  border-top-left-radius: 35px;
+  border-top-right-radius: 35px;
+  background-color: rgb(61, 59, 59);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.person-table-titles {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 55px;
+}
+
+.person-tabel-title-name {
+  flex: 1;
+  text-align: center;
+}
+
+.person-info {
+  width: 100%;
+}
+
+.person-info-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 55px;
+}
+
+.person-info-item-black {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: rgb(39, 38, 38);
+  height: 55px;
+
+}
+
+.person-info-item p,
+.person-info-item-black p {
+  flex: 1;
+  text-align: center;
+  margin: 0;
+}
