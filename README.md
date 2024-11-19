@@ -3,39 +3,59 @@ The best way to manage and organize your contacts effortlessly.
 
 [![photo-2024-10-05-15-52-58.jpg](https://i.postimg.cc/Fz8bqDNJ/photo-2024-10-05-15-52-58.jpg)](https://postimg.cc/Pvb8vbLt)
 
-
 # Technologies Used
 Backend: Java, Spring Boot
 
 Database: MySQL
 
+Other: BCrypt, UUID, lombok
+
 # Backend API
 
 ## Home Page
 #### Get a welcome message
-
 ```
   GET /
 ```
 
 ## User
-
 ### Username/Password
 #### Register
+After registering, you will need to verify your email address **(lifetime - 1 min)**
 ```
-  POST /register
+  POST /auth/register
 ```
 | POST Parameter | Type     |
 | :-------- | :------- |
 | `User` | `class` |
 
-#### Login
+Example JSON
 ```
-  POST /login
+{
+    "username": "MR_Kotuk",
+    "email": "mrkotuk333@gmail.com",
+    "password": "kotuk"
+}
+```
+
+#### Login
+If you don't verify your email on registration, you have to do it on login. 
+**You can't login if you don't verify email address.**
+```
+  POST /auth/login
 ```
 | POST Parameter | Type     |
 | :-------- | :------- |
 | `User` | `class` |
+
+Example JSON
+```
+{
+    "username": "MR_Kotuk",
+    "email": "mrkotuk333@gmail.com",
+    "password": "kotuk"
+}
+```
 
 ### OAuth2
 

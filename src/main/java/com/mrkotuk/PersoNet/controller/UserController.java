@@ -32,8 +32,10 @@ public class UserController {
 
     @GetMapping("/verify-email")
     public ResponseEntity<String> verifyEmail(@RequestParam String token) {
-        return service.isVerified(token)
-                ? new ResponseEntity<>("Email verified successfully!", HttpStatus.OK)
+        String jwtToken = service.isVerified(token);
+
+        return jwtToken != null
+                ? new ResponseEntity<>(jwtToken, HttpStatus.OK)
                 : new ResponseEntity<>("Invalid or expired token.", HttpStatus.NOT_FOUND);
     }
 }

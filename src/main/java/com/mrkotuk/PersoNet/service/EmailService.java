@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class EmailService {
-    private JavaMailSender sender;
+    private final JavaMailSender sender;
 
     public void sendVerificatonEmail(String to, String token) {
         String subject = "Email Verification PersoNet";
