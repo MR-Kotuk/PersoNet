@@ -41,15 +41,15 @@ public class RecycleBinController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<List<Person>> returnFromRecycleBin(@RequestBody List<Person> persons) {
+    public ResponseEntity<List<Person>> returnFromRecycleBin(@RequestBody List<Integer> id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.returnFromRecycleBin(persons, authentication.getName()), HttpStatus.OK);
+        return new ResponseEntity<>(service.returnFromRecycleBin(id, authentication.getName()), HttpStatus.OK);
     }
 
     @DeleteMapping("/")
-    public ResponseEntity<List<Person>> removeFromRecycleBin(@RequestBody List<Person> persons) {
+    public ResponseEntity<List<Person>> removeFromRecycleBin(@RequestBody List<Integer> id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.removeFromRecycleBin(persons, authentication.getName()), HttpStatus.OK);
+        return new ResponseEntity<>(service.removeFromRecycleBin(id, authentication.getName()), HttpStatus.OK);
     }
 
     @DeleteMapping("/clean")

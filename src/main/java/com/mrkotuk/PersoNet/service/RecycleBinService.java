@@ -15,34 +15,34 @@ import lombok.AllArgsConstructor;
 public class RecycleBinService {
     private final PersonRepo repo;
 
-    public List<Person> searchPersons(String username, String keyword) {
-        return repo.findByUsernameAndStatusAndLineValue(username, PersonStatus.DELETED, keyword);
+    public List<Person> searchPersons(String email, String keyword) {
+        return repo.findByEmailAndStatusAndLineValue(email, PersonStatus.DELETED, keyword);
     }
 
-    public List<Person> getPersons(String username) {
-        return repo.findByStatusAndUsername(PersonStatus.DELETED, username);
+    public List<Person> getPersons(String email) {
+        return repo.findByStatusAndEmail(PersonStatus.DELETED, email);
     }
 
-    public List<Person> removeFromRecycleBin(List<Person> persons, String username) {
-        for (Person person : persons)
+    public List<Person> removeFromRecycleBin(List<Integer> id, String email) {
+        for (Person person : repo.findAllById(id))
             if (person.getPersonStatus().equals(PersonStatus.DELETED))
                 repo.delete(person);
 
-        return repo.findByStatusAndUsername(PersonStatus.DELETED, username);
+        return repo.findByStatusAndEmail(PersonStatus.DELETED, email);
     }
 
-    public void cleanRecycleBin(String username) {
-        repo.deleteAll(repo.findByStatusAndUsername(PersonStatus.DELETED, username));
+    public void cleanRecycleBin(String email) {
+        repo.deleteAll(repo.findByStatusAndEmail(PersonStatus.DELETED, email));
     }
 
-    public List<Person> returnFromRecycleBin(List<Person> persons, String username) {
-        for (Person person : persons) {
+    public List<Person> returnFromRecycleBin(List<Integer> id, String email) {
+        for (Person person : repo.findAllById(id)) {
             if (person.getPersonStatus().equals(PersonStatus.DELETED)) {
                 person.setPersonStatus(PersonStatus.ACTIVE);
                 repo.save(person);
             }
         }
 
-        return repo.findByStatusAndUsername(PersonStatus.DELETED, username);
+        return repo.findByStatusAndEmail(PersonStatus.DELETED, email);
     }
 }

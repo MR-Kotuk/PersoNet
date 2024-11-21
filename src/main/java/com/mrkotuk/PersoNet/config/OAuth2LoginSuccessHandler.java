@@ -42,23 +42,27 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     public String processOAuth2User(OAuth2User oAuth2User) {
         String username = oAuth2User.getAttribute("name");
-        String googleId = oAuth2User.getAttribute("sub");
+        String email = oAuth2User.getAttribute("email");
+        String id = oAuth2User.getAttribute("sub");
 
-        User userByUsername = repo.findByUsername(username).orElse(null);
-        User userByPassword = repo.findAll()
-                .stream()
-                .filter(users -> encoder.matches(googleId, users.getPassword()))
-                .findFirst().orElse(null);
+        User userByEmail = repo.findByEmail(email).orElse(null);
 
-        if (userByUsername == null && userByPassword == null) {
+        if (userByEmail == null) {
             User user = new User();
             user.setUsername(username);
-            user.setPassword(encoder.encode(googleId));
+            user.setEmail(email);
+            user.setVerified(true);
+            user.setPassword(encoder.encode(id));
             repo.save(user);
-            return jwtService.generateToken(user.getUsername());
-        } else if (userByPassword != null)
-            return jwtService.generateToken(userByPassword.getUsername());
 
-        return null;
+            return jwtService.generateToken(email);
+        } else {
+            if (!userByEmail.isVerified()) {
+                userByEmail.setVerified(true);
+                repo.save(userByEmail);
+            }
+
+            return jwtService.generateToken(userByEmail.getEmail());
+        }
     }
 }

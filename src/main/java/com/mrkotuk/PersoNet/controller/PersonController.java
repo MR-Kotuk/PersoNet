@@ -74,9 +74,9 @@ public class PersonController {
     }
 
     @DeleteMapping("/")
-    public ResponseEntity<List<Person>> deletePerson(@RequestBody List<Person> persons) {
+    public ResponseEntity<List<Person>> deletePerson(@RequestBody List<Integer> id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        service.deletePersons(persons);
+        service.deletePersonsById(id);
 
         return new ResponseEntity<>(service.getPersons(authentication.getName()), HttpStatus.OK);
     }

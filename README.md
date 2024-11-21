@@ -19,7 +19,7 @@ Other: BCrypt, UUID, lombok
 ```
 
 ## User
-### Username/Password
+### Username/Email/Password
 #### Register
 After registering, you will need to verify your email address **(lifetime - 1 min)**
 ```
@@ -61,17 +61,6 @@ Example JSON
 
 You can use **Google** or **GitHub** for Register/Login
 
-If when you Register you get message:
-```
-Username has already been used!: {your googleId}
-```
-Try use [Username/Password](https://github.com/MR-Kotuk/PersoNet?tab=readme-ov-file#usernamepassword) for Register, with:
-
-    1. Another username
-    2. Use your googleId as password
-
-After that you will be able to login using **Google** or **GitHub**.
-
 ## Person
 
 ### Analytic
@@ -103,6 +92,11 @@ After that you will be able to login using **Google** or **GitHub**.
 | :-------- | :------- |
 | `keyword` | `String` |
 
+Example JSON
+```
+keyword
+```
+
 #### Get list of Person
 ```
   GET /person/
@@ -132,14 +126,37 @@ After that you will be able to login using **Google** or **GitHub**.
 | :-------- | :------- |
 | `Person` | `class` |
 
+Example JSON
+```
+{
+    "personType": "CUSTOM",
+    "lineTemplates": [
+        {
+            "lineName": "First Name",
+            "lineType": "string",
+            "lineValue": "MR_Kotuk"
+        },
+        {
+            "lineName": "Last Name",
+            "lineType": "string",
+            "lineValue": "Meaw"
+        }
+    ]
+}
+```
+
 #### Delete Persons
 ```
   DELETE /person/
 ```
 | DELETE Parameter | Type     |
 | :-------- | :------- |
-| `persons` | `List<Person>` |
+| `id` | `List<Integer>` |
 
+Example JSON
+```
+[1, 4, 5, 7]
+```
 
 ### Recycle Bin
 #### Search person by keyword
@@ -149,6 +166,11 @@ After that you will be able to login using **Google** or **GitHub**.
 | Parameter | Type     |
 | :-------- | :------- |
 | `keyword` | `String` |
+
+Example JSON
+```
+keyword
+```
 
 #### Get list of Persons in Recycle Bin
 ```
@@ -161,7 +183,12 @@ After that you will be able to login using **Google** or **GitHub**.
 ```
 | Parameter | Type     |
 | :-------- | :------- |
-| `persons` | `List<Person>` |
+| `id` | `List<Integer>` |
+
+Example JSON
+```
+[1, 4, 5, 7]
+```
 
 #### Remove from Recycle Bin
 ```
@@ -169,7 +196,12 @@ After that you will be able to login using **Google** or **GitHub**.
 ```
 | Parameter | Type     |
 | :-------- | :------- |
-| `persons` | `List<Person>` |
+| `id` | `List<Integer>` |
+
+Example JSON
+```
+[1, 4, 5, 7]
+```
 
 #### Clean Recycle Bin
 ```

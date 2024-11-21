@@ -1,6 +1,5 @@
 package com.mrkotuk.PersoNet.model;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -11,8 +10,6 @@ import com.mrkotuk.PersoNet.components.PersonType;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,7 +34,7 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer personId;
-    private String username;
+    private String email;
 
     private String creationDate;
     private PersonType personType;

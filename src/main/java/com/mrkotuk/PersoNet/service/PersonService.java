@@ -20,8 +20,8 @@ import lombok.AllArgsConstructor;
 public class PersonService {
     private final PersonRepo repo;
 
-    public String getPersonAnalytic(String username) {
-        List<PersonType> persons = repo.findPersonTypesByStatusAndUsername(PersonStatus.ACTIVE, username);
+    public String getPersonAnalytic(String email) {
+        List<PersonType> persons = repo.findPersonTypesByStatusAndEmail(PersonStatus.ACTIVE, email);
         Map<PersonType, Integer> analytic = new HashMap<>();
 
         for (PersonType person : PersonType.values())
@@ -30,23 +30,23 @@ public class PersonService {
         return analytic.toString();
     }
 
-    public List<Person> searchPersons(String username, String keyword) {
-        return repo.findByUsernameAndStatusAndLineValue(username, PersonStatus.ACTIVE, keyword);
+    public List<Person> searchPersons(String email, String keyword) {
+        return repo.findByEmailAndStatusAndLineValue(email, PersonStatus.ACTIVE, keyword);
     }
 
-    public List<Person> getPersons(String username) {
-        return repo.findByStatusAndUsername(PersonStatus.ACTIVE, username);
+    public List<Person> getPersons(String email) {
+        return repo.findByStatusAndEmail(PersonStatus.ACTIVE, email);
     }
 
     public Person getPerson(int personId) {
         return repo.findByStatusAndId(PersonStatus.ACTIVE, personId).get();
     }
 
-    public void addPerson(Person person, String username) {
+    public void addPerson(Person person, String email) {
         for (int i = 0; i < person.getLineTemplates().size(); i++)
             person.getLineTemplates().get(i).setOrderId(i + 1);
 
-        person.setUsername(username);
+        person.setEmail(email);
         person.setPersonStatus(PersonStatus.ACTIVE);
         person.setCreationDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         repo.save(person);
@@ -56,8 +56,8 @@ public class PersonService {
         repo.save(person);
     }
 
-    public void deletePersons(List<Person> persons) {
-        for (Person person : persons) {
+    public void deletePersonsById(List<Integer> id) {
+        for (Person person : repo.findAllById(id)) {
             person.setPersonStatus(PersonStatus.DELETED);
             repo.save(person);
         }
