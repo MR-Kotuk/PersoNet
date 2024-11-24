@@ -1,8 +1,31 @@
-import { FC } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import "./register.css";
 import { Link } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
 
 export const RegisterPage: FC = () => {
+  interface IRegisterData {
+    username: string;
+    email: string;
+    password: string;
+    confirmPassword?: string;
+  }
+
+  const [regData, setRegData] = useState<IRegisterData>({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const setRegisterDataInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setRegData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   return (
     <div className="register-container">
       <div className="register-greeting-wrapper">
@@ -22,20 +45,35 @@ export const RegisterPage: FC = () => {
 
         <p className="register-field-text">Create account</p>
 
-        <div className="register-field">
+        <form className="register-field">
           <div className="register-field-item">
             <p>Username</p>
-            <input type="text" placeholder="Enter your name" />
+            <input
+              type="text"
+              name="username"
+              placeholder="Enter your name"
+              onChange={setRegisterDataInput}
+            />
           </div>
 
           <div className="register-field-item">
             <p>Email</p>
-            <input type="email" placeholder="Enter your email" />
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              onChange={setRegisterDataInput}
+            />
           </div>
 
           <div className="register-field-item">
             <p>Password</p>
-            <input type="password" placeholder="Enter your password" />
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              onChange={setRegisterDataInput}
+            />
           </div>
 
           <div className="register-field-item">
@@ -45,14 +83,23 @@ export const RegisterPage: FC = () => {
 
           <div className="register-field-item">
             <button className="register-submit">Submit</button>
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                console.log(credentialResponse);
+              }}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+            />
+            ;
             <p className="register-enter-account">
-              already have an account?{" "}
+              Already have an account?{" "}
               <Link to="*" className="register-enter-account-link">
                 Login
               </Link>
             </p>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
