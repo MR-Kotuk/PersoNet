@@ -21,7 +21,7 @@ Other: BCrypt, UUID, lombok
 ## User
 ### Username/Email/Password
 #### Register
-After registering, you will need to verify your email address **(lifetime - 1 min)**
+After registering, you will need to verify your email address using a token **(lifetime - 1 min)**
 ```
   POST /auth/register
 ```
@@ -55,6 +55,19 @@ Example JSON
     "email": "mrkotuk333@gmail.com",
     "password": "kotuk"
 }
+```
+
+#### Verify Email
+```
+  GET /auth/verify-email/{token}
+```
+| Path Parameter | Type |
+| :-------- | :------- |
+| `token` | `String` |
+
+Example
+```
+GET /auth/verify-email/3234
 ```
 
 ### OAuth2

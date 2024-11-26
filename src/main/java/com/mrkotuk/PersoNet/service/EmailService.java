@@ -1,7 +1,7 @@
 package com.mrkotuk.PersoNet.service;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.Random;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -23,12 +23,12 @@ public class EmailService {
     private final VerificaionTokenRepo tokenRepo;
 
     public String sendVerificationEmail(User user) {
-        VerificationToken token = new VerificationToken(UUID.randomUUID().toString(), user);
+        VerificationToken token = new VerificationToken(Integer.toString(new Random().nextInt(1000, 10000)), user);
         repo.save(user);
         tokenRepo.save(token);
         sendVerificatonEmail(user.getEmail(), token.getToken());
 
-        return "Please verify email. Open verification email, and click on the link.";
+        return "Please verify email";
     }
 
     public String isVerified(String token) {
@@ -50,8 +50,7 @@ public class EmailService {
 
     private void sendVerificatonEmail(String to, String token) {
         String subject = "Email Verification PersoNet";
-        String verificationUrl = "http://localhost:8080/auth/verify-email?token=" + token;
-        String text = "Please verify your email in PersoNet by clicking following link: " + verificationUrl;
+        String text = "Your verification token is: " + token;
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
