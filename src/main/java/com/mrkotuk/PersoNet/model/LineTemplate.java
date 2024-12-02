@@ -19,20 +19,16 @@ public class LineTemplate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer orderId;
 
     private String lineName;
-    private String lineType;
     private String lineValue = "";
 
-    public LineTemplate(String lineName, String lineType) {
+    public LineTemplate(String lineName) {
         this.lineName = lineName;
-        this.lineType = lineType;
     }
 
-    public LineTemplate(String lineName, String lineType, String lineValue) {
+    public LineTemplate(String lineName, String lineValue) {
         this.lineName = lineName;
-        this.lineType = lineType;
         this.lineValue = lineValue;
     }
 }

@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 public class UserService {
     private final UserRepo repo;
     private final AuthenticationManager authManager;
-    private final EmailService emailService;
+    private final MessageSenderService messageSenderService;
     private final JWTService jwtService;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(7);
 
@@ -28,14 +28,14 @@ public class UserService {
 
             repo.save(user);
 
-            return emailService.sendVerificationEmail(user);
+            return messageSenderService.sendVerificationEmail(user);
         } else
             return "Email has already been used!";
     }
 
     public String verify(User user) {
         if (!repo.findByEmail(user.getEmail()).get().isVerified())
-            return emailService.sendVerificationEmail(repo.findByEmail(user.getEmail()).get());
+            return messageSenderService.sendVerificationEmail(repo.findByEmail(user.getEmail()).get());
 
         Authentication authentication = authManager
                 .authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
@@ -48,7 +48,7 @@ public class UserService {
     }
 
     public String isVerified(String token) {
-        return emailService.isVerified(token);
+        return messageSenderService.isVerified(token);
     }
 
     public User getUserByEmail(String email) {

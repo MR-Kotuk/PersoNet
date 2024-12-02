@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class EmailService {
+public class MessageSenderService {
     private final JavaMailSender sender;
     private final JWTService jwtService;
     private final UserRepo repo;

@@ -3,19 +3,117 @@ The best way to manage and organize your contacts effortlessly.
 
 [![photo-2024-10-05-15-52-58.jpg](https://i.postimg.cc/Fz8bqDNJ/photo-2024-10-05-15-52-58.jpg)](https://postimg.cc/Pvb8vbLt)
 
+## Features
+### FlexiMail
+A powerful tool for sending personalized messages with ease. Select recipients, use shared details like names and birthdays, and craft one message that’s uniquely tailored for everyone. Perfect for personalized newsletters, greetings, and more - FlexiMail makes every message meaningful!
+
+### Security
+Your data is securely encrypted and always protected.
+
+### Simplicity
+Five standard templates for quick persona creation.
+
+### Customization
+Need more than the standard templates? Create your own unique personas!
+
+### Variety
+Separate profiles for personal and work needs.
+
+### Private Personas
+Create personas using private templates.
+
+### Public Personas
+Create personas using public templates.
+
+### Support
+Need help? We're always here to assist!
 # Technologies Used
 Backend: Java, Spring Boot
 
 Database: MySQL
 
-Other: BCrypt, UUID, lombok
+Other: BCrypt, lombok
 
 # Backend API
+
+## FlexiMail
+#### Get persons with email
+```
+  GET /sender/
+```
+
+Example of Response:
+```
+[
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "ACTIVE",
+        "personType": "GENERAL",
+        "lineTemplates": [...]
+    },
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "ACTIVE",
+        "personType": "CLIENT",
+        "lineTemplates": [...]
+    }
+]
+```
+
+#### Get shared lines
+```
+  GET /sender/sharedlines
+```
+
+| Parameter | Type     |
+| :-------- | :------- |
+| `id` | `List<Integer>` |
+
+Example of List<Integer> in JSON
+```
+  [1, 2]
+```
+
+Example of Response
+```
+[
+    "[</Email/>]",
+    "[</First Name/>]",
+    "[</Last Name/>]"
+]
+```
+
+#### Send messages
+```
+  POST /sender/send
+```
+
+| POST Parameter | Type     |
+| :-------- | :------- |
+| `Message` | `class` |
+
+Example of Message class in JSON
+```
+{
+  "subject": "Hi [</First Name/>]!",
+  "message": "Hi [</First Name/>] [</Last Name/>], this is a test email sent to your email: [</Email/>]. Thanks [</First Name/>] [</Last Name/>], Goodbye!",
+  "recipient": [1, 2]
+}
+```
 
 ## Home Page
 #### Get a welcome message
 ```
   GET /
+```
+
+Response:
+```
+  Welcome {username} to Perso|||et!
 ```
 
 ## User
@@ -29,13 +127,24 @@ After registering, you will need to verify your email address using a token **(l
 | :-------- | :------- |
 | `User` | `class` |
 
-Example JSON
+Example of User in JSON
 ```
 {
     "username": "MR_Kotuk",
     "email": "mrkotuk333@gmail.com",
     "password": "kotuk"
 }
+```
+
+Response:
+```
+  Please verify email
+```
+OR
+
+If your email is already been used
+```
+  Email has already been used!
 ```
 
 #### Login
@@ -48,13 +157,24 @@ If you don't verify your email on registration, you have to do it on login.
 | :-------- | :------- |
 | `User` | `class` |
 
-Example JSON
+Example of User in JSON
 ```
 {
     "username": "MR_Kotuk",
     "email": "mrkotuk333@gmail.com",
     "password": "kotuk"
 }
+```
+
+Response:
+```
+  {JWT}
+```
+OR
+
+If you don't verify your email:
+```
+  Please verify email
 ```
 
 #### Verify Email
@@ -70,9 +190,20 @@ Example
 GET /auth/verify-email/3234
 ```
 
+Response:
+```
+  {JWT}
+```
+OR
+
+If invalid or expired token
+```
+  Invalid or expired token
+```
+
 ### OAuth2
 
-You can use **Google** or **GitHub** for Register/Login
+You can use **Google** or **GitHub** for **Register/Login** or **verify** your **email**
 
 ## Person
 
@@ -82,10 +213,45 @@ You can use **Google** or **GitHub** for Register/Login
   GET /person/analytic
 ```
 
+Response:
+```
+  {FRIEND=0, COLLEAGUE=0, GENERAL=0, FAMILY=0, CLIENT=0, CUSTOM=0}
+```
+
 ### Templates
 #### Get Templates
 ```
   GET /person/templates/
+```
+
+Response:
+```
+[
+    {
+        "personType": "GENERAL",
+        "lineTemplates": [...]
+    },
+    {
+        "personType": "CLIENT",
+        "lineTemplates": [...]
+    }
+    {
+        "personType": "FAMILY",
+        "lineTemplates": [...]
+    },
+    {
+        "personType": "CUSTOM",
+        "lineTemplates": [...]
+    },
+    {
+        "personType": "FRIEND",
+        "lineTemplates": [...]
+    },
+    {
+        "personType": "COLLEAGUE",
+        "lineTemplates": [...]
+    }
+]
 ```
 
 #### Get Template
@@ -95,6 +261,14 @@ You can use **Google** or **GitHub** for Register/Login
 | Path Parameter | Type     | Types of PersonType                |
 | :-------- | :------- | :------------------------- |
 | `personType` | `String` | `general/friend/colleague/family/client/custom` |
+
+Response:
+```
+{
+    "personType": {personType},
+    "lineTemplates": [...]
+}
+```
 
 ### Person
 #### Search person by keyword
@@ -107,12 +281,56 @@ You can use **Google** or **GitHub** for Register/Login
 
 Example JSON
 ```
-keyword
+{keyword}
+```
+
+Example of Response:
+```
+[
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "ACTIVE",
+        "personType": "GENERAL",
+        "lineTemplates": [...]
+    },
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "ACTIVE",
+        "personType": "CLIENT",
+        "lineTemplates": [...]
+    }
+]
 ```
 
 #### Get list of Person
 ```
   GET /person/
+```
+
+Example of Response:
+```
+[
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "ACTIVE",
+        "personType": "GENERAL",
+        "lineTemplates": [...]
+    },
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "ACTIVE",
+        "personType": "CLIENT",
+        "lineTemplates": [...]
+    }
+]
 ```
 
 #### Get Person
@@ -123,6 +341,18 @@ keyword
 | :-------- | :------- |
 | `personId` | `int` |
 
+Example of Response:
+```
+{
+    "personId": {personId},
+    "email": {user email},
+    "creationDate": "...",
+    "personStatus": "ACTIVE",
+    "personType": "GENERAL",
+    "lineTemplates": [...]
+}
+```
+
 #### Add Person
 ```
   POST /person/
@@ -130,6 +360,27 @@ keyword
 | POST Parameter | Type     |
 | :-------- | :------- |
 | `Person` | `class` |
+
+Example of Person class in JSON
+```
+{
+    "personId": ...,
+    "email": {user email},
+    "creationDate": "...",
+    "personStatus": "ACTIVE",
+    "personType": "CUSTOM",
+    "lineTemplates": [
+        {
+            "lineName": "First Name",
+            "lineValue": "MR_Kotuk"
+        },
+        {
+            "lineName": "Last Name",
+            "lineValue": "Meaw"
+        }
+    ]
+}
+```
 
 #### Update Person
 ```
@@ -139,23 +390,58 @@ keyword
 | :-------- | :------- |
 | `Person` | `class` |
 
-Example JSON
+Example of Person class in JSON
 ```
 {
+    "personId": {personId},
+    "email": {user email},
+    "creationDate": "...",
+    "personStatus": "ACTIVE",
     "personType": "CUSTOM",
     "lineTemplates": [
         {
             "lineName": "First Name",
-            "lineType": "string",
             "lineValue": "MR_Kotuk"
         },
         {
             "lineName": "Last Name",
-            "lineType": "string",
-            "lineValue": "Meaw"
+            "lineValue": "MeawMeaw"
         }
     ]
 }
+```
+
+Example of Response:
+
+(List of persons after changes)
+```
+[
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "ACTIVE",
+        "personType": "GENERAL",
+        "lineTemplates": []
+    },
+    {
+        "personId": {personId},
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "ACTIVE",
+        "personType": "CUSTOM",
+        "lineTemplates": [
+            {
+                "lineName": "First Name",
+                "lineValue": "MR_Kotuk"
+            },
+            {
+                "lineName": "Last Name",
+                "lineValue": "MeawMeaw"
+            }
+        ]
+    }
+]
 ```
 
 #### Delete Persons
@@ -166,9 +452,33 @@ Example JSON
 | :-------- | :------- |
 | `id` | `List<Integer>` |
 
-Example JSON
+Example of List<Integer> in JSON
 ```
 [1, 4, 5, 7]
+```
+
+Example of Response:
+
+(List of persons after changes)
+```
+[
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "ACTIVE",
+        "personType": "GENERAL",
+        "lineTemplates": [...]
+    },
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "ACTIVE",
+        "personType": "CLIENT",
+        "lineTemplates": [...]
+    }
+]
 ```
 
 ### Recycle Bin
@@ -182,12 +492,56 @@ Example JSON
 
 Example JSON
 ```
-keyword
+{keyword}
+```
+
+Example of Response:
+```
+[
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "DELETED",
+        "personType": "GENERAL",
+        "lineTemplates": [...]
+    },
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "DELETED",
+        "personType": "CLIENT",
+        "lineTemplates": [...]
+    }
+]
 ```
 
 #### Get list of Persons in Recycle Bin
 ```
   GET /recyclebin/
+```
+
+Example of Response:
+```
+[
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "DELETED",
+        "personType": "GENERAL",
+        "lineTemplates": [...]
+    },
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "DELETED",
+        "personType": "CLIENT",
+        "lineTemplates": [...]
+    }
+]
 ```
 
 #### Return from Recycle Bin
@@ -198,9 +552,33 @@ keyword
 | :-------- | :------- |
 | `id` | `List<Integer>` |
 
-Example JSON
+Example of List<Integer> in JSON
 ```
 [1, 4, 5, 7]
+```
+
+Example of Response:
+
+(List of persons in recyclebin after changes)
+```
+[
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "DELETED",
+        "personType": "GENERAL",
+        "lineTemplates": [...]
+    },
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "DELETED",
+        "personType": "CLIENT",
+        "lineTemplates": [...]
+    }
+]
 ```
 
 #### Remove from Recycle Bin
@@ -211,9 +589,33 @@ Example JSON
 | :-------- | :------- |
 | `id` | `List<Integer>` |
 
-Example JSON
+Example of List<Integer> in JSON
 ```
 [1, 4, 5, 7]
+```
+
+Example of Response:
+
+(List of persons in recyclebin after changes)
+```
+[
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "DELETED",
+        "personType": "GENERAL",
+        "lineTemplates": [...]
+    },
+    {
+        "personId": ...,
+        "email": {user email},
+        "creationDate": "...",
+        "personStatus": "DELETED",
+        "personType": "CLIENT",
+        "lineTemplates": [...]
+    }
+]
 ```
 
 #### Clean Recycle Bin

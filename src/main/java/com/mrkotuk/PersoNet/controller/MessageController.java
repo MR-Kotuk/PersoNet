@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mrkotuk.PersoNet.model.Message;
 import com.mrkotuk.PersoNet.model.Person;
-import com.mrkotuk.PersoNet.service.EmailMessageSenderService;
+import com.mrkotuk.PersoNet.service.MessageService;
 
 import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/sender")
 @AllArgsConstructor
-public class MessageSenderController {
-    private final EmailMessageSenderService service;;
+public class MessageController {
+    private final MessageService service;;
 
     @GetMapping("/")
     public ResponseEntity<List<Person>> getPersonsWithEmail() {

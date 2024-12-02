@@ -15,9 +15,9 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class EmailMessageSenderService {
+public class MessageService {
     private final PersonSenderRepo repo;
-    private final EmailService service;
+    private final MessageSenderService service;
 
     private final String startSymbol = "[</";
     private final String endSymbol = "/>]";
@@ -37,8 +37,6 @@ public class EmailMessageSenderService {
     }
 
     public void sendMessage(Message message) {
-        System.out.println("\n \n \n \n \n" + message.getSubject() + "\n \n \n \n \n");
-
         for (Person person : repo.findAllById(message.getRecipient())) {
             String to = "";
 

@@ -36,6 +36,6 @@ public class UserController {
 
         return jwtToken != null
                 ? new ResponseEntity<>(jwtToken, HttpStatus.OK)
-                : new ResponseEntity<>("Invalid or expired token.", HttpStatus.NOT_FOUND);
+                : new ResponseEntity<>("Invalid or expired token", HttpStatus.NOT_FOUND);
     }
 }

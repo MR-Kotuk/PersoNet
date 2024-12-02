@@ -43,9 +43,6 @@ public class PersonService {
     }
 
     public void addPerson(Person person, String email) {
-        for (int i = 0; i < person.getLineTemplates().size(); i++)
-            person.getLineTemplates().get(i).setOrderId(i + 1);
-
         person.setEmail(email);
         person.setPersonStatus(PersonStatus.ACTIVE);
         person.setCreationDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
