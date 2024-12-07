@@ -36,6 +36,17 @@ Other: BCrypt, lombok
 
 # Backend API
 
+## Home Page
+#### Get a welcome message
+```
+  GET /
+```
+
+Response:
+```
+  Welcome {username} to Perso|||et!
+```
+
 ## FlexiMail
 #### Get persons with email
 ```
@@ -73,7 +84,7 @@ Example of Response:
 | :-------- | :------- |
 | `id` | `List<Integer>` |
 
-Example of List<Integer> in JSON
+Example of Request
 ```
   [1, 2]
 ```
@@ -96,7 +107,7 @@ Example of Response
 | :-------- | :------- |
 | `Message` | `class` |
 
-Example of Message class in JSON
+Example of Request
 ```
 {
   "subject": "Hi [</First Name/>]!",
@@ -105,16 +116,68 @@ Example of Message class in JSON
 }
 ```
 
-## Home Page
-#### Get a welcome message
+## Account
+#### Get Account Info
 ```
-  GET /
+  GET /account/
+```
+Example of Response
+
+```
+{
+    "id": 1,
+    "username": "MR_Kotuk",
+    "email": "mrkotuk333@gmail.com",
+    "password": "**********",
+    "verified": true
+}
 ```
 
-Response:
+#### Set Username
 ```
-  Welcome {username} to Perso|||et!
+  POST /account/set-username
 ```
+
+Example of Request
+
+(MR_Kotuk -> MR_Kotuk_New)
+```
+MR_Kotuk_New
+```
+
+Response
+```
+Username changed successful!
+```
+
+#### Set Password
+```
+  POST /account/set-password
+```
+
+| POST Parameter | Type     |
+| :-------- | :------- |
+| `Password` | `class` |
+
+Example of Request
+```
+{
+    "password": "kotuk",
+    "newPassword": "kotukkk"
+}
+```
+
+Response
+
+If password correct:
+```
+Password changed successful!
+```
+If password is wrong:
+```
+Wrong password
+```
+
 
 ## User
 ### Username/Email/Password
@@ -127,7 +190,7 @@ After registering, you will need to verify your email address using a token **(l
 | :-------- | :------- |
 | `User` | `class` |
 
-Example of User in JSON
+Example of Request
 ```
 {
     "username": "MR_Kotuk",
@@ -157,7 +220,7 @@ If you don't verify your email on registration, you have to do it on login.
 | :-------- | :------- |
 | `User` | `class` |
 
-Example of User in JSON
+Example of Request
 ```
 {
     "username": "MR_Kotuk",
@@ -185,7 +248,7 @@ If you don't verify your email:
 | :-------- | :------- |
 | `token` | `String` |
 
-Example
+Example of Request
 ```
 GET /auth/verify-email/3234
 ```
@@ -279,7 +342,7 @@ Response:
 | :-------- | :------- |
 | `keyword` | `String` |
 
-Example JSON
+Example of Request
 ```
 {keyword}
 ```
@@ -361,7 +424,7 @@ Example of Response:
 | :-------- | :------- |
 | `Person` | `class` |
 
-Example of Person class in JSON
+Example of Request
 ```
 {
     "personId": ...,
@@ -390,7 +453,7 @@ Example of Person class in JSON
 | :-------- | :------- |
 | `Person` | `class` |
 
-Example of Person class in JSON
+Example of Request
 ```
 {
     "personId": {personId},
@@ -452,7 +515,7 @@ Example of Response:
 | :-------- | :------- |
 | `id` | `List<Integer>` |
 
-Example of List<Integer> in JSON
+Example of Request
 ```
 [1, 4, 5, 7]
 ```
@@ -490,7 +553,7 @@ Example of Response:
 | :-------- | :------- |
 | `keyword` | `String` |
 
-Example JSON
+Example of Request
 ```
 {keyword}
 ```
@@ -552,7 +615,7 @@ Example of Response:
 | :-------- | :------- |
 | `id` | `List<Integer>` |
 
-Example of List<Integer> in JSON
+Example of Request
 ```
 [1, 4, 5, 7]
 ```
@@ -589,7 +652,7 @@ Example of Response:
 | :-------- | :------- |
 | `id` | `List<Integer>` |
 
-Example of List<Integer> in JSON
+Example of Request
 ```
 [1, 4, 5, 7]
 ```
