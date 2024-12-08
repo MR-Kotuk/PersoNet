@@ -5,6 +5,7 @@ import { Layout } from "./layout/layout";
 import { AboutPage } from "./pages/about/aboutPage";
 import { PersonPage } from "./pages/person/personPage";
 import { RegisterPage } from "./pages/authorization/register/register";
+import { AuthPage } from "./pages/authorization/authentification/auth";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         </Route>
 
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/auth" element={<AuthPage />} />
       </Routes>
     </div>
   );
