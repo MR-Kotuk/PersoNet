@@ -1,44 +1,20 @@
 import { FC, useState } from "react";
 import "./personList.css";
 
-export const PersonList: FC = () => {
-  interface IPerson {
-    id: number | string;
-    personType: "private" | "public";
-    firstName: string;
-    lastName: string;
-  }
+interface IPerson {
+  id: number | string;
+  personType: "private" | "public";
+  firstName: string;
+  lastName: string;
+  isChecked: boolean;
+}
 
-  const [persons, setPersons] = useState<IPerson[]>([
-    {
-      id: 759,
-      personType: "private",
-      firstName: "Ivan",
-      lastName: "Pronin",
-    },
+interface PersonListProps {
+  persons: IPerson[];
+  toggleChecked: (id: string | number) => void;
+}
 
-    {
-      id: 993,
-      personType: "public",
-      firstName: "Stepan",
-      lastName: "lol",
-    },
-
-    {
-      id: 6546,
-      personType: "private",
-      firstName: "Anton",
-      lastName: "Gondon",
-    },
-
-    {
-      id: 7239,
-      personType: "public",
-      firstName: "Ivan",
-      lastName: "Eblan",
-    },
-  ]);
-
+export const PersonList: FC<PersonListProps> = ({ persons, toggleChecked }) => {
   return (
     <>
       <div className="person-table-wrapper">
@@ -85,7 +61,14 @@ export const PersonList: FC = () => {
               <p>{item.firstName}</p>
               <p>{item.lastName}</p>
               <p>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={item.isChecked}
+                  onClick={() => {
+                    toggleChecked(item.id);
+                    console.log(item);
+                  }}
+                />
               </p>
             </div>
           ))}
