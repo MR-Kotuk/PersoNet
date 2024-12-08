@@ -1,7 +1,6 @@
 import { ChangeEvent, FC, useState } from "react";
 import "./register.css";
-import { Link } from "react-router-dom";
-import { GoogleLogin } from "@react-oauth/google";
+import { Link, redirect, useNavigate } from "react-router-dom";
 
 export const RegisterPage: FC = () => {
   interface IRegisterData {
@@ -83,15 +82,12 @@ export const RegisterPage: FC = () => {
 
           <div className="register-field-item">
             <button className="register-submit">Submit</button>
-            <GoogleLogin
-              onSuccess={(credentialResponse) => {
-                console.log(credentialResponse);
-              }}
-              onError={() => {
-                console.log("Login Failed");
-              }}
-            />
-            ;
+            <button
+              className="google-auth-button"
+              onClick={() => redirect("https://www.youtube.com")}
+            >
+              Sign up with Google
+            </button>
             <p className="register-enter-account">
               Already have an account?{" "}
               <Link to="*" className="register-enter-account-link">
