@@ -1,43 +1,35 @@
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import "./personPage.css";
 import { PersonList } from "./personList/personList";
+import axios from "axios";
+
+export interface IPerson {
+  id: number | string;
+  email: string;
+  personType: "private" | "public";
+  isChecked?: boolean;
+}
 
 export const PersonPage: FC = () => {
   const inputUserSearch = useRef<HTMLInputElement>(null);
 
-  interface IPerson {
-    id: number | string;
-    personType: "private" | "public";
-    firstName: string;
-    lastName: string;
-    isChecked: boolean;
-  }
+  const [persons, setPersons] = useState<IPerson[]>([]);
 
-  const [persons, setPersons] = useState<IPerson[]>([
-    {
-      id: 759,
-      personType: "private",
-      firstName: "Ivan",
-      lastName: "Pronin",
-      isChecked: false,
-    },
+  // const getAllPersons = async () => {
+  //   try {
+  //     const getPersonResponse = await axios.get<IPerson[]>(
+  //       "http://localhost:8080/person/"
+  //     );
 
-    {
-      id: 993,
-      personType: "public",
-      firstName: "Stepan",
-      lastName: "lol",
-      isChecked: false,
-    },
+  //     setPersons(getPersonResponse.data);
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  // };
 
-    {
-      id: 6546,
-      personType: "private",
-      firstName: "Anton",
-      lastName: "Gondon",
-      isChecked: false,
-    },
-  ]);
+  // useEffect(() => {
+  //   getAllPersons();
+  // }, []);
 
   const toggleChecked = (id: string | number) => {
     setPersons((prevPersons) =>

@@ -1,13 +1,6 @@
 import { FC, useState } from "react";
 import "./personList.css";
-
-interface IPerson {
-  id: number | string;
-  personType: "private" | "public";
-  firstName: string;
-  lastName: string;
-  isChecked: boolean;
-}
+import { IPerson } from "../personPage";
 
 interface PersonListProps {
   persons: IPerson[];
@@ -20,31 +13,31 @@ export const PersonList: FC<PersonListProps> = ({ persons, toggleChecked }) => {
       <div className="person-table-wrapper">
         <div className="person-table-titles">
           <p className="person-tabel-title-name" id="person-table-title-id">
-            PersonId
+            PersonPos
           </p>
           <p
             className="person-tabel-title-name"
             id="person-table-title-persontype"
           >
-            PersonType
+            PersonId
           </p>
           <p
             className="person-tabel-title-name"
             id="person-table-title-firstname"
           >
-            FirstName
+            PersonType
           </p>
           <p
             className="person-tabel-title-name"
             id="person-table-title-lastname"
           >
-            LastName
+            Email
           </p>
           <p
             className="person-tabel-title-name"
             id="person-table-title-selectcircle"
           >
-            SelectCircle
+            Select
           </p>
         </div>
 
@@ -56,10 +49,11 @@ export const PersonList: FC<PersonListProps> = ({ persons, toggleChecked }) => {
               }
               key={index}
             >
+              <p>{index + 1}</p>
               <p>{item.id}</p>
               <p>{item.personType}</p>
-              <p>{item.firstName}</p>
-              <p>{item.lastName}</p>
+              <p>{item.email}</p>
+
               <p>
                 <input
                   type="checkbox"
