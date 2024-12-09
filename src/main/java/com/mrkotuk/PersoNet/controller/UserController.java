@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mrkotuk.PersoNet.model.ForgotPassword;
 import com.mrkotuk.PersoNet.model.User;
 import com.mrkotuk.PersoNet.service.UserService;
 
@@ -22,7 +23,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody User user) {
-        return new ResponseEntity<>(service.register(user), HttpStatus.OK);
+        return new ResponseEntity<>(service.register(user), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
@@ -32,10 +33,16 @@ public class UserController {
 
     @GetMapping("/verify-email/{token}")
     public ResponseEntity<String> verifyEmail(@PathVariable String token) {
-        String jwtToken = service.isVerified(token);
+        return new ResponseEntity<>(service.isVerified(token), HttpStatus.OK);
+    }
 
-        return jwtToken != null
-                ? new ResponseEntity<>(jwtToken, HttpStatus.OK)
-                : new ResponseEntity<>("Invalid or expired token", HttpStatus.NOT_FOUND);
+    @PostMapping("/forgot-password/verify-email/send/{email}")
+    public ResponseEntity<String> sendVerifyEmail(@PathVariable String email) {
+        return new ResponseEntity<>(service.sendVerificationEmail(email), HttpStatus.OK);
+    }
+
+    @PostMapping("/forgot-password/verify-email")
+    public ResponseEntity<String> verifyEmail(@RequestBody ForgotPassword forgotPassword) {
+        return new ResponseEntity<>(service.forgotPassword(forgotPassword), HttpStatus.OK);
     }
 }

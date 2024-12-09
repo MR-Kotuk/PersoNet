@@ -31,12 +31,12 @@ public class AccountController {
     @PostMapping("/set-username")
     public ResponseEntity<String> setUsername(@RequestBody String newUsername) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.setUsername(authentication.getName(), newUsername), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(service.setUsername(authentication.getName(), newUsername), HttpStatus.OK);
     }
 
     @PostMapping("/set-password")
     public ResponseEntity<String> setPassword(@RequestBody Password password) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.setPassword(authentication.getName(), password), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(service.setPassword(authentication.getName(), password), HttpStatus.OK);
     }
 }

@@ -250,7 +250,7 @@ If you don't verify your email:
 
 Example of Request
 ```
-GET /auth/verify-email/3234
+  GET /auth/verify-email/3234
 ```
 
 Response:
@@ -260,6 +260,55 @@ Response:
 OR
 
 If invalid or expired token
+```
+  Invalid or expired token
+```
+
+### Forgot Password
+
+If you have forgotten your password, you need to follow these steps:
+#### 1. Send Verification Email
+```
+  POST /auth/forgot-password/verify-email/send/{email}
+```
+
+| Path Parameter | Type |
+| :-------- | :------- |
+| `email` | `String` |
+
+Example of Request:
+```
+  POST /auth/forgot-password/verify-email/send/mrkotuk333@gmail.com
+```
+
+Response:
+```
+Please verify email
+```
+
+#### 2. Verify Email
+```
+  POST /auth/forgot-password/verify-email
+```
+
+| Request Body Parameter | Type |
+| :-------- | :------- |
+| `ForgotPassword` | `class` |
+
+Example of Request
+```
+{
+    "email": "mrkotuk333@gmail.com",
+    "verifyEmailToken": 1234,
+    "newPassword": "kotuk"
+}
+```
+
+Response is JWT:
+```
+  {JWT}
+```
+OR if Invalid or expired token:
 ```
   Invalid or expired token
 ```

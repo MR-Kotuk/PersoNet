@@ -6,8 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,16 +18,13 @@ public class VerificationToken {
     private int id;
 
     private String token;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private String email;
 
     private LocalDateTime expirationTime;
 
-    public VerificationToken(String token, User user) {
+    public VerificationToken(String token, String email) {
         this.token = token;
-        this.user = user;
+        this.email = email;
         expirationTime = LocalDateTime.now().plusMinutes(1);
     }
 }
