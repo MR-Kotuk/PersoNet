@@ -28,9 +28,7 @@ export const AboutPage: FC = () => {
           </div>
           <div className="about-nav-container-item">
             <span className="slash">/</span>
-            <p>/Private Personas/
-                
-            </p>
+            <p>/Private Personas/</p>
             <span className="slash">/</span>
           </div>
           <div className="about-nav-container-item">

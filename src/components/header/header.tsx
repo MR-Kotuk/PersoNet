@@ -2,6 +2,8 @@ import "./header.css";
 import { NavLink } from "react-router-dom";
 
 export const Header = () => {
+  let token;
+
   return (
     <div className="header-container">
       <nav className="header-wrapper">
@@ -57,6 +59,10 @@ export const Header = () => {
             </NavLink>
           </li>
         </ul>
+
+        <p className="profile-follow-wrapper">
+          {!token ? "Log in" : "Your name"}
+        </p>
       </nav>
     </div>
   );

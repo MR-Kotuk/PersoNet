@@ -4,11 +4,19 @@
   height: 7.5vh;
 }
 
+.header-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .header-wrap-items {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  gap: 30px;
   height: 100%;
+  padding: 20px 0px 20px 70px;
 }
 
 .wrap-item {
@@ -16,7 +24,6 @@
   font-weight: 600;
   color: #fff;
   list-style-type: none;
-  padding-top: 20px;
 }
 
 .wrap-item-passive-link {
@@ -27,11 +34,17 @@
 }
 
 .wrap-item-passive-link:hover {
-    color: rgb(61, 115, 216);
+  color: rgb(61, 115, 216);
 }
 
 .wrap-item-active-link {
   color: #0b61a4;
   text-decoration: none;
   background-color: #000;
+}
+
+.profile-follow-wrapper {
+  padding-right: 70px;
+  font-size: 21px;
+  font-weight: 500;
 }
