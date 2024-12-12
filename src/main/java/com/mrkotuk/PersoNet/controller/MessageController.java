@@ -36,8 +36,8 @@ public class MessageController {
     }
 
     @PostMapping("/send")
-    public ResponseEntity<Void> sendMessage(@RequestBody Message message) {
+    public ResponseEntity<String> sendMessage(@RequestBody Message message) {
         service.sendMessage(message);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Message sent successfully", HttpStatus.OK);
     }
 }

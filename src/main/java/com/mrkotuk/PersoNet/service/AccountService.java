@@ -33,7 +33,7 @@ public class AccountService {
         return "Username changed successful!";
     }
 
-    public String setPassword(String email, Password password) {
+    public boolean setPassword(String email, Password password) {
         User user = repo.findByEmail(email).get();
 
         Authentication authentication = authManager
@@ -43,8 +43,8 @@ public class AccountService {
             user.setPassword(encoder.encode(password.getNewPassword()));
             repo.save(user);
 
-            return "Password changed successful!";
+            return true;
         } else
-            return "Wrong password";
+            return false;
     }
 }

@@ -1,6 +1,5 @@
 package com.mrkotuk.PersoNet.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,26 +22,26 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody User user) {
-        return new ResponseEntity<>(service.register(user), HttpStatus.CREATED);
+        return service.register(user);
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
-        return new ResponseEntity<>(service.verify(user), HttpStatus.OK);
+        return service.verify(user);
     }
 
     @GetMapping("/verify-email/{token}")
     public ResponseEntity<String> verifyEmail(@PathVariable String token) {
-        return new ResponseEntity<>(service.isVerified(token), HttpStatus.OK);
+        return service.isVerified(token);
     }
 
     @PostMapping("/forgot-password/verify-email/send/{email}")
     public ResponseEntity<String> sendVerifyEmail(@PathVariable String email) {
-        return new ResponseEntity<>(service.sendVerificationEmail(email), HttpStatus.OK);
+        return service.sendVerificationEmail(email);
     }
 
     @PostMapping("/forgot-password/verify-email")
     public ResponseEntity<String> verifyEmail(@RequestBody ForgotPassword forgotPassword) {
-        return new ResponseEntity<>(service.forgotPassword(forgotPassword), HttpStatus.OK);
+        return service.forgotPassword(forgotPassword);
     }
 }

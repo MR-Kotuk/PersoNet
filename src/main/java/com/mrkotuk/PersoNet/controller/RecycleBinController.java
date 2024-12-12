@@ -27,7 +27,11 @@ public class RecycleBinController {
     @GetMapping("/search")
     public ResponseEntity<List<Person>> searchPerson(String keyword) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.searchPersons(authentication.getName(), keyword), HttpStatus.FOUND);
+        List<Person> persons = service.searchPersons(authentication.getName(), keyword);
+
+        return persons != null
+                ? new ResponseEntity<>(persons, HttpStatus.FOUND)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/")

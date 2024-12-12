@@ -3,6 +3,8 @@ package com.mrkotuk.PersoNet.service;
 import java.time.LocalDateTime;
 import java.util.Random;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -27,13 +29,13 @@ public class MessageSenderService {
         sender.send(message);
     }
 
-    public String sendVerificationEmail(String email) {
+    public ResponseEntity<String> sendVerificationEmail(String email) {
         VerificationToken token = new VerificationToken(Integer.toString(new Random().nextInt(1000, 10000)), email);
         tokenRepo.save(token);
 
         sendEmail(email, "Email Verification PersoNet", "Your verification token is: " + token.getToken());
 
-        return "Please verify email";
+        return new ResponseEntity<>("Please verify email", HttpStatus.ACCEPTED);
     }
 
     public String isVerified(String token) {

@@ -1,5 +1,7 @@
 package com.mrkotuk.PersoNet.service;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,7 +24,7 @@ public class UserService {
     private final JWTService jwtService;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(7);
 
-    public String register(User user) {
+    public ResponseEntity<String> register(User user) {
         if (!repo.findByEmail(user.getEmail()).isPresent()) {
             user.setVerified(false);
             user.setPassword(encoder.encode(user.getPassword()));
@@ -30,10 +32,10 @@ public class UserService {
 
             return messageSenderService.sendVerificationEmail(user.getEmail());
         } else
-            return "Email has already been used!";
+            return new ResponseEntity<>("Email has already been used!", HttpStatus.BAD_REQUEST);
     }
 
-    public String verify(User user) {
+    public ResponseEntity<String> verify(User user) {
         if (!repo.findByEmail(user.getEmail()).get().isVerified())
             return messageSenderService.sendVerificationEmail(user.getEmail());
 
@@ -42,41 +44,41 @@ public class UserService {
 
         if (authentication.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            return jwtService.generateToken(user.getEmail());
+            return new ResponseEntity<>(jwtService.generateToken(user.getEmail()), HttpStatus.OK);
         } else
-            return "Invalid credentials";
+            return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
     }
 
-    public String isVerified(String token) {
+    public ResponseEntity<String> isVerified(String token) {
         String email = messageSenderService.isVerified(token);
 
         if (email.isEmpty())
-            return "Invalid or expired token";
+            return new ResponseEntity<>("Invalid or expired token", HttpStatus.BAD_REQUEST);
 
         User user = repo.findByEmail(email).get();
         user.setVerified(true);
         repo.save(user);
 
-        return jwtService.generateToken(email);
+        return new ResponseEntity<>(jwtService.generateToken(email), HttpStatus.OK);
     }
 
     public User getUserByEmail(String email) {
         return repo.findByEmail(email).get();
     }
 
-    public String forgotPassword(ForgotPassword forgotPassword) {
+    public ResponseEntity<String> forgotPassword(ForgotPassword forgotPassword) {
         if (messageSenderService.isVerified(forgotPassword.getVerifyEmailToken()).isEmpty())
-            return "Invalid or expired token";
+            return new ResponseEntity<>("Invalid or expired token", HttpStatus.BAD_REQUEST);
 
         User user = repo.findByEmail(forgotPassword.getEmail()).get();
         user.setPassword(encoder.encode(forgotPassword.getNewPassword()));
         user.setVerified(true);
         repo.save(user);
 
-        return jwtService.generateToken(forgotPassword.getEmail());
+        return new ResponseEntity<>(jwtService.generateToken(forgotPassword.getEmail()), HttpStatus.OK);
     }
 
-    public String sendVerificationEmail(String email) {
+    public ResponseEntity<String> sendVerificationEmail(String email) {
         return messageSenderService.sendVerificationEmail(email);
     }
 }
