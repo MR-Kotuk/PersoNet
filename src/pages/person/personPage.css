@@ -12,7 +12,7 @@
   gap: 15px;
 }
 
-.select-person-wrapper-item {
+.select-person-button {
   width: 20%;
   height: 40px;
   border-radius: 20px;
@@ -22,6 +22,10 @@
   color: #fff;
   font-size: 21px;
   font-weight: 500;
+}
+
+.select-person-button:hover {
+  background-color: rgb(44, 43, 43);
 }
 
 .search-person-item-input {
@@ -39,4 +43,23 @@
 .search-person-item-input::placeholder {
   font-size: 16px;
   font-weight: 500;
+}
+
+.delete-person-button {
+  background-color: #c43333;
+  color: rgb(148, 144, 144);
+}
+
+.add-person-button {
+  background-color: #2baa64;
+  color: #fff;
+}
+
+.delete-person-button,
+.add-person-button {
+  font-size: 36px;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  width: 50px;
 }

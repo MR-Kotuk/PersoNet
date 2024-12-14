@@ -6,14 +6,49 @@ import axios from "axios";
 export interface IPerson {
   id: number | string;
   email: string;
-  personType: "private" | "public";
+  personType:
+    | "friend"
+    | "custom"
+    | "collague"
+    | "client"
+    | "general"
+    | "family";
   isChecked?: boolean;
 }
 
 export const PersonPage: FC = () => {
   const inputUserSearch = useRef<HTMLInputElement>(null);
 
-  const [persons, setPersons] = useState<IPerson[]>([]);
+  const [persons, setPersons] = useState<IPerson[]>([
+    {
+      id: 1,
+      email: "lalala@mail.com",
+      personType: "friend",
+      isChecked: false,
+    },
+    {
+      id: 54,
+      email: "azaza@mail.com",
+      personType: "custom",
+      isChecked: false,
+    },
+    {
+      id: 792,
+      email: "kek@mail.com",
+      personType: "collague",
+      isChecked: false,
+    },
+
+    { id: 192, email: "bob@mail.com", personType: "client", isChecked: false },
+    { id: 2014, email: "db@mail.com", personType: "general", isChecked: false },
+  ]);
+  const [isDelete, setIsDelete] = useState<boolean>(false);
+
+  useEffect(() => {
+    const isPersonChecked = persons.some((item) => item.isChecked);
+
+    isPersonChecked ? setIsDelete(true) : setIsDelete(false);
+  }, [persons]);
 
   // const getAllPersons = async () => {
   //   try {
@@ -39,11 +74,27 @@ export const PersonPage: FC = () => {
     );
   };
 
-  const onlyPrivate = () =>
-    setPersons(persons.filter((item) => item.personType === "private"));
+  const onlyFriend = () =>
+    setPersons(persons.filter((item) => item.personType === "friend"));
 
-  const onlyPublic = () =>
-    setPersons(persons.filter((item) => item.personType === "public"));
+  const onlyCustom = () =>
+    setPersons(persons.filter((item) => item.personType === "custom"));
+
+  const onlyCollague = () => {
+    setPersons(persons.filter((item) => item.personType === "collague"));
+  };
+
+  const onlyClient = () => {
+    setPersons(persons.filter((item) => item.personType === "client"));
+  };
+
+  const onlyGeneral = () => {
+    setPersons(persons.filter((item) => item.personType === "general"));
+  };
+
+  const onlyFamily = () => {
+    setPersons(persons.filter((item) => item.personType === "family"));
+  };
 
   const allPersons = () => setPersons(persons);
 
@@ -51,14 +102,26 @@ export const PersonPage: FC = () => {
     <>
       <div className="person-container">
         <nav className="select-person-wrapper">
-          <button className="select-person-wrapper-item" onClick={allPersons}>
+          <button className="select-person-button" onClick={allPersons}>
             All persons
           </button>
-          <button className="select-person-wrapper-item" onClick={onlyPrivate}>
-            Private
+          <button className="select-person-button" onClick={onlyFriend}>
+            Friends
           </button>
-          <button className="select-person-wrapper-item" onClick={onlyPublic}>
-            Public
+          <button className="select-person-button" onClick={onlyCustom}>
+            Customs
+          </button>
+          <button className="select-person-button" onClick={onlyCollague}>
+            Collagues
+          </button>
+          <button className="select-person-button" onClick={onlyClient}>
+            Clients
+          </button>
+          <button className="select-person-button" onClick={onlyGeneral}>
+            Generals
+          </button>
+          <button className="select-person-button" onClick={onlyFamily}>
+            Relatives
           </button>
           <input
             type="text"
@@ -66,6 +129,11 @@ export const PersonPage: FC = () => {
             className="search-person-item-input"
             ref={inputUserSearch}
           />
+          <button
+            className={isDelete ? "delete-person-button" : "add-person-button"}
+          >
+            {isDelete ? "✖" : "+"}
+          </button>
         </nav>
       </div>
 
