@@ -1,0 +1,28 @@
+.recycle-page-title {
+  width: 100vw;
+  background-color: rgb(206, 40, 40);
+  text-align: center;
+  padding: 16px;
+}
+
+.recycle-page-title p {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.recycle-container {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.clear-all-removed-persons-button {
+  width: 400px;
+  padding: 4px;
+  background-color: rgb(206, 40, 40);
+  color: #fff;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  font-size: 24px;
+}
