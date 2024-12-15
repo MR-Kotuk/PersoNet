@@ -1,6 +1,7 @@
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
 import "./register.css";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const RegisterPage: FC = () => {
   interface IRegisterData {
@@ -16,6 +17,8 @@ export const RegisterPage: FC = () => {
     password: "",
   });
 
+  const navigate = useNavigate();
+
   const setRegisterDataInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -23,6 +26,21 @@ export const RegisterPage: FC = () => {
       ...prevData,
       [name]: value,
     }));
+  };
+
+  const postRegisterData = async (e: FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/auth/register",
+        regData
+      );
+
+      console.log(response);
+    } catch (e) {
+      alert(e);
+    }
   };
 
   return (
@@ -44,7 +62,7 @@ export const RegisterPage: FC = () => {
 
         <p className="register-field-text">Create account</p>
 
-        <form className="register-field">
+        <form className="register-field" onSubmit={postRegisterData}>
           <div className="register-field-item">
             <p>Username</p>
             <input
@@ -80,14 +98,30 @@ export const RegisterPage: FC = () => {
             <input type="password" placeholder="Confirm your password" />
           </div>
 
+          <p className="register-forgot-password-item">Forgot password?</p>
+
           <div className="register-field-item">
-            <button className="register-submit">Submit</button>
+            <button className="register-submit" type="submit">
+              Submit
+            </button>
             <button
               className="google-auth-button"
-              onClick={() => redirect("https://www.youtube.com")}
+              onClick={() =>
+                navigate("http://localhost:8080/oauth2/authorization/google")
+              }
             >
               Sign up with Google
             </button>
+
+            <button
+              className="github-auth-button"
+              onClick={() =>
+                navigate("http://localhost:8080/oauth2/authorization/github")
+              }
+            >
+              Sign up with Github
+            </button>
+
             <p className="register-enter-account">
               Already have an account?{" "}
               <Link to="*" className="register-enter-account-link">

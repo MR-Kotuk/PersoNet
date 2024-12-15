@@ -85,6 +85,12 @@
   font-weight: 500;
 }
 
+.register-forgot-password-item {
+  font-size: 18px;
+  font-weight: 500;
+  color: rgb(107, 107, 168);
+}
+
 .register-submit {
   width: 500px;
   display: flex;
@@ -97,7 +103,6 @@
   border-radius: 8px;
   font-size: 21px;
   font-weight: 600;
-  margin-top: 25px;
 }
 
 .register-enter-account {
@@ -124,6 +129,24 @@
 }
 
 .google-auth-button:hover {
+  opacity: 1;
+  transition: 0.15s linear;
+}
+
+.github-auth-button {
+  margin-top: 5px;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 500;
+  opacity: 0.7;
+  background-color: rgb(44, 43, 43);
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.github-auth-button:hover {
   opacity: 1;
   transition: 0.15s linear;
 }
