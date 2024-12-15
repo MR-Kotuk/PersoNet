@@ -67,25 +67,25 @@ export const PersonRecyclePage: FC = () => {
 
   const allPersons = () => setRemovedPersons(removedPersons);
 
-  // const clearMarkedPersons = async () => {
-  //   await axios.delete("http://localhost:8080/recyclebin", removingPersonsId);
-  // };
+  const clearMarkedPersons = async () => {
+    await axios.delete("http://localhost:8080/recyclebin", removingPersonsId);
+  };
 
-  //   const clearAllRemovedPersons = async () => {
-  //     await axios.delete("http://localhost:8080/recyclebin/clean");
-  //   };
+    const clearAllRemovedPersons = async () => {
+      await axios.delete("http://localhost:8080/recyclebin/clean");
+    };
 
-  //   const getAllRemovedPersons = async () => {
-  //     const response = await axios.get("http://localhost:8080/recyclebin");
+    const getAllRemovedPersons = async () => {
+      const response = await axios.get("http://localhost:8080/recyclebin");
 
-  //     setRemovedPersons(response.data);
-  //   };
+      setRemovedPersons(response.data);
+    };
 
-  //   useEffect(() => {
-  //     getAllRemovedPersons();
-  //     clearAllRemovedPersons();
-  //     clearMarkedPersons();
-  //   }, []);
+    useEffect(() => {
+      getAllRemovedPersons();
+      clearAllRemovedPersons();
+      clearMarkedPersons();
+    }, []);
 
   return (
     <>
@@ -117,7 +117,7 @@ export const PersonRecyclePage: FC = () => {
           </button>
           <button
             className="clear-all-removed-persons-button"
-            // onClick={clearAllRemovedPersons}
+            onClick={clearAllRemovedPersons}
           >
             Clear All
           </button>

@@ -50,21 +50,21 @@ export const PersonPage: FC = () => {
     isPersonChecked ? setIsDelete(true) : setIsDelete(false);
   }, [persons]);
 
-  // const getAllPersons = async () => {
-  //   try {
-  //     const getPersonResponse = await axios.get<IPerson[]>(
-  //       "http://localhost:8080/person/"
-  //     );
+  const getAllPersons = async () => {
+    try {
+      const getPersonResponse = await axios.get<IPerson[]>(
+        "http://localhost:8080/person/"
+      );
 
-  //     setPersons(getPersonResponse.data);
-  //   } catch (e) {
-  //     alert(e);
-  //   }
-  // };
+      setPersons(getPersonResponse.data);
+    } catch (e) {
+      alert(e);
+    }
+  };
 
-  // useEffect(() => {
-  //   getAllPersons();
-  // }, []);
+  useEffect(() => {
+    getAllPersons();
+  }, []);
 
   const toggleChecked = (id: string | number) => {
     setPersons((prevPersons) =>
@@ -74,12 +74,12 @@ export const PersonPage: FC = () => {
     );
   };
 
-  const onlyFriend = () =>
+  const onlyFriend = () => {
     setPersons(persons.filter((item) => item.personType === "friend"));
-
-  const onlyCustom = () =>
+  };
+  const onlyCustom = () => {
     setPersons(persons.filter((item) => item.personType === "custom"));
-
+  };
   const onlyCollague = () => {
     setPersons(persons.filter((item) => item.personType === "collague"));
   };
