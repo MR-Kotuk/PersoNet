@@ -6,13 +6,29 @@ import axios from "axios";
 export const PersonRecyclePage: FC = () => {
   const inputUserSearch = useRef<HTMLInputElement>(null);
 
-  const [removedPersons, setRemovedPersons] = useState<IPerson[]>([]);
+  const [removedPersons, setRemovedPersons] = useState<IPerson[]>([
+    { id: 34, email: "kkal@mail.ru", personType: "collague", isChecked: false },
+  ]);
   const [isDelete, setIsDelete] = useState<boolean>(false);
+
+  const toggleChecked = (id: string | number) => {
+    setRemovedPersons((prevPersons) =>
+      prevPersons.map((person) =>
+        person.id === id ? { ...person, isChecked: !person.isChecked } : person
+      )
+    );
+  };
+
+  let removingPersonsId: object;
 
   useEffect(() => {
     const isPersonChecked = removedPersons.some((item) => item.isChecked);
 
     isPersonChecked ? setIsDelete(true) : setIsDelete(false);
+
+    removingPersonsId = removedPersons
+      .filter((item) => item.isChecked === true)
+      .map((item) => item.id);
   }, [removedPersons]);
 
   const onlyFriend = () => {
@@ -51,20 +67,25 @@ export const PersonRecyclePage: FC = () => {
 
   const allPersons = () => setRemovedPersons(removedPersons);
 
-//   const clearAllRemovedPersons = async () => {
-//     await axios.delete("http://localhost:8080/recyclebin/clean");
-//   };
+  // const clearMarkedPersons = async () => {
+  //   await axios.delete("http://localhost:8080/recyclebin", removingPersonsId);
+  // };
 
-//   const getAllRemovedPersons = async () => {
-//     const response = await axios.get("http://localhost:8080/recyclebin");
+  //   const clearAllRemovedPersons = async () => {
+  //     await axios.delete("http://localhost:8080/recyclebin/clean");
+  //   };
 
-//     setRemovedPersons(response.data);
-//   };
+  //   const getAllRemovedPersons = async () => {
+  //     const response = await axios.get("http://localhost:8080/recyclebin");
 
-//   useEffect(() => {
-//     getAllRemovedPersons();
-//     clearAllRemovedPersons();
-//   }, []);
+  //     setRemovedPersons(response.data);
+  //   };
+
+  //   useEffect(() => {
+  //     getAllRemovedPersons();
+  //     clearAllRemovedPersons();
+  //     clearMarkedPersons();
+  //   }, []);
 
   return (
     <>
@@ -142,6 +163,32 @@ export const PersonRecyclePage: FC = () => {
             >
               Select
             </p>
+          </div>
+
+          <div className="person-info">
+            {removedPersons.map((item, index) => (
+              <div
+                className={
+                  index % 2 === 0
+                    ? "person-info-item-black"
+                    : "person-info-item"
+                }
+                key={index}
+              >
+                <p>{index + 1}</p>
+                <p>{item.id}</p>
+                <p>{item.personType}</p>
+                <p>{item.email}</p>
+
+                <p>
+                  <input
+                    type="checkbox"
+                    checked={item.isChecked}
+                    onChange={() => toggleChecked(item.id)}
+                  />
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
