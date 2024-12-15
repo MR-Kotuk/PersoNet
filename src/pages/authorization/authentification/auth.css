@@ -85,6 +85,12 @@
   font-weight: 500;
 }
 
+.auth-forgot-password-item {
+  font-size: 18px;
+  font-weight: 500;
+  color: rgb(107, 107, 168);
+}
+
 .auth-submit {
   width: 500px;
   display: flex;

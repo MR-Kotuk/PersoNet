@@ -98,29 +98,30 @@ export const RegisterPage: FC = () => {
             <input type="password" placeholder="Confirm your password" />
           </div>
 
-          <p className="register-forgot-password-item">Forgot password?</p>
-
           <div className="register-field-item">
             <button className="register-submit" type="submit">
               Submit
             </button>
-            <button
-              className="google-auth-button"
-              onClick={() =>
-                navigate("http://localhost:8080/oauth2/authorization/google")
-              }
-            >
-              Sign up with Google
-            </button>
 
-            <button
-              className="github-auth-button"
-              onClick={() =>
-                navigate("http://localhost:8080/oauth2/authorization/github")
-              }
-            >
-              Sign up with Github
-            </button>
+            <div className="oauth-buttons-field">
+              <button
+                className="google-auth-button"
+                onClick={() =>
+                  navigate("http://localhost:8080/oauth2/authorization/google")
+                }
+              >
+                Sign up with Google
+              </button>
+
+              <button
+                className="github-auth-button"
+                onClick={() =>
+                  navigate("http://localhost:8080/oauth2/authorization/github")
+                }
+              >
+                Sign up with Github
+              </button>
+            </div>
 
             <p className="register-enter-account">
               Already have an account?{" "}

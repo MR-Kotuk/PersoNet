@@ -33,6 +33,8 @@ export const AuthPage: FC = () => {
             <input type="password" placeholder="Enter your password" />
           </div>
 
+          <p className="auth-forgot-password-item">Forgot password?</p>
+
           <div className="auth-field-item">
             <button className="auth-submit">Submit</button>
 
