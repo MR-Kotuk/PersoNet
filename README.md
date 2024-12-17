@@ -7,6 +7,9 @@ The best way to manage and organize your contacts effortlessly.
 ### FlexiMail
 A powerful tool for sending personalized messages with ease. Select recipients, use shared details like names and birthdays, and craft one message that’s uniquely tailored for everyone. Perfect for personalized newsletters, greetings, and more - FlexiMail makes every message meaningful!
 
+### Streamline Your Communication with Custom Templates
+Create personalized message templates for any occasion and send them in seconds. Save time, maintain consistency, and elevate your messaging with ease. Effortless, professional communication is just a template away!
+
 ### Security
 Your data is securely encrypted and always protected.
 
@@ -30,7 +33,7 @@ Database: MySQL
 Other: BCrypt, lombok
 
 ## Backend API
-[SwaggerHub](https://app.swaggerhub.com/apis-docs/MR_Kotuk/PersoNetDoc/1.1.1)
+[SwaggerHub](https://app.swaggerhub.com/apis-docs/MR_Kotuk/PersoNetDoc/1.1.2#/)
 
 ## Authors
 [MR_Kotuk](https://github.com/MR-Kotuk)
