@@ -23,19 +23,20 @@ public class RecycleBinService {
         return repo.findByStatusAndEmail(PersonStatus.DELETED, email);
     }
 
-    public List<Person> removeFromRecycleBin(List<Integer> id, String email) {
+    public String removeFromRecycleBin(List<Integer> id) {
         for (Person person : repo.findAllById(id))
             if (person.getPersonStatus().equals(PersonStatus.DELETED))
                 repo.delete(person);
 
-        return repo.findByStatusAndEmail(PersonStatus.DELETED, email);
+        return "Persons removed from the recycle bin successfully";
     }
 
-    public void cleanRecycleBin(String email) {
+    public String cleanRecycleBin(String email) {
         repo.deleteAll(repo.findByStatusAndEmail(PersonStatus.DELETED, email));
+        return "Recycle bin cleaned successfully";
     }
 
-    public List<Person> returnFromRecycleBin(List<Integer> id, String email) {
+    public String returnFromRecycleBin(List<Integer> id) {
         for (Person person : repo.findAllById(id)) {
             if (person.getPersonStatus().equals(PersonStatus.DELETED)) {
                 person.setPersonStatus(PersonStatus.ACTIVE);
@@ -43,6 +44,6 @@ public class RecycleBinService {
             }
         }
 
-        return repo.findByStatusAndEmail(PersonStatus.DELETED, email);
+        return "Persons returned from the recycle bin successfully";
     }
 }

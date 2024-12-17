@@ -42,21 +42,24 @@ public class PersonService {
         return repo.findByStatusAndId(PersonStatus.ACTIVE, personId).get();
     }
 
-    public void addPerson(Person person, String email) {
+    public Person addPerson(Person person, String email) {
         person.setEmail(email);
         person.setPersonStatus(PersonStatus.ACTIVE);
         person.setCreationDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
-        repo.save(person);
+
+        return repo.save(person);
     }
 
-    public void updatePerson(Person person) {
-        repo.save(person);
+    public Person updatePerson(Person person) {
+        return repo.save(person);
     }
 
-    public void deletePersonsById(List<Integer> id) {
+    public String deletePersonsById(List<Integer> id) {
         for (Person person : repo.findAllById(id)) {
             person.setPersonStatus(PersonStatus.DELETED);
             repo.save(person);
         }
+
+        return "Persons deleted successfully";
     }
 }

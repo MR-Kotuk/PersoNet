@@ -32,7 +32,7 @@ public class MessageController {
         return new ResponseEntity<>(service.getPersonsWithEmail(authentication.getName()), HttpStatus.FOUND);
     }
 
-    @GetMapping("/sharedlines")
+    @GetMapping("/shared-lines")
     public ResponseEntity<List<String>> getSharedLines(@RequestBody List<Integer> id) {
         return new ResponseEntity<>(service.getSharedLines(id), HttpStatus.FOUND);
     }

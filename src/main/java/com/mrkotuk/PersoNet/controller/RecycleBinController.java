@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/recyclebin")
+@RequestMapping("/recycle-bin")
 @AllArgsConstructor
 public class RecycleBinController {
     private final RecycleBinService service;
@@ -47,22 +47,18 @@ public class RecycleBinController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<List<Person>> returnFromRecycleBin(@RequestBody List<Integer> id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.returnFromRecycleBin(id, authentication.getName()), HttpStatus.OK);
+    public ResponseEntity<String> returnFromRecycleBin(@RequestBody List<Integer> id) {
+        return new ResponseEntity<>(service.returnFromRecycleBin(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/")
-    public ResponseEntity<List<Person>> removeFromRecycleBin(@RequestBody List<Integer> id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.removeFromRecycleBin(id, authentication.getName()), HttpStatus.OK);
+    public ResponseEntity<String> removeFromRecycleBin(@RequestBody List<Integer> id) {
+        return new ResponseEntity<>(service.removeFromRecycleBin(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/clean")
-    public ResponseEntity<Void> cleanRecycleBin() {
+    public ResponseEntity<String> cleanRecycleBin() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        service.cleanRecycleBin(authentication.getName());
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(service.cleanRecycleBin(authentication.getName()), HttpStatus.OK);
     }
 }

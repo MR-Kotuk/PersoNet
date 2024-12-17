@@ -60,26 +60,18 @@ public class PersonController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Void> addPerson(@RequestBody Person person) {
+    public ResponseEntity<Person> addPerson(@RequestBody Person person) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        service.addPerson(person, authentication.getName());
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(service.addPerson(person, authentication.getName()), HttpStatus.CREATED);
     }
 
     @PutMapping("/")
-    public ResponseEntity<List<Person>> updatePerson(@RequestBody Person person) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        service.updatePerson(person);
-
-        return new ResponseEntity<>(service.getPersons(authentication.getName()), HttpStatus.OK);
+    public ResponseEntity<Person> updatePerson(@RequestBody Person person) {
+        return new ResponseEntity<>(service.updatePerson(person), HttpStatus.OK);
     }
 
     @DeleteMapping("/")
-    public ResponseEntity<List<Person>> deletePerson(@RequestBody List<Integer> id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        service.deletePersonsById(id);
-
-        return new ResponseEntity<>(service.getPersons(authentication.getName()), HttpStatus.OK);
+    public ResponseEntity<String> deletePerson(@RequestBody List<Integer> id) {
+        return new ResponseEntity<>(service.deletePersonsById(id), HttpStatus.OK);
     }
 }
