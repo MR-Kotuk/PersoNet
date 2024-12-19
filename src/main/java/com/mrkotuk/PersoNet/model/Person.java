@@ -1,5 +1,6 @@
 package com.mrkotuk.PersoNet.model;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -39,6 +40,9 @@ public class Person {
     private String creationDate;
     private PersonType personType;
     private PersonStatus personStatus;
+
+    @Builder.Default
+    private HashSet<String> tags = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "person_id")

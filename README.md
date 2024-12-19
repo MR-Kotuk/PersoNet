@@ -5,10 +5,10 @@ The best way to manage and organize your contacts effortlessly.
 
 ## Features
 ### FlexiMail
-A powerful tool for sending personalized messages with ease. Select recipients, use shared details like names and birthdays, and craft one message that’s uniquely tailored for everyone. Perfect for personalized newsletters, greetings, and more - FlexiMail makes every message meaningful!
+A powerful tool for crafting personalized messages using shared details such as names, birthdays, and more!
 
-### Streamline Your Communication with Custom Templates
-Create personalized message templates for any occasion and send them in seconds. Save time, maintain consistency, and elevate your messaging with ease. Effortless, professional communication is just a template away!
+### SwiftText
+Create personalized message templates in seconds. Save time, stay consistent, and communicate effortlessly!
 
 ### Security
 Your data is securely encrypted and always protected.
@@ -17,7 +17,7 @@ Your data is securely encrypted and always protected.
 Five standard templates for quick persona creation.
 
 ### Customization
-Need more than the standard templates? Create your own unique personas!
+Need more than the standard templates? Create your own unique persons!
 
 ### Variety
 Separate profiles for personal and work needs.
@@ -33,7 +33,7 @@ Database: MySQL
 Other: BCrypt, lombok
 
 ## Backend API
-[SwaggerHub](https://app.swaggerhub.com/apis-docs/MR_Kotuk/PersoNetDoc/1.1.2#/)
+[SwaggerHub](https://app.swaggerhub.com/apis-docs/MR_Kotuk/PersoNetDoc/1.2.2#/)
 
 ## Authors
 [MR_Kotuk](https://github.com/MR-Kotuk)
