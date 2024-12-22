@@ -2,6 +2,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import "./personPage.css";
 import { PersonList } from "./personList/personList";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export interface IPerson {
   id: number | string;
@@ -18,6 +19,8 @@ export interface IPerson {
 
 export const PersonPage: FC = () => {
   const inputUserSearch = useRef<HTMLInputElement>(null);
+
+  const navigate = useNavigate();
 
   const [persons, setPersons] = useState<IPerson[]>([
     {
@@ -48,12 +51,16 @@ export const PersonPage: FC = () => {
     const isPersonChecked = persons.some((item) => item.isChecked);
 
     isPersonChecked ? setIsDelete(true) : setIsDelete(false);
+
+    removingPersonsId = persons
+      .filter((item) => item.isChecked === true)
+      .map((item) => item.id);
   }, [persons]);
 
   const getAllPersons = async () => {
     try {
       const getPersonResponse = await axios.get<IPerson[]>(
-        "http://localhost:8080/person/"
+        "http://localhost:8080/person"
       );
 
       setPersons(getPersonResponse.data);
@@ -62,9 +69,29 @@ export const PersonPage: FC = () => {
     }
   };
 
+  let removingPersonsId: object;
+
+  const removeMarkedPersons = async () => {
+    try {
+      await axios.delete("http://localhost:8080/person/", removingPersonsId);
+    } catch (e) {
+      alert(e);
+    }
+  };
+
   useEffect(() => {
     getAllPersons();
   }, []);
+
+  useEffect(() => {
+    const isPersonChecked = persons.some((item) => item.isChecked);
+
+    isPersonChecked ? setIsDelete(true) : setIsDelete(false);
+
+    removingPersonsId = persons
+      .filter((item) => item.isChecked === true)
+      .map((item) => item.id);
+  }, [persons]);
 
   const toggleChecked = (id: string | number) => {
     setPersons((prevPersons) =>
@@ -131,6 +158,7 @@ export const PersonPage: FC = () => {
           />
           <button
             className={isDelete ? "delete-person-button" : "add-person-button"}
+            onClick={() => (isDelete ? removeMarkedPersons : navigate("*"))}
           >
             {isDelete ? "✖" : "+"}
           </button>
