@@ -8,6 +8,7 @@ import { RegisterPage } from "./pages/authorization/register/register";
 import { AuthPage } from "./pages/authorization/authentification/auth";
 import { PersonRecyclePage } from "./pages/recycle/binPerson";
 import { AccountPage } from "./pages/account/account";
+import { VerifyEmailPage } from "./pages/authorization/verifyEmail/verifyEmailPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
 
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/email_verify" element={<VerifyEmailPage />} />
       </Routes>
     </div>
   );
