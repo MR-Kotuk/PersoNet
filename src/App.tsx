@@ -7,6 +7,7 @@ import { PersonPage } from "./pages/person/personPage";
 import { RegisterPage } from "./pages/authorization/register/register";
 import { AuthPage } from "./pages/authorization/authentification/auth";
 import { PersonRecyclePage } from "./pages/recycle/binPerson";
+import { AccountPage } from "./pages/account/account";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="about" element={<AboutPage />} />
           <Route path="person" element={<PersonPage />} />
           <Route path="recycle_bin" element={<PersonRecyclePage />} />
+          <Route path="account" element={<AccountPage />} />
         </Route>
 
         <Route path="/register" element={<RegisterPage />} />
