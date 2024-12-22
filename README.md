@@ -10,6 +10,9 @@ A powerful tool for crafting personalized messages using shared details such as 
 ### SwiftText
 Create personalized message templates in seconds. Save time, stay consistent, and communicate effortlessly!
 
+### QuickSearch
+Lets you quickly find persons by keyword, status, type, and tags, making your search more efficient and precise than ever!
+
 ### Security
 Your data is securely encrypted and always protected.
 
@@ -33,7 +36,7 @@ Database: MySQL
 Other: BCrypt, lombok
 
 ## Backend API
-[SwaggerHub](https://app.swaggerhub.com/apis-docs/MR_Kotuk/PersoNetDoc/1.2.2#/)
+[SwaggerHub](https://app.swaggerhub.com/apis-docs/MR_Kotuk/PersoNetDoc/2.2.2)
 
 ## Authors
 [MR_Kotuk](https://github.com/MR-Kotuk)

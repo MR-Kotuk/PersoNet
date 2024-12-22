@@ -10,6 +10,7 @@ import com.mrkotuk.PersoNet.components.PersonStatus;
 import com.mrkotuk.PersoNet.components.PersonType;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

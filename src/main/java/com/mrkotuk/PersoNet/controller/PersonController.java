@@ -34,12 +34,6 @@ public class PersonController {
         return new ResponseEntity<>(service.getPersonAnalytic(authentication.getName()), HttpStatus.OK);
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<Person>> searchPerson(@RequestBody String keyword) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.searchPersons(authentication.getName(), keyword), HttpStatus.FOUND);
-    }
-
     @GetMapping("/")
     public ResponseEntity<List<Person>> getPersons() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

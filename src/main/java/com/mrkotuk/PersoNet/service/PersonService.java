@@ -30,10 +30,6 @@ public class PersonService {
         return analytic.toString();
     }
 
-    public List<Person> searchPersons(String email, String keyword) {
-        return repo.findByEmailAndStatusAndLineValue(email, PersonStatus.ACTIVE, keyword);
-    }
-
     public List<Person> getPersons(String email) {
         return repo.findByStatusAndEmail(PersonStatus.ACTIVE, email);
     }

@@ -26,16 +26,6 @@ import lombok.AllArgsConstructor;
 public class RecycleBinController {
     private final RecycleBinService service;
 
-    @GetMapping("/search")
-    public ResponseEntity<List<Person>> searchPerson(String keyword) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        List<Person> persons = service.searchPersons(authentication.getName(), keyword);
-
-        return persons != null
-                ? new ResponseEntity<>(persons, HttpStatus.FOUND)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
     @GetMapping("/")
     public ResponseEntity<List<Person>> getPersons() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

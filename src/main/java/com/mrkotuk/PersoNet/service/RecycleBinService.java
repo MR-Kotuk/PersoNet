@@ -15,10 +15,6 @@ import lombok.AllArgsConstructor;
 public class RecycleBinService {
     private final PersonRepo repo;
 
-    public List<Person> searchPersons(String email, String keyword) {
-        return repo.findByEmailAndStatusAndLineValue(email, PersonStatus.DELETED, keyword);
-    }
-
     public List<Person> getPersons(String email) {
         return repo.findByStatusAndEmail(PersonStatus.DELETED, email);
     }

@@ -14,27 +14,18 @@ import com.mrkotuk.PersoNet.model.Person;
 
 @Repository
 public interface PersonRepo extends JpaRepository<Person, Integer> {
-        @Query("SELECT p.personType FROM Person p WHERE p.personStatus = :personStatus AND p.email = :email")
-        public List<PersonType> findPersonTypesByStatusAndEmail(
-                        @Param("personStatus") PersonStatus personStatus,
-                        @Param("email") String email);
+    @Query("SELECT p.personType FROM Person p WHERE p.personStatus = :personStatus AND p.email = :email")
+    public List<PersonType> findPersonTypesByStatusAndEmail(
+            @Param("personStatus") PersonStatus personStatus,
+            @Param("email") String email);
 
-        @Query("SELECT p FROM Person p WHERE p.personStatus = :personStatus AND p.email = :email")
-        public List<Person> findByStatusAndEmail(
-                        @Param("personStatus") PersonStatus personStatus,
-                        @Param("email") String email);
+    @Query("SELECT p FROM Person p WHERE p.personStatus = :personStatus AND p.email = :email")
+    public List<Person> findByStatusAndEmail(
+            @Param("personStatus") PersonStatus personStatus,
+            @Param("email") String email);
 
-        @Query("SELECT p FROM Person p WHERE p.personStatus = :personStatus AND p.personId = :personId")
-        public Optional<Person> findByStatusAndId(
-                        @Param("personStatus") PersonStatus personStatus,
-                        @Param("personId") Integer personId);
-
-        @Query("SELECT p FROM Person p JOIN p.lineTemplates lt " +
-                        "WHERE LOWER(lt.lineValue) LIKE LOWER(CONCAT('%', :lineValue, '%')) " +
-                        "AND p.email = :email " +
-                        "AND p.personStatus = :personStatus")
-        public List<Person> findByEmailAndStatusAndLineValue(
-                        @Param("email") String email,
-                        @Param("personStatus") PersonStatus personStatus,
-                        @Param("lineValue") String lineValue);
+    @Query("SELECT p FROM Person p WHERE p.personStatus = :personStatus AND p.personId = :personId")
+    public Optional<Person> findByStatusAndId(
+            @Param("personStatus") PersonStatus personStatus,
+            @Param("personId") Integer personId);
 }
