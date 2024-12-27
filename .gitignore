@@ -15,6 +15,7 @@ desktop.ini
 .springBeans
 .sts4-cache
 *.properties
+*.yml
 
 ### IntelliJ IDEA ###
 .idea
