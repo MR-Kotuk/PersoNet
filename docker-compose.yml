@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mrkotuk/personet:mysql
+    container_name: mysql
+    environment:
+      MYSQL_DATABASE: personet
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - springboot-mysql
+
+  app:
+    image: mrkotuk/personet:personet-app
+    container_name: springboot
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/personet
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      SPRING_MAIL_HOST: smtp.gmail.com
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_USERNAME: ktkcode.official@gmail.com
+      SPRING_MAIL_PASSWORD: ${SPRING_MAIL_PASSWORD}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
+      SPRING_MAIL_PROPERTIES_MAIL_DEBUG: true
+    depends_on:
+      - mysql
+    networks:
+      - springboot-mysql
+
+volumes:
+  mysql-data:
+
+networks:
+  springboot-mysql:
+    driver: bridge

@@ -22,9 +22,6 @@ Five standard templates for quick persona creation.
 ### Customization
 Need more than the standard templates? Create your own unique persons!
 
-### Variety
-Separate profiles for personal and work needs.
-
 ### Support
 Need help? We're always here to assist!
 
@@ -33,7 +30,10 @@ Backend: Java, Spring Boot
 
 Database: MySQL
 
-Other: BCrypt, lombok
+Other: BCrypt, lombok, dotenv, docker
+
+## Docker
+[Docker](https://hub.docker.com/repository/docker/mrkotuk/personet/general)
 
 ## Backend API
 [SwaggerHub](https://app.swaggerhub.com/apis-docs/MR_Kotuk/PersoNetDoc/2.2.2)
