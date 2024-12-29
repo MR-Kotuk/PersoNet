@@ -47,7 +47,7 @@ export const RegisterPage: FC = () => {
     <div className="register-container">
       <div className="register-greeting-wrapper">
         <p className="register-greeting-title">
-          <span>Welcome to</span> Perso <span>|||</span> et
+          <span>Welcome to</span> Perso<span>|||</span>et
         </p>
 
         <p className="register-greeting-text">
@@ -57,7 +57,7 @@ export const RegisterPage: FC = () => {
       </div>
       <div className="register-field-wrapper">
         <p className="register-field-title">
-          Perso <span>|||</span> et
+          Perso<span>|||</span>et
         </p>
 
         <p className="register-field-text">Create account</p>

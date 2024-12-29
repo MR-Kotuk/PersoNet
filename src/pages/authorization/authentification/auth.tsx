@@ -34,6 +34,7 @@ export const AuthPage: FC = () => {
 
       const token = response.data;
       localStorage.setItem("token", token);
+      window.location.href = "/home";
     } catch (e) {
       alert("Invalid data");
     }
@@ -43,7 +44,7 @@ export const AuthPage: FC = () => {
     <div className="auth-container">
       <div className="auth-greeting-wrapper">
         <p className="auth-greeting-title">
-          <span>Welcome to</span> Perso <span>|||</span> et
+          <span>Welcome to</span> Perso<span>|||</span>et
         </p>
 
         <p className="auth-greeting-text">
@@ -53,7 +54,7 @@ export const AuthPage: FC = () => {
       </div>
       <div className="auth-field-wrapper">
         <p className="auth-field-title">
-          Perso <span>|||</span> et
+          Perso<span>|||</span>et
         </p>
 
         <p className="auth-field-text">Log in</p>
@@ -78,7 +79,9 @@ export const AuthPage: FC = () => {
             />
           </div>
 
-          <p className="auth-forgot-password-item">Forgot password?</p>
+          <Link to="/" className="auth-forgot-password-item">
+            Forgot password?
+          </Link>
 
           <div className="auth-field-item">
             <button className="auth-submit" type="submit">

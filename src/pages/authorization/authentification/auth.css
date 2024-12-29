@@ -41,7 +41,7 @@
 
 .auth-field-title {
   font-size: 40px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .auth-field-title span {
@@ -88,7 +88,8 @@
 .auth-forgot-password-item {
   font-size: 18px;
   font-weight: 500;
-  color: rgb(107, 107, 168);
+  color: #1e90ff;
+  text-decoration: none;
 }
 
 .auth-submit {
@@ -112,6 +113,6 @@
 }
 
 .auth-enter-account-link {
-  color: rgb(99, 99, 165);
+  color: #1e90ff;
   text-decoration: none;
 }
