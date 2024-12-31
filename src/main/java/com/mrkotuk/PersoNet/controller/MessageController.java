@@ -24,7 +24,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/sender")
 @AllArgsConstructor
 public class MessageController {
-    private final MessageService service;;
+    private final MessageService service;
 
     @GetMapping("/")
     public ResponseEntity<List<Person>> getPersonsWithEmail() {
@@ -39,7 +39,8 @@ public class MessageController {
 
     @PostMapping("/send")
     public ResponseEntity<String> sendMessage(@RequestBody Message message) {
-        service.sendMessage(message);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        service.sendMessage(authentication.getName(), message);
         return new ResponseEntity<>("Message sent successfully", HttpStatus.OK);
     }
 }

@@ -21,8 +21,6 @@ public class HomeController {
     @GetMapping("/")
     public ResponseEntity<String> greet() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(
-                "Welcome " + userService.getUserByEmail(authentication.getName()).getUsername() + " to Perso|||et!",
-                HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserByEmail(authentication.getName()).getUsername(), HttpStatus.OK);
     }
 }

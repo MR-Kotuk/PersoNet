@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   mysql:
     image: mrkotuk/personet:mysql
-    container_name: mysql
+    container_name: localhost
     environment:
       MYSQL_DATABASE: personet
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}

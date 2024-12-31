@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 public class MessageService {
     private final PersonSenderRepo repo;
     private final MessageSenderService service;
+    private final UserService userService;
 
     private final String startSymbol = "[</";
     private final String endSymbol = "/>]";
@@ -36,7 +37,9 @@ public class MessageService {
         return sharedLinesWithSymbols;
     }
 
-    public void sendMessage(Message message) {
+    public void sendMessage(String email, Message message) {
+        String sender = userService.getUserByEmail(email).getUsername();
+
         for (Person person : repo.findAllById(message.getRecipient())) {
             String to = "";
 
@@ -44,10 +47,10 @@ public class MessageService {
                 if (line.getLineName().equals("Email"))
                     to = line.getLineValue();
 
-            service.sendEmail(
-                    to,
-                    getPersonaliseMessage(message.getSubject(), person),
-                    getPersonaliseMessage(message.getMessage(), person));
+            if (!to.isEmpty())
+                service.sendEmail(sender, to,
+                        getPersonaliseMessage(message.getSubject(), person),
+                        getPersonaliseMessage(message.getMessage(), person));
         }
     }
 
