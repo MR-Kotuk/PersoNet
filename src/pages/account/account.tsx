@@ -62,11 +62,10 @@ export const AccountPage: FC = () => {
           <h1 className="account-data-title">Account Data</h1>
 
           <p className="account-data-item">Username: {accountData?.username}</p>
-          <p className="account-data-item">ID: {accountData?.id}</p>
           <p className="account-data-item">Email: {accountData?.email}</p>
           <p className="account-data-item">Password: {accountData?.password}</p>
           <p className="account-data-item">
-            Is Verify: {Boolean(accountData?.verified) === true ? "Yes" : "No"}
+            Is Verify: {accountData?.verified ? "Yes" : "No"}
           </p>
         </div>
 

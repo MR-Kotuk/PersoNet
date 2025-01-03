@@ -1,8 +1,25 @@
 import "./header.css";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export const Header = () => {
-  let token;
+  const [name, setName] = useState<string>("");
+  let token = localStorage.getItem("token");
+
+  const getName = async () => {
+    try {
+      const name = await axios.get("http://localhost:8080/");
+
+      setName(name.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getName();
+  });
 
   return (
     <div className="header-container">
@@ -10,7 +27,7 @@ export const Header = () => {
         <ul className="header-wrap-items">
           <li className="wrap-item">
             <NavLink
-              to="/"
+              to="/home"
               className={({ isActive }) =>
                 isActive ? "wrap-item-active-link" : "wrap-item-passive-link"
               }
@@ -20,7 +37,7 @@ export const Header = () => {
           </li>
           <li className="wrap-item">
             <NavLink
-              to="/drgrhtfh"
+              to="/about"
               className={({ isActive }) =>
                 isActive ? "wrap-item-active-link" : "wrap-item-passive-link"
               }
@@ -33,14 +50,14 @@ export const Header = () => {
               className={({ isActive }) =>
                 isActive ? "wrap-item-active-link" : "wrap-item-passive-link"
               }
-              to="/"
+              to="/person"
             >
               Persons
             </NavLink>
           </li>
           <li className="wrap-item">
             <NavLink
-              to="/"
+              to="/account"
               className={({ isActive }) =>
                 isActive ? "wrap-item-active-link" : "wrap-item-passive-link"
               }
@@ -60,9 +77,7 @@ export const Header = () => {
           </li>
         </ul>
 
-        <p className="profile-follow-wrapper">
-          {!token ? "Log in" : "Your name"}
-        </p>
+        <p className="profile-follow-wrapper">{token ? name : "Log in"}</p>
       </nav>
     </div>
   );

@@ -17,13 +17,18 @@ p {
 }
 
 span {
-  color: blue;
+  color: #1e90ff;
 }
 
 #follow-to-auth-link {
   font-size: 21px;
   font-weight: 500;
   color: #fff;
+}
+
+.follow-to-auth-link-item {
+  text-decoration: none;
+  color: #1e90ff;
 }
 
 #slash {
