@@ -104,28 +104,28 @@ export const RegisterPage: FC = () => {
             </button>
 
             <div className="oauth-buttons-field">
-              <button
-                className="google-auth-button"
-                onClick={() =>
-                  navigate("http://localhost:8080/oauth2/authorization/google")
-                }
+              <a
+                className="google-auth-link"
+                href="http://localhost:8080/oauth2/authorization/google"
               >
-                Sign up with Google
-              </button>
+                <button className="google-auth-button">
+                  Sign up with Google
+                </button>
+              </a>
 
-              <button
-                className="github-auth-button"
-                onClick={() =>
-                  navigate("http://localhost:8080/oauth2/authorization/github")
-                }
+              <a
+                className="github-auth-link"
+                href="http://localhost:8080/oauth2/authorization/github"
               >
-                Sign up with Github
-              </button>
+                <button className="github-auth-button">
+                  Sign up with Github
+                </button>
+              </a>
             </div>
 
             <p className="register-enter-account">
               Already have an account?{" "}
-              <Link to="*" className="register-enter-account-link">
+              <Link to="/auth" className="register-enter-account-link">
                 Login
               </Link>
             </p>

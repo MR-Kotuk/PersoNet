@@ -116,7 +116,7 @@
   align-items: center;
 }
 
-.google-auth-button {
+.google-auth-link {
   width: 49%;
   margin-top: 5px;
   padding: 16px;
@@ -124,6 +124,7 @@
   font-weight: 500;
   opacity: 0.7;
   background-color: rgb(7, 116, 7);
+  color: rgb(7, 116, 7);
   outline: none;
   border: none;
   border-radius: 8px;
@@ -135,7 +136,7 @@
   transition: 0.15s linear;
 }
 
-.github-auth-button {
+.github-auth-link {
   width: 49%;
   margin-top: 5px;
   padding: 16px;
@@ -152,4 +153,24 @@
 .github-auth-button:hover {
   opacity: 1;
   transition: 0.15s linear;
+}
+
+.google-auth-button {
+  background-color: rgb(7, 116, 7);
+  border: none;
+  outline: none;
+  color: #fff;
+  padding-left: 30px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.github-auth-button {
+  background-color: rgb(44, 43, 43);
+  border: none;
+  outline: none;
+  color: #fff;
+  padding-left: 30px;
+  font-size: 14px;
+  font-weight: 500;
 }

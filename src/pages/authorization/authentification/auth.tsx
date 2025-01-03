@@ -90,7 +90,7 @@ export const AuthPage: FC = () => {
 
             <p className="auth-enter-account">
               Have no account?{" "}
-              <Link to="*" className="auth-enter-account-link">
+              <Link to="/register" className="auth-enter-account-link">
                 Create
               </Link>
             </p>
