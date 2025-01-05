@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.mrkotuk.PersoNet.components.PersonStatus;
 import com.mrkotuk.PersoNet.model.Person;
+import com.mrkotuk.PersoNet.model.PhotoURL;
 import com.mrkotuk.PersoNet.repo.PersonRepo;
 
 import lombok.AllArgsConstructor;
@@ -14,21 +15,30 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class RecycleBinService {
     private final PersonRepo repo;
+    private final GoogleDriveService googleDriveService;
 
     public List<Person> getPersons(String email) {
         return repo.findByStatusAndEmail(PersonStatus.DELETED, email);
     }
 
     public String removeFromRecycleBin(List<Integer> id) {
-        for (Person person : repo.findAllById(id))
-            if (person.getPersonStatus().equals(PersonStatus.DELETED))
+        for (Person person : repo.findAllById(id)) {
+            if (person.getPersonStatus().equals(PersonStatus.DELETED)) {
+                googleDriveService.deleteFileByUrl(person.getPreviewPhotoUrl().getUrl());
+                for (PhotoURL url : person.getPhotoURLs())
+                    googleDriveService.deleteFileByUrl(url.getUrl());
+
                 repo.delete(person);
+            }
+        }
 
         return "Persons removed from the recycle bin successfully";
     }
 
     public String cleanRecycleBin(String email) {
-        repo.deleteAll(repo.findByStatusAndEmail(PersonStatus.DELETED, email));
+        removeFromRecycleBin(
+                repo.findByStatusAndEmail(PersonStatus.DELETED, email).stream().map(Person::getPersonId).toList());
+
         return "Recycle bin cleaned successfully";
     }
 

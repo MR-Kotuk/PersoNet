@@ -15,6 +15,7 @@ desktop.ini
 .springBeans
 .sts4-cache
 *.env
+*google-drive.json
 
 ### IntelliJ IDEA ###
 .idea
