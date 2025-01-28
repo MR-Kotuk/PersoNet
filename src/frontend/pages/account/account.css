@@ -1,0 +1,80 @@
+.account-page-container {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.profile-title {
+  margin-top: 2rem;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+}
+
+.account-interface-field {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.account-data-field {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
+}
+
+.account-data-title {
+  font-size: 2rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.account-data-item {
+  font-size: 1.35rem;
+  font-weight: 500;
+}
+
+.account-field-options {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.account-change-data-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.account-change-data-item p {
+  font-size: 21px;
+  font-weight: 500;
+  color: #ffffff9f;
+}
+
+.account-change-data-item input {
+  padding: 12px;
+  width: 400px;
+  background-color: rgb(44, 43, 43);
+  color: #ffffff9f;
+  font-size: 16px;
+  border: none;
+  outline: none;
+}
+
+.account-change-data-item button {
+  padding: 12px;
+  width: 400px;
+  background-color: rgb(53, 53, 53);
+  color: #ffffff9f;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  margin-top: 8px;
+}
+
+.account-change-data-item button:hover {
+  background-color: rgb(73, 73, 73);
+  transition: 0.2s linear;
+}

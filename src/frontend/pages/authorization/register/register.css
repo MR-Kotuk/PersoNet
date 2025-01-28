@@ -1,0 +1,176 @@
+.register-container {
+  display: flex;
+  align-items: center;
+}
+
+.register-greeting-wrapper {
+  height: 100vh;
+  width: 45vw;
+  background-color: rgb(44, 43, 43);
+  padding-top: 50vh;
+}
+
+.register-greeting-title {
+  text-align: center;
+  font-size: 40px;
+  font-weight: 500;
+}
+
+.register-greeting-title span {
+  color: #1e90ff;
+}
+
+.register-greeting-text {
+  font-size: 21px;
+  font-weight: 500;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.register-field-wrapper {
+  height: 100vh;
+  width: 55vw;
+  padding: auto;
+  background-color: rgb(61, 59, 59);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.register-field-title {
+  font-size: 40px;
+  font-weight: 500;
+}
+
+.register-field-title span {
+  color: #1e90ff;
+}
+
+.register-field-text {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.register-field {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.register-field-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.register-field-item p {
+  color: rgb(133, 133, 133);
+  font-size: 21px;
+  font-size: 600;
+}
+
+.register-field-item input {
+  padding: 0.75rem;
+  border-radius: 8px;
+  background-color: #222222;
+  border: none;
+  outline: none;
+  width: 500px;
+  color: rgb(130, 130, 130);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.register-submit {
+  width: 500px;
+  display: flex;
+  justify-content: center;
+  background-color: #222222;
+  color: rgb(130, 130, 130);
+  padding: 0.8rem;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  font-size: 21px;
+  font-weight: 600;
+  margin-top: 25px;
+}
+
+.register-enter-account {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.register-enter-account-link {
+  color: rgb(99, 99, 165);
+  text-decoration: none;
+}
+
+.oauth-buttons-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.google-auth-link {
+  width: 49%;
+  margin-top: 5px;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 500;
+  opacity: 0.7;
+  background-color: rgb(7, 116, 7);
+  color: rgb(7, 116, 7);
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.google-auth-button:hover {
+  opacity: 1;
+  transition: 0.15s linear;
+}
+
+.github-auth-link {
+  width: 49%;
+  margin-top: 5px;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 500;
+  opacity: 0.7;
+  background-color: rgb(44, 43, 43);
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.github-auth-button:hover {
+  opacity: 1;
+  transition: 0.15s linear;
+}
+
+.google-auth-button {
+  background-color: rgb(7, 116, 7);
+  border: none;
+  outline: none;
+  color: #fff;
+  padding-left: 30px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.github-auth-button {
+  background-color: rgb(44, 43, 43);
+  border: none;
+  outline: none;
+  color: #fff;
+  padding-left: 30px;
+  font-size: 14px;
+  font-weight: 500;
+}

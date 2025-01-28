@@ -1,0 +1,36 @@
+.layout-container {
+  max-width: 1800px;
+  height: 100vh;
+  margin: auto;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 700;
+  padding: 20vh 0 20vh 0;
+}
+
+.analytic-contacts-title {
+  padding-top: 5rem;
+}
+
+p {
+  color: #fff;
+}
+
+span {
+  color: #1e90ff;
+}
+
+#follow-to-auth-link {
+  font-size: 21px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.follow-to-auth-link-item {
+  text-decoration: none;
+  color: #1e90ff;
+}
+
+#slash {
+  font-size: 48px;
+}

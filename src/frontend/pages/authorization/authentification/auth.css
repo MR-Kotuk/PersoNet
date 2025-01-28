@@ -1,0 +1,118 @@
+.auth-container {
+  display: flex;
+  align-items: center;
+}
+
+.auth-greeting-wrapper {
+  height: 100vh;
+  width: 45vw;
+  background-color: rgb(44, 43, 43);
+  padding-top: 50vh;
+}
+
+.auth-greeting-title {
+  text-align: center;
+  font-size: 40px;
+  font-weight: 500;
+}
+
+.auth-greeting-title span {
+  color: #1e90ff;
+}
+
+.auth-greeting-text {
+  font-size: 21px;
+  font-weight: 500;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.auth-field-wrapper {
+  height: 100vh;
+  width: 55vw;
+  padding: auto;
+  background-color: rgb(61, 59, 59);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.auth-field-title {
+  font-size: 40px;
+  font-weight: 500;
+}
+
+.auth-field-title span {
+  color: #1e90ff;
+}
+
+.auth-field-text {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.auth-field {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-field-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.auth-field-item p {
+  color: rgb(133, 133, 133);
+  font-size: 21px;
+  font-size: 600;
+}
+
+.auth-field-item input {
+  padding: 0.75rem;
+  border-radius: 8px;
+  background-color: #222222;
+  border: none;
+  outline: none;
+  width: 500px;
+  color: rgb(130, 130, 130);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.auth-forgot-password-item {
+  font-size: 18px;
+  font-weight: 500;
+  color: #1e90ff;
+  text-decoration: none;
+}
+
+.auth-submit {
+  width: 500px;
+  display: flex;
+  justify-content: center;
+  background-color: #222222;
+  color: rgb(130, 130, 130);
+  padding: 0.8rem;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  font-size: 21px;
+  font-weight: 600;
+  margin-top: 25px;
+}
+
+.auth-enter-account {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.auth-enter-account-link {
+  color: #1e90ff;
+  text-decoration: none;
+}
