@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.mrkotuk.PersoNet.components.PersonStatus;
-import com.mrkotuk.PersoNet.model.Person;
+import com.mrkotuk.PersoNet.domain.model.Person;
 
 @Repository
 public interface PersonSenderRepo extends JpaRepository<Person, Integer> {

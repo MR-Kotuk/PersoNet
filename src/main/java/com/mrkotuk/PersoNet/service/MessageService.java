@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.mrkotuk.PersoNet.components.PersonStatus;
-import com.mrkotuk.PersoNet.model.LineTemplate;
-import com.mrkotuk.PersoNet.model.Message;
-import com.mrkotuk.PersoNet.model.Person;
+import com.mrkotuk.PersoNet.domain.model.LineTemplate;
+import com.mrkotuk.PersoNet.domain.model.Message;
+import com.mrkotuk.PersoNet.domain.model.Person;
 import com.mrkotuk.PersoNet.repo.PersonSenderRepo;
 
 import lombok.AllArgsConstructor;

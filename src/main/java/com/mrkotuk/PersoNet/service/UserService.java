@@ -1,5 +1,6 @@
 package com.mrkotuk.PersoNet.service;
 
+import com.mrkotuk.PersoNet.domain.enums.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,8 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.mrkotuk.PersoNet.model.ForgotPassword;
-import com.mrkotuk.PersoNet.model.User;
+import com.mrkotuk.PersoNet.domain.model.ForgotPassword;
+import com.mrkotuk.PersoNet.domain.model.User;
 import com.mrkotuk.PersoNet.repo.UserRepo;
 
 import lombok.AllArgsConstructor;
@@ -27,6 +28,7 @@ public class UserService {
     public ResponseEntity<String> register(User user) {
         if (!repo.findByEmail(user.getEmail()).isPresent()) {
             user.setVerified(false);
+            user.setRole(Role.MEMBER);
             user.setPassword(encoder.encode(user.getPassword()));
             repo.save(user);
 

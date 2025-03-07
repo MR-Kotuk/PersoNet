@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.mrkotuk.PersoNet.components.PersonStatus;
-import com.mrkotuk.PersoNet.model.Person;
-import com.mrkotuk.PersoNet.model.PhotoURL;
+import com.mrkotuk.PersoNet.domain.model.Person;
+import com.mrkotuk.PersoNet.domain.model.PhotoURL;
 import com.mrkotuk.PersoNet.repo.PersonRepo;
 
 import lombok.AllArgsConstructor;

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import com.mrkotuk.PersoNet.domain.enums.Role;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +20,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.mrkotuk.PersoNet.model.User;
+import com.mrkotuk.PersoNet.domain.model.User;
 import com.mrkotuk.PersoNet.repo.UserRepo;
 import com.mrkotuk.PersoNet.service.JWTService;
 
@@ -66,6 +67,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
             userByEmail = new User();
             userByEmail.setUsername(username);
             userByEmail.setEmail(email);
+            userByEmail.setRole(Role.MEMBER);
             userByEmail.setVerified(true);
             userByEmail.setPassword(encoder.encode(id));
         } else if (!userByEmail.isVerified())

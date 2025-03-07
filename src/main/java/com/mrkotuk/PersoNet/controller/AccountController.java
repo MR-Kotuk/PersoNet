@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mrkotuk.PersoNet.model.Password;
-import com.mrkotuk.PersoNet.model.User;
+import com.mrkotuk.PersoNet.domain.model.Password;
+import com.mrkotuk.PersoNet.domain.model.User;
 import com.mrkotuk.PersoNet.service.AccountService;
 
 import lombok.AllArgsConstructor;

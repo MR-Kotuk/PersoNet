@@ -6,8 +6,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.mrkotuk.PersoNet.model.Password;
-import com.mrkotuk.PersoNet.model.User;
+import com.mrkotuk.PersoNet.domain.model.Password;
+import com.mrkotuk.PersoNet.domain.model.User;
 import com.mrkotuk.PersoNet.repo.UserRepo;
 
 import lombok.AllArgsConstructor;

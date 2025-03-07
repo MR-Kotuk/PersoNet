@@ -36,7 +36,7 @@ Other: BCrypt, lombok, dotenv, docker
 [Docker](https://hub.docker.com/repository/docker/mrkotuk/personet/general)
 
 ## Backend API
-[SwaggerHub](https://app.swaggerhub.com/apis-docs/MR_Kotuk/PersoNetDoc/2.5.5)
+[SwaggerHub](https://app.swaggerhub.com/apis-docs/MR_Kotuk/PersoNetDoc)
 
 ## Authors
 [MR_Kotuk](https://github.com/MR-Kotuk)

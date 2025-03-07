@@ -1,4 +1,4 @@
-package com.mrkotuk.PersoNet.model;
+package com.mrkotuk.PersoNet.domain.model;
 
 import java.time.LocalDateTime;
 

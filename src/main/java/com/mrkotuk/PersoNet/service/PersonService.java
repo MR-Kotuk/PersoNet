@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.mrkotuk.PersoNet.components.PersonStatus;
 import com.mrkotuk.PersoNet.components.PersonType;
-import com.mrkotuk.PersoNet.model.Person;
+import com.mrkotuk.PersoNet.domain.model.Person;
 import com.mrkotuk.PersoNet.repo.PersonRepo;
 
 import lombok.AllArgsConstructor;

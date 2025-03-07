@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mrkotuk.PersoNet.components.PersonStatus;
 import com.mrkotuk.PersoNet.components.PersonType;
-import com.mrkotuk.PersoNet.model.Person;
-import com.mrkotuk.PersoNet.model.SearchFilter;
+import com.mrkotuk.PersoNet.domain.model.Person;
+import com.mrkotuk.PersoNet.domain.model.SearchFilter;
 import com.mrkotuk.PersoNet.service.SearchService;
 
 import lombok.AllArgsConstructor;

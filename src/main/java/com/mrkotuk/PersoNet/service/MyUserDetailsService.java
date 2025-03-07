@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.mrkotuk.PersoNet.model.User;
+import com.mrkotuk.PersoNet.domain.model.User;
 import com.mrkotuk.PersoNet.repo.UserRepo;
 
 import lombok.AllArgsConstructor;

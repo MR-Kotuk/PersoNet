@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.mrkotuk.PersoNet.model.MessageTemplate;
+import com.mrkotuk.PersoNet.domain.model.MessageTemplate;
 import com.mrkotuk.PersoNet.repo.MessageTemplatesRepo;
 
 import lombok.AllArgsConstructor;

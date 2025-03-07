@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mrkotuk.PersoNet.model.Person;
+import com.mrkotuk.PersoNet.domain.model.Person;
 import com.mrkotuk.PersoNet.service.RecycleBinService;
 
 import lombok.AllArgsConstructor;

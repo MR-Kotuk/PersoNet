@@ -15,7 +15,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.mrkotuk.PersoNet.model.VerificationToken;
+import com.mrkotuk.PersoNet.domain.model.VerificationToken;
 import com.mrkotuk.PersoNet.repo.VerificaionTokenRepo;
 
 import jakarta.mail.MessagingException;

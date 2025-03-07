@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.mrkotuk.PersoNet.components.PersonStatus;
 import com.mrkotuk.PersoNet.components.PersonType;
-import com.mrkotuk.PersoNet.model.Person;
+import com.mrkotuk.PersoNet.domain.model.Person;
 
 @Repository
 public interface PersonRepo extends JpaRepository<Person, Integer> {

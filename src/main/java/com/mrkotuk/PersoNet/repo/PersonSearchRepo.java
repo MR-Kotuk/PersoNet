@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.mrkotuk.PersoNet.components.PersonStatus;
 import com.mrkotuk.PersoNet.components.PersonType;
-import com.mrkotuk.PersoNet.model.Person;
+import com.mrkotuk.PersoNet.domain.model.Person;
 
 public interface PersonSearchRepo extends JpaRepository<Person, Integer> {
     @Query("SELECT DISTINCT p FROM Person p " +
