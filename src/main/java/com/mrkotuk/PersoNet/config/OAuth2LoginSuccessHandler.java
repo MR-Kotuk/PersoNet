@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.mrkotuk.PersoNet.domain.model.User;
-import com.mrkotuk.PersoNet.repo.UserRepo;
+import com.mrkotuk.PersoNet.repository.UserRepository;
 import com.mrkotuk.PersoNet.service.JWTService;
 
 import jakarta.servlet.ServletException;
@@ -32,7 +32,7 @@ import lombok.AllArgsConstructor;
 @Component
 @AllArgsConstructor
 public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
-    private final UserRepo repo;
+    private final UserRepository repository;
     private final JWTService jwtService;
     private final OAuth2AuthorizedClientService authorizedClientService;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(7);
@@ -61,7 +61,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
                 ? oAuth2User.getAttribute("sub")
                 : Integer.toString(oAuth2User.getAttribute("id"));
 
-        User userByEmail = repo.findByEmail(email).orElse(null);
+        User userByEmail = repository.findByEmail(email).orElse(null);
 
         if (userByEmail == null) {
             userByEmail = new User();
@@ -73,7 +73,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         } else if (!userByEmail.isVerified())
             userByEmail.setVerified(true);
 
-        repo.save(userByEmail);
+        repository.save(userByEmail);
         return jwtService.generateToken(email);
     }
 

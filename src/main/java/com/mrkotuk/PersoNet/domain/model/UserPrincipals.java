@@ -3,6 +3,7 @@ package com.mrkotuk.PersoNet.domain.model;
 import java.util.Collection;
 import java.util.Collections;
 
+import com.mrkotuk.PersoNet.domain.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +16,7 @@ public class UserPrincipals implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        return Collections.singleton(new SimpleGrantedAuthority(Role.MEMBER.name()));
     }
 
     @Override

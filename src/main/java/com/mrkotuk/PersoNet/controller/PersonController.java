@@ -37,20 +37,12 @@ public class PersonController {
     @GetMapping("/")
     public ResponseEntity<List<Person>> getPersons() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        List<Person> persons = service.getPersons(authentication.getName());
-
-        return persons != null
-                ? new ResponseEntity<>(persons, HttpStatus.FOUND)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(service.getPersons(authentication.getName()), HttpStatus.FOUND);
     }
 
     @GetMapping("/{personId}")
     public ResponseEntity<Person> getPerson(@PathVariable int personId) {
-        Person persons = service.getPerson(personId);
-
-        return persons != null
-                ? new ResponseEntity<>(persons, HttpStatus.FOUND)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(service.getPerson(personId), HttpStatus.FOUND);
     }
 
     @PostMapping("/")

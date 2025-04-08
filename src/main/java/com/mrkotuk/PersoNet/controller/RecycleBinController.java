@@ -29,11 +29,7 @@ public class RecycleBinController {
     @GetMapping("/")
     public ResponseEntity<List<Person>> getPersons() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        List<Person> persons = service.getPersons(authentication.getName());
-
-        return persons != null
-                ? new ResponseEntity<>(persons, HttpStatus.FOUND)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(service.getPersons(authentication.getName()), HttpStatus.OK);
     }
 
     @PostMapping("/")

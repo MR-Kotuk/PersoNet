@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.mrkotuk.PersoNet.components.PersonStatus;
-import com.mrkotuk.PersoNet.components.PersonType;
+import com.mrkotuk.PersoNet.domain.enums.PersonStatus;
+import com.mrkotuk.PersoNet.domain.enums.PersonType;
 import com.mrkotuk.PersoNet.service.GoogleDriveService;
 
 import jakarta.persistence.CascadeType;

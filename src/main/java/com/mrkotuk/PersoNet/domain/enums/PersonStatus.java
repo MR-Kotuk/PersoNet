@@ -1,4 +1,4 @@
-package com.mrkotuk.PersoNet.components;
+package com.mrkotuk.PersoNet.domain.enums;
 
 public enum PersonStatus {
     ACTIVE, DELETED

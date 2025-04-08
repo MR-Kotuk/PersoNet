@@ -8,21 +8,21 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.mrkotuk.PersoNet.components.PersonStatus;
-import com.mrkotuk.PersoNet.components.PersonType;
+import com.mrkotuk.PersoNet.domain.enums.PersonStatus;
+import com.mrkotuk.PersoNet.domain.enums.PersonType;
 import com.mrkotuk.PersoNet.domain.model.Person;
 import com.mrkotuk.PersoNet.domain.model.SearchFilter;
-import com.mrkotuk.PersoNet.repo.PersonSearchRepo;
+import com.mrkotuk.PersoNet.repository.PersonSearchRepository;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class SearchService {
-    private final PersonSearchRepo repo;
+    private final PersonSearchRepository repository;
 
     public List<Person> searchPersons(String email, SearchFilter filter) {
-        List<Person> persons = repo.findByFilters(email, filter.getKeyword(), filter.getStatus(), filter.getTypes());
+        List<Person> persons = repository.findByFilters(email, filter.getKeyword(), filter.getStatus(), filter.getTypes());
 
         Iterator<Person> iterator = persons.iterator();
         while (iterator.hasNext()) {
@@ -39,17 +39,17 @@ public class SearchService {
     }
 
     public List<String> getTags(String email) {
-        return repo.findTagsByEmail(email).stream()
+        return repository.findTagsByEmail(email).stream()
                 .flatMap(tags -> Arrays.stream(tags.split(",")))
                 .distinct()
                 .collect(Collectors.toList());
     }
 
     public List<PersonType> getTypes(String email) {
-        return new ArrayList<>(repo.findTypesByEmail(email));
+        return new ArrayList<>(repository.findTypesByEmail(email));
     }
 
     public List<PersonStatus> getStatuses(String email) {
-        return new ArrayList<>(repo.findStatusesByEmail(email));
+        return new ArrayList<>(repository.findStatusesByEmail(email));
     }
 }

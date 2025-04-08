@@ -4,31 +4,31 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.mrkotuk.PersoNet.components.PersonStatus;
+import com.mrkotuk.PersoNet.domain.enums.PersonStatus;
 import com.mrkotuk.PersoNet.domain.model.Person;
 import com.mrkotuk.PersoNet.domain.model.PhotoURL;
-import com.mrkotuk.PersoNet.repo.PersonRepo;
+import com.mrkotuk.PersoNet.repository.PersonRepository;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class RecycleBinService {
-    private final PersonRepo repo;
+    private final PersonRepository repository;
     private final GoogleDriveService googleDriveService;
 
     public List<Person> getPersons(String email) {
-        return repo.findByStatusAndEmail(PersonStatus.DELETED, email);
+        return repository.findByStatusAndEmail(PersonStatus.DELETED, email);
     }
 
     public String removeFromRecycleBin(List<Integer> id) {
-        for (Person person : repo.findAllById(id)) {
+        for (Person person : repository.findAllById(id)) {
             if (person.getPersonStatus().equals(PersonStatus.DELETED)) {
                 googleDriveService.deleteFileByUrl(person.getPreviewPhotoUrl().getUrl());
                 for (PhotoURL url : person.getPhotoURLs())
                     googleDriveService.deleteFileByUrl(url.getUrl());
 
-                repo.delete(person);
+                repository.delete(person);
             }
         }
 
@@ -37,16 +37,16 @@ public class RecycleBinService {
 
     public String cleanRecycleBin(String email) {
         removeFromRecycleBin(
-                repo.findByStatusAndEmail(PersonStatus.DELETED, email).stream().map(Person::getPersonId).toList());
+                repository.findByStatusAndEmail(PersonStatus.DELETED, email).stream().map(Person::getPersonId).toList());
 
         return "Recycle bin cleaned successfully";
     }
 
     public String returnFromRecycleBin(List<Integer> id) {
-        for (Person person : repo.findAllById(id)) {
+        for (Person person : repository.findAllById(id)) {
             if (person.getPersonStatus().equals(PersonStatus.DELETED)) {
                 person.setPersonStatus(PersonStatus.ACTIVE);
-                repo.save(person);
+                repository.save(person);
             }
         }
 

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mrkotuk.PersoNet.domain.enums.PersonType;
 import org.springframework.stereotype.Component;
 
 import com.mrkotuk.PersoNet.domain.model.LineTemplate;

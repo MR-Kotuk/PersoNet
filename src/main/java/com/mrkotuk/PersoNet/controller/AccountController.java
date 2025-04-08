@@ -39,8 +39,6 @@ public class AccountController {
     @PutMapping("/set-password")
     public ResponseEntity<String> setPassword(@RequestBody Password password) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return service.setPassword(authentication.getName(), password)
-                ? new ResponseEntity<>("Password changed successful!", HttpStatus.OK)
-                : new ResponseEntity<>("Wrong password", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(service.setPassword(authentication.getName(), password), HttpStatus.OK);
     }
 }

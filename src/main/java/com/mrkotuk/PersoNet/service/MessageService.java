@@ -5,18 +5,18 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.mrkotuk.PersoNet.components.PersonStatus;
+import com.mrkotuk.PersoNet.domain.enums.PersonStatus;
 import com.mrkotuk.PersoNet.domain.model.LineTemplate;
 import com.mrkotuk.PersoNet.domain.model.Message;
 import com.mrkotuk.PersoNet.domain.model.Person;
-import com.mrkotuk.PersoNet.repo.PersonSenderRepo;
+import com.mrkotuk.PersoNet.repository.PersonSenderRepository;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class MessageService {
-    private final PersonSenderRepo repo;
+    private final PersonSenderRepository repository;
     private final MessageSenderService service;
     private final UserService userService;
 
@@ -24,11 +24,11 @@ public class MessageService {
     private final String endSymbol = "/>]";
 
     public List<Person> getPersonsWithEmail(String email) {
-        return repo.findByEmailAndStatusAndValidLineTemplate(email, PersonStatus.ACTIVE);
+        return repository.findByEmailAndStatusAndValidLineTemplate(email, PersonStatus.ACTIVE);
     }
 
     public List<String> getSharedLines(List<Integer> id) {
-        List<String> sharedLines = repo.findSharedLineTemplateNamesByPersonId(id, id.size());
+        List<String> sharedLines = repository.findSharedLineTemplateNamesByPersonId(id, id.size());
         List<String> sharedLinesWithSymbols = new ArrayList<>();
 
         for (String line : sharedLines)
@@ -40,7 +40,7 @@ public class MessageService {
     public void sendMessage(String email, Message message) {
         String sender = userService.getUserByEmail(email).getUsername();
 
-        for (Person person : repo.findAllById(message.getRecipient())) {
+        for (Person person : repository.findAllById(message.getRecipient())) {
             String to = "";
 
             for (LineTemplate line : person.getLineTemplates())
@@ -61,8 +61,6 @@ public class MessageService {
                 message = message.replace(placeholder, line.getLineValue());
         }
 
-        message = message.replaceAll("\\[</([a-zA-Z0-9_]+/)>]", "Unknown");
-
-        return message;
+        return message.replaceAll("\\[</([a-zA-Z0-9_]+/)>]", "Unknown");
     }
 }

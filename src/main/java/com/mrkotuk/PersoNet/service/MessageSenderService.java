@@ -9,14 +9,12 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.mrkotuk.PersoNet.domain.model.VerificationToken;
-import com.mrkotuk.PersoNet.repo.VerificaionTokenRepo;
+import com.mrkotuk.PersoNet.repository.VerificaionTokenRepository;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -31,7 +29,7 @@ public class MessageSenderService {
     private final String messagePath = "src/main/resources/static/message.html";
 
     private final JavaMailSender sender;
-    private final VerificaionTokenRepo tokenRepo;
+    private final VerificaionTokenRepository tokenRepo;
 
     public String isVerified(String token) {
         VerificationToken verificationToken = tokenRepo.findByToken(token).get();
@@ -51,7 +49,7 @@ public class MessageSenderService {
         sendEmail(to, subject, html);
     }
 
-    public ResponseEntity<String> sendVerificationEmail(String email) {
+    public String sendVerificationEmail(String email) {
         VerificationToken token = new VerificationToken(Integer.toString(new Random().nextInt(1000, 10000)), email);
         tokenRepo.save(token);
 
@@ -59,7 +57,7 @@ public class MessageSenderService {
         html = html.replace("[/token/]", token.getToken());
 
         sendEmail(email, "Email Verification Perso|||et", html);
-        return new ResponseEntity<>("Please verify email", HttpStatus.ACCEPTED);
+        return "Please verify email"; // Accepted
     }
 
     private void sendEmail(String to, String subject, String htmlContent) {

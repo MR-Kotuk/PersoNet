@@ -29,10 +29,6 @@ public class PersonTemplatesController {
 
     @GetMapping("/{personType}")
     public ResponseEntity<Person> getPersonTemplate(@PathVariable String personType) {
-        Person person = service.getPersonTemplate(personType);
-
-        return person != null
-                ? new ResponseEntity<>(person, HttpStatus.FOUND)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(service.getPersonTemplate(personType), HttpStatus.FOUND);
     }
 }

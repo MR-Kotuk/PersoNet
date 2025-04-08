@@ -1,4 +1,4 @@
-package com.mrkotuk.PersoNet.repo;
+package com.mrkotuk.PersoNet.repository;
 
 import java.util.List;
 
@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.mrkotuk.PersoNet.domain.model.MessageTemplate;
 
 @Repository
-public interface MessageTemplatesRepo extends JpaRepository<MessageTemplate, Integer> {
-    public List<MessageTemplate> findByEmail(String email);
+public interface MessageTemplatesRepository extends JpaRepository<MessageTemplate, Integer> {
+    List<MessageTemplate> findByEmail(String email);
 }

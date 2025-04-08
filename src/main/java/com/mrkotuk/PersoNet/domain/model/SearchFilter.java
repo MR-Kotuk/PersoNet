@@ -2,8 +2,8 @@ package com.mrkotuk.PersoNet.domain.model;
 
 import java.util.HashSet;
 
-import com.mrkotuk.PersoNet.components.PersonStatus;
-import com.mrkotuk.PersoNet.components.PersonType;
+import com.mrkotuk.PersoNet.domain.enums.PersonStatus;
+import com.mrkotuk.PersoNet.domain.enums.PersonType;
 
 import lombok.Getter;
 

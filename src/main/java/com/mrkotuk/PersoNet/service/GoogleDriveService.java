@@ -26,7 +26,8 @@ import com.google.auth.oauth2.GoogleCredentials;
 
 @Service
 public class GoogleDriveService {
-    public static final String DEFAULT_PHOTO_URL = "https://drive.google.com/file/d/1QMAvRnqeHTO7YRGEGfbucAYMvj6MzBm4/view?usp=drivesdk";
+    public static final String DEFAULT_PHOTO_URL =
+            "https://drive.google.com/file/d/1QMAvRnqeHTO7YRGEGfbucAYMvj6MzBm4/view?usp=drivesdk";
 
     private final Logger logger = LoggerFactory.getLogger(GoogleDriveService.class);
 

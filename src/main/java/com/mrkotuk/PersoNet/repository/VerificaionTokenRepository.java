@@ -1,4 +1,4 @@
-package com.mrkotuk.PersoNet.repo;
+package com.mrkotuk.PersoNet.repository;
 
 import java.util.Optional;
 
@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.mrkotuk.PersoNet.domain.model.VerificationToken;
 
 @Repository
-public interface VerificaionTokenRepo extends JpaRepository<VerificationToken, Integer> {
-    public Optional<VerificationToken> findByToken(String token);
+public interface VerificaionTokenRepository extends JpaRepository<VerificationToken, Integer> {
+    Optional<VerificationToken> findByToken(String token);
 }
