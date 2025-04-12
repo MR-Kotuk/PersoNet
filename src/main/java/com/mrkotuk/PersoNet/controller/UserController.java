@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mrkotuk.PersoNet.domain.model.ForgotPassword;
+import com.mrkotuk.PersoNet.domain.dto.ForgotPasswordDTO;
 import com.mrkotuk.PersoNet.domain.model.User;
 import com.mrkotuk.PersoNet.service.UserService;
 
@@ -21,30 +21,30 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/auth")
 @AllArgsConstructor
 public class UserController {
-    private final UserService service;
+    private final UserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody User user) {
-        return new ResponseEntity<>(service.register(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.register(user), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
-        return new ResponseEntity<>(service.verify(user), HttpStatus.OK);
+        return new ResponseEntity<>(userService.verify(user), HttpStatus.OK);
     }
 
     @GetMapping("/verify-email/{token}")
     public ResponseEntity<String> verifyEmail(@PathVariable String token) {
-        return new ResponseEntity<>(service.isVerified(token), HttpStatus.OK);
+        return new ResponseEntity<>(userService.isVerified(token), HttpStatus.OK);
     }
 
     @PostMapping("/forgot-password/verify-email/send/{email}")
     public ResponseEntity<String> sendVerifyEmail(@PathVariable String email) {
-        return new ResponseEntity<>(service.sendVerificationEmail(email), HttpStatus.OK);
+        return new ResponseEntity<>(userService.sendVerificationEmail(email), HttpStatus.OK);
     }
 
     @PostMapping("/forgot-password/verify-email")
-    public ResponseEntity<String> verifyEmail(@RequestBody ForgotPassword forgotPassword) {
-        return new ResponseEntity<>(service.forgotPassword(forgotPassword), HttpStatus.OK);
+    public ResponseEntity<String> verifyEmail(@RequestBody ForgotPasswordDTO forgotPassword) {
+        return new ResponseEntity<>(userService.forgotPassword(forgotPassword), HttpStatus.OK);
     }
 }

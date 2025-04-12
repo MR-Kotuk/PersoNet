@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.mrkotuk.PersoNet.domain.enums.PersonStatus;
 import com.mrkotuk.PersoNet.domain.enums.PersonType;
 import com.mrkotuk.PersoNet.domain.model.Person;
-import com.mrkotuk.PersoNet.domain.model.SearchFilter;
+import com.mrkotuk.PersoNet.domain.dto.SearchFilterDTO;
 import com.mrkotuk.PersoNet.service.SearchService;
 
 import lombok.AllArgsConstructor;
@@ -25,29 +25,29 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RequestMapping("/person/search")
 public class SearchController {
-    private final SearchService service;
+    private final SearchService searchService;
 
     @GetMapping("/")
-    public ResponseEntity<List<Person>> searchPerson(@RequestBody SearchFilter filter) {
+    public ResponseEntity<List<Person>> searchPerson(@RequestBody SearchFilterDTO filter) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.searchPersons(authentication.getName(), filter), HttpStatus.OK);
+        return new ResponseEntity<>(searchService.searchPersons(authentication.getName(), filter), HttpStatus.OK);
     }
 
     @GetMapping("/tags")
     public ResponseEntity<List<String>> getTags() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.getTags(authentication.getName()), HttpStatus.OK);
+        return new ResponseEntity<>(searchService.getTags(authentication.getName()), HttpStatus.OK);
     }
 
     @GetMapping("/types")
     public ResponseEntity<List<PersonType>> getTypes() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.getTypes(authentication.getName()), HttpStatus.OK);
+        return new ResponseEntity<>(searchService.getTypes(authentication.getName()), HttpStatus.OK);
     }
 
     @GetMapping("/statuses")
     public ResponseEntity<List<PersonStatus>> getStatuses() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.getStatuses(authentication.getName()), HttpStatus.OK);
+        return new ResponseEntity<>(searchService.getStatuses(authentication.getName()), HttpStatus.OK);
     }
 }

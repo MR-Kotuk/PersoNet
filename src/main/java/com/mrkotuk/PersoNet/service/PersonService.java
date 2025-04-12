@@ -5,25 +5,24 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import com.mrkotuk.PersoNet.exception.NotFoundException;
+import com.mrkotuk.PersoNet.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
 import com.mrkotuk.PersoNet.domain.enums.PersonStatus;
 import com.mrkotuk.PersoNet.domain.enums.PersonType;
 import com.mrkotuk.PersoNet.domain.model.Person;
-import com.mrkotuk.PersoNet.repository.PersonRepository;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class PersonService {
-    private final PersonRepository repository;
+    private final PersonRepository personRepository;
 
     public String getPersonAnalytic(String email) {
-        List<PersonType> persons = repository.findPersonTypesByStatusAndEmail(PersonStatus.ACTIVE, email);
+        List<PersonType> persons = personRepository.findPersonTypesByStatusAndEmail(PersonStatus.ACTIVE, email);
         Map<PersonType, Integer> analytic = new HashMap<>();
 
         for (PersonType person : PersonType.values())
@@ -33,19 +32,12 @@ public class PersonService {
     }
 
     public List<Person> getPersons(String email) {
-        List<Person> persons = repository.findByStatusAndEmail(PersonStatus.ACTIVE, email);
-        if (persons == null || persons.isEmpty())
-            throw new NotFoundException("Persons not found");
-
-        return persons;
+        return personRepository.findByStatusAndEmail(PersonStatus.ACTIVE, email);
     }
 
     public Person getPerson(int personId) {
-        Optional<Person> persons = repository.findByStatusAndId(PersonStatus.ACTIVE, personId);
-        if (persons.isEmpty())
-            throw new NotFoundException("Person not found");
-
-        return persons.get();
+        return personRepository.findByStatusAndId(PersonStatus.ACTIVE, personId)
+                .orElseThrow(() -> new NotFoundException("Not found person with id: " + personId));
     }
 
     public Person addPerson(Person person, String email) {
@@ -53,19 +45,17 @@ public class PersonService {
         person.setPersonStatus(PersonStatus.ACTIVE);
         person.setCreationDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
 
-        return repository.save(person);
+        return personRepository.save(person);
     }
 
     public Person updatePerson(Person person) {
-        return repository.save(person);
+        return personRepository.save(person);
     }
 
-    public String deletePersonsById(List<Integer> id) {
-        for (Person person : repository.findAllById(id)) {
+    public void deletePersonsById(List<Integer> id) {
+        for (Person person : personRepository.findAllById(id)) {
             person.setPersonStatus(PersonStatus.DELETED);
-            repository.save(person);
+            personRepository.save(person);
         }
-
-        return "Persons deleted successfully";
     }
 }

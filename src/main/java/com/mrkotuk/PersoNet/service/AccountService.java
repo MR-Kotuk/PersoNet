@@ -1,13 +1,14 @@
 package com.mrkotuk.PersoNet.service;
 
 import com.mrkotuk.PersoNet.exception.BadRequestException;
+import com.mrkotuk.PersoNet.exception.NotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.mrkotuk.PersoNet.domain.model.Password;
+import com.mrkotuk.PersoNet.domain.dto.PasswordDTO;
 import com.mrkotuk.PersoNet.domain.model.User;
 import com.mrkotuk.PersoNet.repository.UserRepository;
 
@@ -16,36 +17,37 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class AccountService {
-    private final UserRepository repository;
+    private final UserRepository userRepository;
     private final AuthenticationManager authManager;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(7);
 
     public User getAccountInfo(String email) {
-        User user = repository.findByEmail(email).get();
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
+
         user.setPassword("**********");
         return user;
     }
 
-    public String setUsername(String email, String newUsername) {
-        User user = repository.findByEmail(email).get();
-        user.setUsername(newUsername);
-        repository.save(user);
+    public void setUsername(String email, String newUsername) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
 
-        return "Username changed successful!";
+        user.setUsername(newUsername);
+        userRepository.save(user);
     }
 
-    public String setPassword(String email, Password password) {
-        User user = repository.findByEmail(email).get();
-
-        Authentication authentication = authManager
-                .authenticate(new UsernamePasswordAuthenticationToken(email, password.getPassword()));
+    public void setPassword(String email, PasswordDTO password) {
+        Authentication authentication = authManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(email, password.getPassword()));
 
         if (authentication.isAuthenticated()) {
-            user.setPassword(encoder.encode(password.getNewPassword()));
-            repository.save(user);
+            User user = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
 
-            return "Password changed successful!";
+            user.setPassword(encoder.encode(password.getNewPassword()));
+            userRepository.save(user);
         } else
-            throw new BadRequestException("Wrong password");
+            throw new BadRequestException("Wrong password when changing password with email: " + email);
     }
 }

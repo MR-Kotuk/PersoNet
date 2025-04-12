@@ -1,5 +1,6 @@
 package com.mrkotuk.PersoNet;
 
+import com.mrkotuk.PersoNet.config.PathConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -14,7 +15,7 @@ public class PersoNetApplication {
 
 	private static void dotenv() {
 		Dotenv dotenv = Dotenv.configure()
-				.filename(".env")
+				.filename(PathConfig.DOT_ENV)
 				.load();
 
 		System.setProperty("MYSQL_ROOT_PASSWORD", dotenv.get("MYSQL_ROOT_PASSWORD"));
@@ -22,7 +23,7 @@ public class PersoNetApplication {
 		System.setProperty("SPRING_DATASOURCE_PASSWORD", dotenv.get("SPRING_DATASOURCE_PASSWORD"));
 		System.setProperty("SPRING_MAIL_PASSWORD", dotenv.get("SPRING_MAIL_PASSWORD"));
 
-		System.setProperty("GOOGLE_DRIVE_CREDITALS_PATH", dotenv.get("GOOGLE_DRIVE_CREDITALS_PATH"));
+		System.setProperty("GOOGLE_DRIVE_CREDENTIALS_PATH", dotenv.get("GOOGLE_DRIVE_CREDENTIALS_PATH"));
 		System.setProperty("GOOGLE_DRIVE_FOLDER_ID", dotenv.get("GOOGLE_DRIVE_FOLDER_ID"));
 
 		System.setProperty("GOOGLE_CLIENT_ID", dotenv.get("GOOGLE_CLIENT_ID"));

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.mrkotuk.PersoNet.domain.enums.Role;
+import com.mrkotuk.PersoNet.exception.InternalServerErrorException;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -24,7 +25,6 @@ import com.mrkotuk.PersoNet.domain.model.User;
 import com.mrkotuk.PersoNet.repository.UserRepository;
 import com.mrkotuk.PersoNet.service.JWTService;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -32,14 +32,14 @@ import lombok.AllArgsConstructor;
 @Component
 @AllArgsConstructor
 public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
-    private final UserRepository repository;
+    private final UserRepository userRepository;
     private final JWTService jwtService;
     private final OAuth2AuthorizedClientService authorizedClientService;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(7);
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-            Authentication authentication) throws IOException, ServletException {
+            Authentication authentication) throws IOException {
 
         OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
         OAuth2User oAuth2User = oauthToken.getPrincipal();
@@ -61,7 +61,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
                 ? oAuth2User.getAttribute("sub")
                 : Integer.toString(oAuth2User.getAttribute("id"));
 
-        User userByEmail = repository.findByEmail(email).orElse(null);
+        User userByEmail = userRepository.findByEmail(email).orElse(null);
 
         if (userByEmail == null) {
             userByEmail = new User();
@@ -73,7 +73,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         } else if (!userByEmail.isVerified())
             userByEmail.setVerified(true);
 
-        repository.save(userByEmail);
+        userRepository.save(userByEmail);
         return jwtService.generateToken(email);
     }
 
@@ -83,23 +83,19 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
                 oauthToken.getName());
 
         if (client == null || client.getAccessToken() == null)
-            throw new RuntimeException("Access token is missing or invalid!");
-
-        String accessToken = client.getAccessToken().getTokenValue();
+            throw new InternalServerErrorException("Access token is missing or invalid!");
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
 
-        headers.setBearerAuth(accessToken);
-
+        headers.setBearerAuth(client.getAccessToken().getTokenValue());
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         String emailApiUrl = "https://api.github.com/user/emails";
 
         ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
                 emailApiUrl, HttpMethod.GET, entity,
-                new ParameterizedTypeReference<List<Map<String, Object>>>() {
-                });
+                new ParameterizedTypeReference<List<Map<String, Object>>>() {});
 
         return response.getBody().stream()
                 .filter(emailData -> (boolean) emailData.get("primary"))

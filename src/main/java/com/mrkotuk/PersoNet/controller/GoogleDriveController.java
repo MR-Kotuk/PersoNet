@@ -21,15 +21,16 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RequestMapping("/google-drive")
 public class GoogleDriveController {
-    private final GoogleDriveService service;
+    private final GoogleDriveService driveService;
 
     @GetMapping("/upload")
     public ResponseEntity<List<String>> uploadPhotos(@RequestParam List<MultipartFile> files) {
-        return new ResponseEntity<>(service.uploadFiles(files), HttpStatus.OK);
+        return new ResponseEntity<>(driveService.uploadFiles(files), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> deletePhoto(@RequestParam String url) {
-        return new ResponseEntity<>(service.deleteFileByUrl(url), HttpStatus.OK);
+        driveService.deleteFileByUrl(url);
+        return new ResponseEntity<>("File with URL deleted successfully!", HttpStatus.OK);
     }
 }

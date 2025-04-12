@@ -26,33 +26,34 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/message-templates")
 @AllArgsConstructor
 public class MessageTemplateController {
-    private final MessageTemplatesService service;
+    private final MessageTemplatesService messageTemplatesService;
 
     @GetMapping("/")
     public ResponseEntity<List<MessageTemplate>> getMessageTemplates() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.getMessageTemplates(authentication.getName()), HttpStatus.FOUND);
+        return new ResponseEntity<>(messageTemplatesService.getMessageTemplates(authentication.getName()), HttpStatus.FOUND);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<MessageTemplate> getMessageTemplateById(@PathVariable int id) {
-        return new ResponseEntity<>(service.getMessageTemplateById(id), HttpStatus.FOUND);
+        return new ResponseEntity<>(messageTemplatesService.getMessageTemplateById(id), HttpStatus.FOUND);
     }
 
     @PostMapping("/")
     public ResponseEntity<MessageTemplate> addMessageTemplate(@RequestBody MessageTemplate message) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.addMessageTemplate(authentication.getName(), message), HttpStatus.CREATED);
+        return new ResponseEntity<>(messageTemplatesService.addMessageTemplate(authentication.getName(), message), HttpStatus.CREATED);
     }
 
     @PutMapping("/")
     public ResponseEntity<MessageTemplate> updateMessageTemplate(@RequestBody MessageTemplate message) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.updateMessageTemplate(authentication.getName(), message), HttpStatus.OK);
+        return new ResponseEntity<>(messageTemplatesService.updateMessageTemplate(authentication.getName(), message), HttpStatus.OK);
     }
 
     @DeleteMapping("/")
     public ResponseEntity<String> deleteMessageTemplates(@RequestBody List<Integer> id) {
-        return new ResponseEntity<>(service.deleteMessageTemplate(id), HttpStatus.OK);
+        messageTemplatesService.deleteMessageTemplate(id);
+        return new ResponseEntity<>("Message template deleted successfully", HttpStatus.OK);
     }
 }

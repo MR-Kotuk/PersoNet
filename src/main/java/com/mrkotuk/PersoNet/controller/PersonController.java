@@ -26,38 +26,39 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/person")
 @AllArgsConstructor
 public class PersonController {
-    private final PersonService service;
+    private final PersonService personService;
 
     @GetMapping("/analytic")
     public ResponseEntity<String> getPersonAnalytic() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.getPersonAnalytic(authentication.getName()), HttpStatus.OK);
+        return new ResponseEntity<>(personService.getPersonAnalytic(authentication.getName()), HttpStatus.OK);
     }
 
     @GetMapping("/")
     public ResponseEntity<List<Person>> getPersons() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.getPersons(authentication.getName()), HttpStatus.FOUND);
+        return new ResponseEntity<>(personService.getPersons(authentication.getName()), HttpStatus.OK);
     }
 
     @GetMapping("/{personId}")
     public ResponseEntity<Person> getPerson(@PathVariable int personId) {
-        return new ResponseEntity<>(service.getPerson(personId), HttpStatus.FOUND);
+        return new ResponseEntity<>(personService.getPerson(personId), HttpStatus.OK);
     }
 
     @PostMapping("/")
     public ResponseEntity<Person> addPerson(@RequestBody Person person) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.addPerson(person, authentication.getName()), HttpStatus.CREATED);
+        return new ResponseEntity<>(personService.addPerson(person, authentication.getName()), HttpStatus.CREATED);
     }
 
     @PutMapping("/")
     public ResponseEntity<Person> updatePerson(@RequestBody Person person) {
-        return new ResponseEntity<>(service.updatePerson(person), HttpStatus.OK);
+        return new ResponseEntity<>(personService.updatePerson(person), HttpStatus.OK);
     }
 
     @DeleteMapping("/")
     public ResponseEntity<String> deletePerson(@RequestBody List<Integer> id) {
-        return new ResponseEntity<>(service.deletePersonsById(id), HttpStatus.OK);
+        personService.deletePersonsById(id);
+        return new ResponseEntity<>("Persons deleted successfully", HttpStatus.OK);
     }
 }

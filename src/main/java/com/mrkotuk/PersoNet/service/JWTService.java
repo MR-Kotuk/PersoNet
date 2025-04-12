@@ -10,6 +10,7 @@ import java.util.function.Function;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
+import com.mrkotuk.PersoNet.exception.InternalServerErrorException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -24,34 +25,24 @@ public class JWTService {
     public JWTService() {
         try {
             KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
-            tokenKey = Base64
-                    .getEncoder()
-                    .encodeToString(keyGen
-                            .generateKey()
-                            .getEncoded());
-
+            tokenKey = Base64.getEncoder().encodeToString(keyGen.generateKey().getEncoded());
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+            throw new InternalServerErrorException("Error generating token key: " + e.getMessage());
         }
     }
 
     public String generateToken(String key) {
         Map<String, Object> claims = new HashMap<>();
 
-        return Jwts.builder()
-                .claims()
-                .add(claims)
-                .subject(key)
+        return Jwts.builder().claims().add(claims).subject(key)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 30))
-                .and()
-                .signWith(getKey())
+                .and().signWith(getKey())
                 .compact();
     }
 
     private SecretKey getKey() {
-        byte[] keyBytes = Base64.getDecoder().decode(tokenKey);
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Keys.hmacShaKeyFor(Base64.getDecoder().decode(tokenKey));
     }
 
     public String extractToken(String token) {
@@ -59,21 +50,17 @@ public class JWTService {
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
-        final Claims claims = extractAllClaims(token);
-        return claimResolver.apply(claims);
+        return claimResolver.apply(extractAllClaims(token));
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser()
-                .verifyWith(getKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+        return Jwts.parser().verifyWith(getKey()).build()
+                .parseSignedClaims(token).getPayload();
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
-        final String gmail = extractToken(token);
-        return (gmail.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        final String email = extractToken(token);
+        return email.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {

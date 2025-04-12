@@ -2,6 +2,7 @@ package com.mrkotuk.PersoNet.controller;
 
 import java.util.List;
 
+import com.mrkotuk.PersoNet.domain.enums.PersonType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,15 +21,15 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/person/templates")
 @AllArgsConstructor
 public class PersonTemplatesController {
-    private final PersonTemplatesService service;
+    private final PersonTemplatesService personTemplatesService;
 
     @GetMapping("/")
     public ResponseEntity<List<Person>> getPersonTemplates() {
-        return new ResponseEntity<>(service.getPersonTemplates(), HttpStatus.FOUND);
+        return new ResponseEntity<>(personTemplatesService.getPersonTemplates(), HttpStatus.OK);
     }
 
     @GetMapping("/{personType}")
-    public ResponseEntity<Person> getPersonTemplate(@PathVariable String personType) {
-        return new ResponseEntity<>(service.getPersonTemplate(personType), HttpStatus.FOUND);
+    public ResponseEntity<Person> getPersonTemplate(@PathVariable PersonType personType) {
+        return new ResponseEntity<>(personTemplatesService.getPersonTemplate(personType), HttpStatus.OK);
     }
 }

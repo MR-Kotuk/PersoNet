@@ -11,14 +11,14 @@ import com.mrkotuk.PersoNet.domain.enums.PersonStatus;
 import com.mrkotuk.PersoNet.domain.model.Person;
 
 @Repository
-public interface PersonSenderRepository extends JpaRepository<Person, Integer> {
+public interface PersonMessageRepository extends JpaRepository<Person, Integer> {
     @Query("SELECT DISTINCT p FROM Person p " +
             "JOIN p.lineTemplates lt " +
             "WHERE p.personStatus = :personStatus " +
             "AND p.email = :email " +
             "AND lt.lineName = 'Email' " +
             "AND lt.lineValue IS NOT NULL")
-    List<Person> findByEmailAndStatusAndValidLineTemplate(
+    List<Person> findByEmailAndStatus(
             @Param("email") String email,
             @Param("personStatus") PersonStatus personStatus);
 

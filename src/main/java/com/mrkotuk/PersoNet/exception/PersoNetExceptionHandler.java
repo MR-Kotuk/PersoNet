@@ -1,6 +1,6 @@
 package com.mrkotuk.PersoNet.exception;
 
-import com.mrkotuk.PersoNet.domain.model.ErrorResponse;
+import com.mrkotuk.PersoNet.domain.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -39,5 +39,15 @@ public class PersoNetExceptionHandler {
                 "Not Found", ex.getMessage(),
                 request.getDescription(false)
         ), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InternalServerErrorException.class)
+    public ResponseEntity<ErrorResponse> handleInternalServerErrorException(InternalServerErrorException ex, WebRequest request) {
+        return new ResponseEntity<>(new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Internal Server Error", ex.getMessage(),
+                request.getDescription(false)
+        ), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

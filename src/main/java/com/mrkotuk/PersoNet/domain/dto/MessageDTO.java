@@ -1,4 +1,4 @@
-package com.mrkotuk.PersoNet.domain.model;
+package com.mrkotuk.PersoNet.domain.dto;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Message {
+public class MessageDTO {
     private String subject;
     private String message;
     private List<Integer> recipient;

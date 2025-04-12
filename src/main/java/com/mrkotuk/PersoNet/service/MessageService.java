@@ -7,28 +7,28 @@ import org.springframework.stereotype.Service;
 
 import com.mrkotuk.PersoNet.domain.enums.PersonStatus;
 import com.mrkotuk.PersoNet.domain.model.LineTemplate;
-import com.mrkotuk.PersoNet.domain.model.Message;
+import com.mrkotuk.PersoNet.domain.dto.MessageDTO;
 import com.mrkotuk.PersoNet.domain.model.Person;
-import com.mrkotuk.PersoNet.repository.PersonSenderRepository;
+import com.mrkotuk.PersoNet.repository.PersonMessageRepository;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class MessageService {
-    private final PersonSenderRepository repository;
-    private final MessageSenderService service;
+    private final PersonMessageRepository personMessageRepository;
+    private final MessageSenderService senderService;
     private final UserService userService;
 
     private final String startSymbol = "[</";
     private final String endSymbol = "/>]";
 
     public List<Person> getPersonsWithEmail(String email) {
-        return repository.findByEmailAndStatusAndValidLineTemplate(email, PersonStatus.ACTIVE);
+        return personMessageRepository.findByEmailAndStatus(email, PersonStatus.ACTIVE);
     }
 
     public List<String> getSharedLines(List<Integer> id) {
-        List<String> sharedLines = repository.findSharedLineTemplateNamesByPersonId(id, id.size());
+        List<String> sharedLines = personMessageRepository.findSharedLineTemplateNamesByPersonId(id, id.size());
         List<String> sharedLinesWithSymbols = new ArrayList<>();
 
         for (String line : sharedLines)
@@ -37,10 +37,10 @@ public class MessageService {
         return sharedLinesWithSymbols;
     }
 
-    public void sendMessage(String email, Message message) {
+    public void sendMessage(String email, MessageDTO message) {
         String sender = userService.getUserByEmail(email).getUsername();
 
-        for (Person person : repository.findAllById(message.getRecipient())) {
+        for (Person person : personMessageRepository.findAllById(message.getRecipient())) {
             String to = "";
 
             for (LineTemplate line : person.getLineTemplates())
@@ -48,7 +48,7 @@ public class MessageService {
                     to = line.getLineValue();
 
             if (!to.isEmpty())
-                service.sendEmail(sender, to,
+                senderService.sendEmail(sender, to,
                         getPersonaliseMessage(message.getSubject(), person),
                         getPersonaliseMessage(message.getMessage(), person));
         }

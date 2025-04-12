@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mrkotuk.PersoNet.domain.model.Password;
+import com.mrkotuk.PersoNet.domain.dto.PasswordDTO;
 import com.mrkotuk.PersoNet.domain.model.User;
 import com.mrkotuk.PersoNet.service.AccountService;
 
@@ -22,23 +22,25 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/account")
 @AllArgsConstructor
 public class AccountController {
-    private final AccountService service;
+    private final AccountService accountService;
 
     @GetMapping("/")
     public ResponseEntity<User> getAccountInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.getAccountInfo(authentication.getName()), HttpStatus.FOUND);
+        return new ResponseEntity<>(accountService.getAccountInfo(authentication.getName()), HttpStatus.FOUND);
     }
 
     @PutMapping("/set-username")
     public ResponseEntity<String> setUsername(@RequestBody String newUsername) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.setUsername(authentication.getName(), newUsername), HttpStatus.OK);
+        accountService.setUsername(authentication.getName(), newUsername);
+        return new ResponseEntity<>("Username changed successful!", HttpStatus.OK);
     }
 
     @PutMapping("/set-password")
-    public ResponseEntity<String> setPassword(@RequestBody Password password) {
+    public ResponseEntity<String> setPassword(@RequestBody PasswordDTO password) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.setPassword(authentication.getName(), password), HttpStatus.OK);
+        accountService.setPassword(authentication.getName(), password);
+        return new ResponseEntity<>("Password changed successful!", HttpStatus.OK);
     }
 }

@@ -43,7 +43,7 @@ public class PersonDirector {
     }
 
     private Person createCustomPerson() {
-        Person person = Person.builder()
+        return Person.builder()
                 .lineTemplates(new ArrayList<>(Arrays.asList(
                         new LineTemplate[] {
                                 new LineTemplate("First Name"),
@@ -51,8 +51,6 @@ public class PersonDirector {
                         })))
                 .personType(PersonType.CUSTOM)
                 .build();
-
-        return person;
     }
 
     private Person createGeneralPerson() {

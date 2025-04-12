@@ -1,9 +1,9 @@
-package com.mrkotuk.PersoNet.domain.model;
+package com.mrkotuk.PersoNet.domain.dto;
 
 import lombok.Getter;
 
 @Getter
-public class Password {
+public class PasswordDTO {
     private String password;
     private String newPassword;
 }

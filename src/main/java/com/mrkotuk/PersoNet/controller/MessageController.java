@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mrkotuk.PersoNet.domain.model.Message;
+import com.mrkotuk.PersoNet.domain.dto.MessageDTO;
 import com.mrkotuk.PersoNet.domain.model.Person;
 import com.mrkotuk.PersoNet.service.MessageService;
 
@@ -24,23 +24,23 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/sender")
 @AllArgsConstructor
 public class MessageController {
-    private final MessageService service;
+    private final MessageService messageService;
 
     @GetMapping("/")
     public ResponseEntity<List<Person>> getPersonsWithEmail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.getPersonsWithEmail(authentication.getName()), HttpStatus.FOUND);
+        return new ResponseEntity<>(messageService.getPersonsWithEmail(authentication.getName()), HttpStatus.FOUND);
     }
 
     @GetMapping("/shared-lines")
     public ResponseEntity<List<String>> getSharedLines(@RequestBody List<Integer> id) {
-        return new ResponseEntity<>(service.getSharedLines(id), HttpStatus.FOUND);
+        return new ResponseEntity<>(messageService.getSharedLines(id), HttpStatus.FOUND);
     }
 
     @PostMapping("/send")
-    public ResponseEntity<String> sendMessage(@RequestBody Message message) {
+    public ResponseEntity<String> sendMessage(@RequestBody MessageDTO message) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        service.sendMessage(authentication.getName(), message);
+        messageService.sendMessage(authentication.getName(), message);
         return new ResponseEntity<>("Message sent successfully", HttpStatus.OK);
     }
 }

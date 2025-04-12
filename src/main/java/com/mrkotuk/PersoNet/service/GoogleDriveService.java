@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.mrkotuk.PersoNet.exception.BadRequestException;
+import com.mrkotuk.PersoNet.exception.InternalServerErrorException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,21 +26,19 @@ import com.google.auth.oauth2.GoogleCredentials;
 
 @Service
 public class GoogleDriveService {
-    public static final String DEFAULT_PHOTO_URL =
-            "https://drive.google.com/file/d/1QMAvRnqeHTO7YRGEGfbucAYMvj6MzBm4/view?usp=drivesdk";
-
-    private final Logger logger = LoggerFactory.getLogger(GoogleDriveService.class);
-
-    @Value("${GOOGLE_DRIVE_CREDITALS_PATH}")
+    @Value("${GOOGLE_DRIVE_CREDENTIALS_PATH}")
     private final String credentialsPath;
 
     @Value("${GOOGLE_DRIVE_FOLDER_ID}")
     private final String folderId;
 
+    public static final String DEFAULT_PHOTO_URL =
+            "drive.google.com/file/d/1QMAvRnqeHTO7YRGEGfbucAYMvj6MzBm4/view?usp=drivesdk";
+
     private final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private final Drive DRIVE_SERVICE;
 
-    public GoogleDriveService(@Value("${GOOGLE_DRIVE_CREDITALS_PATH}") String credentialsPath,
+    public GoogleDriveService(@Value("${GOOGLE_DRIVE_CREDENTIALS_PATH}") String credentialsPath,
             @Value("${GOOGLE_DRIVE_FOLDER_ID}") String folderId) {
         this.credentialsPath = credentialsPath;
         this.folderId = folderId;
@@ -56,20 +54,17 @@ public class GoogleDriveService {
         return urls;
     }
 
-    public String deleteFileByUrl(String fileUrl) {
+    public void deleteFileByUrl(String fileUrl) {
         if (fileUrl.equals(DEFAULT_PHOTO_URL))
-            return "Default photo cannot be deleted!";
+            throw new BadRequestException("Cannot delete default photo with URL: " + DEFAULT_PHOTO_URL);
 
         try {
             DRIVE_SERVICE.files().delete(extractFileIdFromUrl(fileUrl)).execute();
-            return "File with URL deleted successfully!";
         } catch (IllegalArgumentException e) {
-            logger.error("Failed to extract file ID from URL: {}", e.getMessage());
+            throw new BadRequestException("Invalid URL format: " + fileUrl);
         } catch (IOException e) {
-            logger.error("Error deleting file from URL", e);
+            throw new BadRequestException("Failed to delete file with URL: " + fileUrl + "\n" + e.getMessage());
         }
-
-        return "Error deleting file from URL: " + fileUrl;
     }
 
     private String uploadFile(MultipartFile file) {
@@ -83,23 +78,26 @@ public class GoogleDriveService {
             FileContent fileContent = new FileContent(file.getContentType(), tempFile);
 
             File uploadedFile = DRIVE_SERVICE.files().create(fileMetadata, fileContent)
-                    .setFields("id, webViewLink")
-                    .execute();
+                    .setFields("id, webViewLink").execute();
 
-            tempFile.delete();
-            return uploadedFile.getWebViewLink();
+            if (tempFile.delete()) {
+                return uploadedFile.getWebViewLink();
+            } else {
+                throw new InternalServerErrorException("Failed to delete file: " + tempFile.getAbsolutePath());
+            }
         } catch (IOException e) {
-            logger.error("Failed to upload file to Google Drive", e);
-            return null;
+            throw new InternalServerErrorException("Failed to upload file: " + e.getMessage());
         }
     }
 
     private String extractFileIdFromUrl(String fileUrl) {
         Matcher matcher = Pattern.compile("[-\\w]{25,}").matcher(fileUrl);
 
-        return matcher.find()
-                ? matcher.group()
-                : null;
+        if (matcher.find()) {
+            return matcher.group();
+        } else {
+            throw new BadRequestException("Invalid URL format: " + fileUrl);
+        }
     }
 
     private Drive createDriveService() {
@@ -114,8 +112,7 @@ public class GoogleDriveService {
                     .setApplicationName("PersoNet")
                     .build();
         } catch (IOException e) {
-            logger.error("Failed to create Google Drive service", e);
-            return null;
+            throw new InternalServerErrorException("Failed to create Google Drive service: " + e.getMessage());
         }
     }
 }

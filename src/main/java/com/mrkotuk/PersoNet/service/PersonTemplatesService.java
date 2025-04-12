@@ -20,10 +20,10 @@ public class PersonTemplatesService {
         return director.getAllPersons();
     }
 
-    public Person getPersonTemplate(String personType) {
-        Person person = director.getPerson(PersonType.valueOf(personType.toUpperCase()));
+    public Person getPersonTemplate(PersonType personType) {
+        Person person = director.getPerson(personType);
         if (person == null) {
-            throw new NotFoundException("Person template not found");
+            throw new NotFoundException("Not found person template with type: " + personType);
         }
 
         return person;

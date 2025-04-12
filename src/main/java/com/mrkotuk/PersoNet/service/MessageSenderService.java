@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Random;
 
+import com.mrkotuk.PersoNet.config.PathConfig;
+import com.mrkotuk.PersoNet.exception.BadRequestException;
+import com.mrkotuk.PersoNet.exception.InternalServerErrorException;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -23,25 +23,23 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class MessageSenderService {
-    private final Logger logger = LoggerFactory.getLogger(MessageSenderService.class);
-
-    private final String verificationMessagePath = "src/main/resources/static/verification.html";
-    private final String messagePath = "src/main/resources/static/message.html";
-
     private final JavaMailSender sender;
-    private final VerificaionTokenRepository tokenRepo;
+    private final VerificaionTokenRepository tokenRepository;
 
     public String isVerified(String token) {
-        VerificationToken verificationToken = tokenRepo.findByToken(token).get();
-        tokenRepo.delete(verificationToken);
+        VerificationToken verificationToken = tokenRepository.findByToken(token)
+                .orElseThrow(() -> new BadRequestException("Trying to verify with a non-existent token: " + token));
 
-        return !verificationToken.getExpirationTime().isBefore(LocalDateTime.now())
-                ? verificationToken.getEmail()
-                : "";
+        tokenRepository.delete(verificationToken);
+        if (!verificationToken.getExpirationTime().isBefore(LocalDateTime.now())) {
+            return verificationToken.getEmail();
+        } else {
+            throw new BadRequestException("Token expired at: " + verificationToken.getExpirationTime());
+        }
     }
 
     public void sendEmail(String sender, String to, String subject, String text) {
-        String html = htmlToText(messagePath);
+        String html = htmlToText(PathConfig.PERSON_MESSAGE);
         html = html.replace("[/subject/]", subject);
         html = html.replace("[/text/]", text);
         html = html.replace("[/sender/]", sender);
@@ -50,14 +48,15 @@ public class MessageSenderService {
     }
 
     public String sendVerificationEmail(String email) {
-        VerificationToken token = new VerificationToken(Integer.toString(new Random().nextInt(1000, 10000)), email);
-        tokenRepo.save(token);
+        VerificationToken token = new VerificationToken(
+                Integer.toString(new Random().nextInt(1000, 10000)), email);
+        tokenRepository.save(token);
 
-        String html = htmlToText(verificationMessagePath);
+        String html = htmlToText(PathConfig.VERIFICATION_MESSAGE);
         html = html.replace("[/token/]", token.getToken());
 
         sendEmail(email, "Email Verification Perso|||et", html);
-        return "Please verify email"; // Accepted
+        return "Please verify email";
     }
 
     private void sendEmail(String to, String subject, String htmlContent) {
@@ -73,19 +72,15 @@ public class MessageSenderService {
 
             System.out.println("HTML email sent successfully.");
         } catch (MessagingException e) {
-            logger.error("An error occurred while sending the message", e);
+            throw new InternalServerErrorException("An error occurred while sending email to: " + to);
         }
     }
 
     private String htmlToText(String path) {
         try {
-            File input = new File(path);
-            Document doc = Jsoup.parse(input, "UTF-8");
-            return doc.html();
+            return Jsoup.parse(new File(path), "UTF-8").html();
         } catch (IOException e) {
-            logger.error("An error occurred while convert HTML to String", e);
+            throw new InternalServerErrorException("An error occurred while reading HTML file: " + path + "\n" + e);
         }
-
-        return null;
     }
 }

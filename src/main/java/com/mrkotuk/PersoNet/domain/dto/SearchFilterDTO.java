@@ -1,4 +1,4 @@
-package com.mrkotuk.PersoNet.domain.model;
+package com.mrkotuk.PersoNet.domain.dto;
 
 import java.util.HashSet;
 
@@ -8,7 +8,7 @@ import com.mrkotuk.PersoNet.domain.enums.PersonType;
 import lombok.Getter;
 
 @Getter
-public class SearchFilter {
+public class SearchFilterDTO {
     private String keyword;
 
     private HashSet<PersonStatus> status;
