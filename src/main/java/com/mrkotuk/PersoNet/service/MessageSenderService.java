@@ -1,7 +1,7 @@
 package com.mrkotuk.PersoNet.service;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Random;
 
@@ -9,9 +9,11 @@ import com.mrkotuk.PersoNet.config.PathConfig;
 import com.mrkotuk.PersoNet.exception.BadRequestException;
 import com.mrkotuk.PersoNet.exception.InternalServerErrorException;
 import org.jsoup.Jsoup;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StreamUtils;
 
 import com.mrkotuk.PersoNet.domain.model.VerificationToken;
 import com.mrkotuk.PersoNet.repository.VerificaionTokenRepository;
@@ -78,7 +80,9 @@ public class MessageSenderService {
 
     private String htmlToText(String path) {
         try {
-            return Jsoup.parse(new File(path), "UTF-8").html();
+            ClassPathResource resource = new ClassPathResource(path);
+            String html = StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
+            return Jsoup.parse(html).html();
         } catch (IOException e) {
             throw new InternalServerErrorException("An error occurred while reading HTML file: " + path + "\n" + e);
         }

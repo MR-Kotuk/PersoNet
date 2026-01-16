@@ -16,20 +16,25 @@ public class PersoNetApplication {
 	private static void dotenv() {
 		Dotenv dotenv = Dotenv.configure()
 				.filename(PathConfig.DOT_ENV)
+				.ignoreIfMissing()
 				.load();
 
-		System.setProperty("MYSQL_ROOT_PASSWORD", dotenv.get("MYSQL_ROOT_PASSWORD"));
-		System.setProperty("SPRING_DATASOURCE_URL", dotenv.get("SPRING_DATASOURCE_URL"));
-		System.setProperty("SPRING_DATASOURCE_PASSWORD", dotenv.get("SPRING_DATASOURCE_PASSWORD"));
-		System.setProperty("SPRING_MAIL_PASSWORD", dotenv.get("SPRING_MAIL_PASSWORD"));
+		setPropertyIfExists(dotenv, "MYSQL_ROOT_PASSWORD");
+		setPropertyIfExists(dotenv, "SPRING_DATASOURCE_URL");
+		setPropertyIfExists(dotenv, "SPRING_DATASOURCE_PASSWORD");
+		setPropertyIfExists(dotenv, "SPRING_MAIL_PASSWORD");
+		setPropertyIfExists(dotenv, "GOOGLE_DRIVE_CREDENTIALS_PATH");
+		setPropertyIfExists(dotenv, "GOOGLE_DRIVE_FOLDER_ID");
+		setPropertyIfExists(dotenv, "GOOGLE_CLIENT_ID");
+		setPropertyIfExists(dotenv, "GOOGLE_CLIENT_SECRET");
+		setPropertyIfExists(dotenv, "GITHUB_CLIENT_ID");
+		setPropertyIfExists(dotenv, "GITHUB_CLIENT_SECRET");
+	}
 
-		System.setProperty("GOOGLE_DRIVE_CREDENTIALS_PATH", dotenv.get("GOOGLE_DRIVE_CREDENTIALS_PATH"));
-		System.setProperty("GOOGLE_DRIVE_FOLDER_ID", dotenv.get("GOOGLE_DRIVE_FOLDER_ID"));
-
-		System.setProperty("GOOGLE_CLIENT_ID", dotenv.get("GOOGLE_CLIENT_ID"));
-		System.setProperty("GOOGLE_CLIENT_SECRET", dotenv.get("GOOGLE_CLIENT_SECRET"));
-
-		System.setProperty("GITHUB_CLIENT_ID", dotenv.get("GITHUB_CLIENT_ID"));
-		System.setProperty("GITHUB_CLIENT_SECRET", dotenv.get("GITHUB_CLIENT_SECRET"));
+	private static void setPropertyIfExists(Dotenv dotenv, String key) {
+		String value = dotenv.get(key);
+		if (value != null) {
+			System.setProperty(key, value);
+		}
 	}
 }

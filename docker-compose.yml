@@ -13,6 +13,9 @@ services:
       - springboot-mysql
 
   app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: mrkotuk/personet:personet-app
     container_name: springboot
     ports:
@@ -28,6 +31,10 @@ services:
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
       SPRING_MAIL_PROPERTIES_MAIL_DEBUG: true
+      GOOGLE_DRIVE_CREDENTIALS_PATH: /app/google-drive.json
+      GOOGLE_DRIVE_FOLDER_ID: ${GOOGLE_DRIVE_FOLDER_ID}
+    volumes:
+      - ./google-drive.json:/app/google-drive.json:ro
     depends_on:
       - mysql
     networks:
