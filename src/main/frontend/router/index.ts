@@ -3,6 +3,7 @@ import HomeView from "../src/views/HomeView.vue";
 import SignUpView from "../src/views/SignUpView.vue";
 import SignInView from "../src/views/SignInView.vue";
 import OtpVerificationView from "../src/views/OTPVerificationView.vue";
+import SettingsView from "../src/views/SettingsView.vue";
 import NotFoundView from "../src/views/NotFoundView.vue";
 
 export const router = createRouter({
@@ -27,6 +28,11 @@ export const router = createRouter({
             path: "/otp-verification",
             name: "otp-verification",
             component: OtpVerificationView
+        },
+        {
+            path: "/settings",
+            name: "settings",
+            component: SettingsView
         },
         {
             path: '/:catchAll(.*)',

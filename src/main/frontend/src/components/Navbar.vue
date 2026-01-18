@@ -15,13 +15,10 @@ import {RouterLink} from 'vue-router';
       <RouterLink to="/">Home</RouterLink>
       <a href="/contacts">Contacts</a>
       <a href="/about">About</a>
-      <a href="/account">Account</a>
-      <a href="/settings">Settings</a>
+      <RouterLink to="/settings">Settings</RouterLink>
 
       <!--      <RouterLink to="/contacts">Contacts</RouterLink>-->
       <!--      <RouterLink to="/about">About</RouterLink>-->
-      <!--      <RouterLink to="/account">Account</RouterLink>-->
-      <!--      <RouterLink to="/settings">Settings</RouterLink>-->
     </div>
   </div>
 </template>
