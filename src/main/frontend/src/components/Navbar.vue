@@ -1,18 +1,27 @@
+<script setup lang="ts">
+import {RouterLink} from 'vue-router';
+</script>
+
 <template>
   <div class="header">
 
     <div class="logo">
-      <a href="/">
+      <RouterLink to="/">
         <img src="../assets/logo.png" alt="home">
-      </a>
+      </RouterLink>
     </div>
 
     <div class="menu">
-      <a href="/">Home</a>
+      <RouterLink to="/">Home</RouterLink>
       <a href="/contacts">Contacts</a>
       <a href="/about">About</a>
       <a href="/account">Account</a>
       <a href="/settings">Settings</a>
+
+      <!--      <RouterLink to="/contacts">Contacts</RouterLink>-->
+      <!--      <RouterLink to="/about">About</RouterLink>-->
+      <!--      <RouterLink to="/account">Account</RouterLink>-->
+      <!--      <RouterLink to="/settings">Settings</RouterLink>-->
     </div>
   </div>
 </template>
@@ -30,6 +39,8 @@
   background: black;
 
   border-bottom: 1px #282828 solid;
+
+  z-index: 1000;
 }
 
 .logo {

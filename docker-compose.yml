@@ -11,6 +11,12 @@ services:
       - mysql-data:/var/lib/mysql
     networks:
       - springboot-mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
   app:
     build:
@@ -24,6 +30,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/personet
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+
       SPRING_MAIL_HOST: smtp.gmail.com
       SPRING_MAIL_PORT: 587
       SPRING_MAIL_USERNAME: ktkcode.official@gmail.com
@@ -31,12 +38,14 @@ services:
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
       SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
       SPRING_MAIL_PROPERTIES_MAIL_DEBUG: true
+
       GOOGLE_DRIVE_CREDENTIALS_PATH: /app/google-drive.json
       GOOGLE_DRIVE_FOLDER_ID: ${GOOGLE_DRIVE_FOLDER_ID}
     volumes:
       - ./google-drive.json:/app/google-drive.json:ro
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     networks:
       - springboot-mysql
 

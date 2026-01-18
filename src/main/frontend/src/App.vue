@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import Header from "@/components/Header.vue";
+import NetworkBackground from "@/components/NetworkBackground.vue";
+import Navbar from "@/components/Navbar.vue";
+import {RouterView} from "vue-router";
 </script>
 
 <template>
-  <Header/>
+  <Navbar/>
+  <NetworkBackground/>
+  <RouterView/>
 </template>

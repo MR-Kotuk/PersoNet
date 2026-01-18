@@ -41,7 +41,7 @@ public class UserService {
         User existingUser = userRepository.findByEmail(user.getEmail())
                 .orElseThrow(() -> new NotFoundException("User not found with email: " + user.getEmail()));
         if (!existingUser.isVerified())
-            return messageSenderService.sendVerificationEmail(user.getEmail());
+            throw new BadRequestException("Email is not verified");
 
         Authentication authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
