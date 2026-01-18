@@ -1,19 +1,57 @@
 <script setup lang="ts">
-import {type Router, useRouter} from 'vue-router'
+import {nextTick, onMounted, ref} from 'vue';
+import axios from 'axios';
+import {useRouter} from 'vue-router';
 
-const router: Router = useRouter();
+const router = useRouter();
+const username = ref<string | null>(null);
 
 function handleSignUp(): void {
   router.push('/sign-up');
 }
+
+async function fetchUsername(): Promise<void> {
+
+  const token = localStorage.getItem('access_token');
+  if (!token) {
+    return;
+  }
+
+  try {
+    const response = await axios.get<string>('/api/', {
+      headers: {Authorization: `Bearer ${token}`},
+    });
+
+    if (response.status === 200) {
+      username.value = response.data;
+      await nextTick();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+onMounted(() => {
+  fetchUsername();
+});
 </script>
 
 <template>
   <div class="welcome-hero">
-    <p class="title">Welcome to Perso|||et</p>
-    <p class="subtitle">The best way to manage and organize your contacts effortlessly.</p>
+    <p class="title">
+      <span class="default-text">Welcome</span>
+      <span v-if="username" class="highlight-text">{{ username }}</span>
+      <span class="default-text">to</span>
+      <span class="highlight-text">Perso</span>
+      <span class="default-text n-lines">|||</span>
+      <span class="highlight-text">et</span>
+    </p>
 
-    <button @click="handleSignUp">Start Managing Contacts</button>
+    <p v-if="!username" class="subtitle">
+      The best way to manage and organize your contacts effortlessly.
+    </p>
+
+    <button v-if="!username" @click="handleSignUp">Start Managing Contacts</button>
   </div>
 </template>
 
@@ -28,18 +66,28 @@ function handleSignUp(): void {
   box-sizing: border-box;
   transform: scale(min(1, 100vw / 800));
   transition: transform 0.3s ease;
-  gap: 1.5rem;
-}
-
-.welcome-hero p {
-  font-weight: bold;
-  margin: 0;
-  line-height: 1;
+  gap: 0.8rem;
 }
 
 .title {
-  font-size: 3rem;
+  font-size: 2.3rem;
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  font-weight: bold;
+  margin: 0;
+}
+
+.n-lines {
+  margin: -3px -0.8rem;
+}
+
+.default-text {
   color: #1E90FF;
+}
+
+.highlight-text {
+  color: white;
 }
 
 .subtitle {
@@ -54,7 +102,6 @@ button {
   border: 2px solid #1E90FF;
   border-radius: 0.5rem;
   transition: background-color 0.3s;
-
   padding: 10px 15px;
 }
 

@@ -1,7 +1,9 @@
 package com.mrkotuk.PersoNet.controller;
 
 import java.util.List;
+import java.util.Map;
 
+import com.mrkotuk.PersoNet.domain.enums.PersonType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -29,7 +31,7 @@ public class PersonController {
     private final PersonService personService;
 
     @GetMapping("/analytic")
-    public ResponseEntity<String> getPersonAnalytic() {
+    public ResponseEntity<Map<PersonType, Integer>> getPersonAnalytic() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return new ResponseEntity<>(personService.getPersonAnalytic(authentication.getName()), HttpStatus.OK);
     }

@@ -21,14 +21,14 @@ import lombok.AllArgsConstructor;
 public class PersonService {
     private final PersonRepository personRepository;
 
-    public String getPersonAnalytic(String email) {
+    public Map<PersonType, Integer> getPersonAnalytic(String email) {
         List<PersonType> persons = personRepository.findPersonTypesByStatusAndEmail(PersonStatus.ACTIVE, email);
         Map<PersonType, Integer> analytic = new HashMap<>();
 
         for (PersonType person : PersonType.values())
             analytic.put(person, (int) persons.stream().filter(type -> type == person).count());
 
-        return analytic.toString();
+        return analytic;
     }
 
     public List<Person> getPersons(String email) {

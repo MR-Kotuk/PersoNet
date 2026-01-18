@@ -24,6 +24,7 @@ async function handleVerify() {
     const response = await axios.get(`/api/auth/verify-email/${otpCode}`);
 
     if (response.status === 200) {
+      localStorage.setItem('access_token', response.data);
       await router.push('/');
     }
 

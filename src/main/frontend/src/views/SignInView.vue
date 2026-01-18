@@ -26,6 +26,7 @@ async function handleSignIn() {
     const response = await axios.post('/api/auth/login', signInForm);
 
     if (response.status === 200) {
+      localStorage.setItem('access_token', response.data);
       await router.push('/');
     }
 
