@@ -31,6 +31,10 @@ async function fetchUsername(): Promise<void> {
   }
 }
 
+function handleGoToContacts(): void {
+  router.push('/contacts');
+}
+
 onMounted(() => {
   fetchUsername();
 });
@@ -52,6 +56,7 @@ onMounted(() => {
     </p>
 
     <button v-if="!username" @click="handleSignUp">Start Managing Contacts</button>
+    <button v-else @click="handleGoToContacts">Go to Contacts</button>
   </div>
 </template>
 

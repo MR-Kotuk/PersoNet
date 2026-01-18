@@ -2,7 +2,8 @@ import {createRouter, createWebHistory} from "vue-router";
 import HomeView from "../src/views/HomeView.vue";
 import SignUpView from "../src/views/SignUpView.vue";
 import SignInView from "../src/views/SignInView.vue";
-import OTPVerification from "../src/views/OTPVerification.vue";
+import OtpVerificationView from "../src/views/OTPVerificationView.vue";
+import NotFoundView from "../src/views/NotFoundView.vue";
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -25,7 +26,12 @@ export const router = createRouter({
         {
             path: "/otp-verification",
             name: "otp-verification",
-            component: OTPVerification
+            component: OtpVerificationView
+        },
+        {
+            path: '/:catchAll(.*)',
+            name: 'not-found',
+            component: NotFoundView
         }
     ]
 });

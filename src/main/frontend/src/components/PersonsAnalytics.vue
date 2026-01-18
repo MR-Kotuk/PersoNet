@@ -151,6 +151,7 @@ onMounted(() => {
 
 <style scoped>
 .analytics-container {
+  margin-top: -20vh;
   display: flex;
   justify-content: center;
   padding: 2rem;
