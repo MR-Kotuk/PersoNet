@@ -56,7 +56,7 @@ public class GoogleDriveService {
 
     public void deleteFileByUrl(String fileUrl) {
         if (fileUrl.equals(DEFAULT_PHOTO_URL))
-            throw new BadRequestException("Cannot delete default photo with URL: " + DEFAULT_PHOTO_URL);
+            return;
 
         try {
             DRIVE_SERVICE.files().delete(extractFileIdFromUrl(fileUrl)).execute();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -22,8 +23,12 @@ public class SearchService {
     private final PersonSearchRepository searchRepository;
 
     public List<Person> searchPersons(String email, SearchFilterDTO filter) {
-        List<Person> persons = searchRepository.findByFilters(
-                email, filter.getKeyword(), filter.getStatus(), filter.getTypes());
+
+        String keyword = filter.getKeyword() == null || filter.getKeyword().isBlank() ? null : filter.getKeyword();
+        Set<PersonStatus> status = filter.getStatus() == null || filter.getStatus().isEmpty() ? null : filter.getStatus();
+        Set<PersonType> types = filter.getTypes() == null || filter.getTypes().isEmpty() ? null : filter.getTypes();
+
+        List<Person> persons = searchRepository.findByFilters(email, keyword, status, types);
 
         Iterator<Person> iterator = persons.iterator();
         while (iterator.hasNext()) {

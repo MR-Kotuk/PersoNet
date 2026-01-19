@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {nextTick, reactive, ref} from 'vue';
-import {type Router, useRouter} from 'vue-router';
+import {useRouter} from 'vue-router';
 import axios from 'axios';
 
-const router: Router = useRouter();
+const router = useRouter();
 
 const otpValues = reactive<string[]>(['', '', '', '']);
 const inputRefs = ref<HTMLInputElement[]>([]);
@@ -48,6 +48,7 @@ async function handleResend() {
   const email = sessionStorage.getItem('otp_email');
 
   if (!email) {
+
     await router.push('/login');
     return;
   }
@@ -79,6 +80,7 @@ function handleInput(index: number, event: Event) {
 }
 
 function handleKeyDown(index: number, event: KeyboardEvent) {
+
   if (event.key === 'Backspace' && !otpValues[index] && index > 0) {
     nextTick(() => {
       inputRefs.value[index - 1]?.focus();

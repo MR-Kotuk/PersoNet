@@ -27,11 +27,13 @@ const totalPersons = computed(() => {
 });
 
 const chartData = computed(() => {
+
   const data = Object.entries(personStats.value).map(([type, count]) => ({
     type,
     count,
     percentage: totalPersons.value > 0 ? (count / totalPersons.value) * 100 : 0
   }));
+
   return data.filter(item => item.count > 0);
 });
 
@@ -64,6 +66,7 @@ async function fetchPersonsAnalytics() {
     if (response.status === 200) {
       personStats.value = response.data;
     }
+
   } catch (error) {
     console.error('Failed to fetch persons analytics:', error);
 

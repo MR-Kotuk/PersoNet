@@ -6,8 +6,15 @@ import com.mrkotuk.PersoNet.domain.enums.PersonStatus;
 import com.mrkotuk.PersoNet.domain.enums.PersonType;
 
 import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
 
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class SearchFilterDTO {
     private String keyword;
 

@@ -32,4 +32,9 @@ public class PersonTemplatesController {
     public ResponseEntity<Person> getPersonTemplate(@PathVariable PersonType personType) {
         return new ResponseEntity<>(personTemplatesService.getPersonTemplate(personType), HttpStatus.OK);
     }
+
+    @GetMapping("/types/all")
+    public ResponseEntity<PersonType[]> getPersonTypes() {
+        return new ResponseEntity<>(personTemplatesService.getPersonTypes(), HttpStatus.OK);
+    }
 }

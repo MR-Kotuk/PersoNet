@@ -28,6 +28,7 @@ async function handleSignUp() {
     const response = await axios.post('/api/auth/register', signUpForm);
 
     if (response.status === 201) {
+
       sessionStorage.setItem('otp_email', signUpForm.email);
       await router.push('/otp-verification');
     }

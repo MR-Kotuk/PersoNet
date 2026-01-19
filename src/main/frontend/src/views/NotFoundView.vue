@@ -7,13 +7,13 @@ const glitchActive = ref(false);
 
 let glitchInterval: number;
 
-const handleGoHome = async () => {
+async function handleGoHome() {
   await router.push('/');
-};
+}
 
-const handleGoBack = () => {
+async function handleGoBack() {
   router.back();
-};
+}
 
 onMounted(() => {
   glitchInterval = window.setInterval(() => {

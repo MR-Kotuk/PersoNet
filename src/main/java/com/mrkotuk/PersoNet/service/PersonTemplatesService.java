@@ -28,4 +28,8 @@ public class PersonTemplatesService {
 
         return person;
     }
+
+    public PersonType[] getPersonTypes() {
+        return PersonType.values();
+    }
 }

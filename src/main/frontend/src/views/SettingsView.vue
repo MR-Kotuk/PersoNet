@@ -41,7 +41,7 @@ async function fetchAccountInfo() {
 
   } catch (error: unknown) {
 
-    if (axios.isAxiosError(error) && error.response?.status === 401) {
+    if (axios.isAxiosError(error) && error.response?.status === 500) {
 
       localStorage.removeItem('access_token');
       await router.push('/sign-in');
@@ -49,6 +49,7 @@ async function fetchAccountInfo() {
     } else {
       console.error('Failed to fetch account info:', error);
     }
+
   } finally {
     isLoading.value = false;
   }
