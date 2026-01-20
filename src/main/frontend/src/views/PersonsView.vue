@@ -246,6 +246,10 @@ function openRecycleBin() {
   router.push('/recycle-bin');
 }
 
+function sendMessage() {
+  router.push('/send-message');
+}
+
 onMounted(() => {
   fetchPersons();
   fetchMetadata();
@@ -261,12 +265,12 @@ onMounted(() => {
             <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </button>
-        <button class="icon-btn message-btn">
+        <button @click="sendMessage" class="icon-btn message-btn">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M2 3h16v12H6l-4 4V3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                   stroke-linejoin="round"/>
           </svg>
-          <span>WRITE MESSAGE</span>
+          <span>Write message</span>
         </button>
       </div>
 
@@ -457,7 +461,6 @@ onMounted(() => {
 }
 
 .message-btn {
-  text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 

@@ -29,12 +29,12 @@ public class MessageController {
     @GetMapping("/")
     public ResponseEntity<List<Person>> getPersonsWithEmail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(messageService.getPersonsWithEmail(authentication.getName()), HttpStatus.FOUND);
+        return new ResponseEntity<>(messageService.getPersonsWithEmail(authentication.getName()), HttpStatus.OK);
     }
 
-    @GetMapping("/shared-lines")
+    @PostMapping("/shared-lines")
     public ResponseEntity<List<String>> getSharedLines(@RequestBody List<Integer> id) {
-        return new ResponseEntity<>(messageService.getSharedLines(id), HttpStatus.FOUND);
+        return new ResponseEntity<>(messageService.getSharedLines(id), HttpStatus.OK);
     }
 
     @PostMapping("/send")
