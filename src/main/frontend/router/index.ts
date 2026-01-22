@@ -8,6 +8,7 @@ import PersonView from "../src/views/PersonView.vue";
 import CreatePersonView from "../src/views/CreatePersonView.vue";
 import RecycleBinView from "../src/views/RecycleBinView.vue";
 import MessageSenderView from "../src/views/MessageSenderView.vue";
+import AboutView from "../src/views/AboutView.vue";
 import SettingsView from "../src/views/SettingsView.vue";
 import NotFoundView from "../src/views/NotFoundView.vue";
 
@@ -58,6 +59,11 @@ export const router = createRouter({
             path: "/send-message",
             name: "send-message",
             component: MessageSenderView
+        },
+        {
+            path: "/about",
+            name: "about",
+            component: AboutView
         },
         {
             path: "/settings",

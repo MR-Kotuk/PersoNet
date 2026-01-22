@@ -14,10 +14,8 @@ import {RouterLink} from 'vue-router';
     <div class="menu">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/contacts">Contacts</RouterLink>
-      <a href="/about">About</a>
+      <RouterLink to="/about">About</RouterLink>
       <RouterLink to="/settings">Settings</RouterLink>
-
-      <!--      <RouterLink to="/about">About</RouterLink>-->
     </div>
   </div>
 </template>

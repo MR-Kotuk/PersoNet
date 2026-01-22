@@ -26,6 +26,7 @@ Need more than the standard templates? Create your own unique persons!
 Need help? We're always here to assist!
 
 ## Technologies Used
+Frontend: Vue.js (TS, CompositionAPI), Vuetify, Axios
 Backend: Java, Spring Boot
 
 Database: MySQL
