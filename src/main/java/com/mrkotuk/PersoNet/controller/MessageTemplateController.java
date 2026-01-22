@@ -31,12 +31,12 @@ public class MessageTemplateController {
     @GetMapping("/")
     public ResponseEntity<List<MessageTemplate>> getMessageTemplates() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(messageTemplatesService.getMessageTemplates(authentication.getName()), HttpStatus.FOUND);
+        return new ResponseEntity<>(messageTemplatesService.getMessageTemplates(authentication.getName()), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<MessageTemplate> getMessageTemplateById(@PathVariable int id) {
-        return new ResponseEntity<>(messageTemplatesService.getMessageTemplateById(id), HttpStatus.FOUND);
+        return new ResponseEntity<>(messageTemplatesService.getMessageTemplateById(id), HttpStatus.OK);
     }
 
     @PostMapping("/")
