@@ -1,6 +1,5 @@
 package com.mrkotuk.PersoNet.service;
 
-import com.mrkotuk.PersoNet.domain.enums.Role;
 import com.mrkotuk.PersoNet.exception.BadRequestException;
 import com.mrkotuk.PersoNet.exception.NotFoundException;
 import com.mrkotuk.PersoNet.exception.UnauthorizedException;
@@ -28,7 +27,6 @@ public class UserService {
     public String register(User user) {
         if (userRepository.findByEmail(user.getEmail()).isEmpty()) {
             user.setVerified(false);
-            user.setRole(Role.MEMBER);
             user.setPassword(encoder.encode(user.getPassword()));
             userRepository.save(user);
 

@@ -55,7 +55,7 @@ async function handleEmailVerify() {
   isLoading.value = true;
 
   try {
-    const response = await axios.post(`/api/auth/forgot-password/verify-email/send/${signInForm.email}`);
+    const response = await axios.post(`/api/auth/verify-email/send/${signInForm.email}`);
 
     if (response.status === 200) {
 

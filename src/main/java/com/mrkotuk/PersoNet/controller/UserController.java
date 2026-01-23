@@ -38,7 +38,7 @@ public class UserController {
         return new ResponseEntity<>(userService.isVerified(token), HttpStatus.OK);
     }
 
-    @PostMapping("/forgot-password/verify-email/send/{email}")
+    @PostMapping("/verify-email/send/{email}")
     public ResponseEntity<String> sendVerifyEmail(@PathVariable String email) {
         return new ResponseEntity<>(userService.sendVerificationEmail(email), HttpStatus.OK);
     }

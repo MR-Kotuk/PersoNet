@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import com.mrkotuk.PersoNet.domain.enums.Role;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mrkotuk.PersoNet.exception.InternalServerErrorException;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -46,8 +46,9 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         String jwtToken = processOAuth2User(oAuth2User, oauthToken);
 
-        response.setContentType("application/json");
-        response.getWriter().write(jwtToken);
+        response.sendRedirect(
+                "http://localhost:3000/oauth-success?token=" + jwtToken
+        );
     }
 
     public String processOAuth2User(OAuth2User oAuth2User, OAuth2AuthenticationToken oauthToken) {
@@ -67,7 +68,6 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
             userByEmail = new User();
             userByEmail.setUsername(username);
             userByEmail.setEmail(email);
-            userByEmail.setRole(Role.MEMBER);
             userByEmail.setVerified(true);
             userByEmail.setPassword(encoder.encode(id));
         } else if (!userByEmail.isVerified())

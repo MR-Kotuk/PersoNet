@@ -1,6 +1,5 @@
 package com.mrkotuk.PersoNet.domain.model;
 
-import com.mrkotuk.PersoNet.domain.enums.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +18,6 @@ public class User {
     private String username;
     private String email;
     private String password;
-    private Role role;
 
     private boolean isVerified;
 }

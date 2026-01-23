@@ -54,7 +54,7 @@ async function handleResend() {
   }
 
   try {
-    await axios.post(`/api/auth/forgot-password/verify-email/send/${email}`);
+    await axios.post(`/api/auth/verify-email/send/${email}`);
 
   } catch (error: unknown) {
     console.error('Resend error:', error);

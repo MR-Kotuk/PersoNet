@@ -25,7 +25,7 @@ public class SearchService {
     public List<Person> searchPersons(String email, SearchFilterDTO filter) {
 
         String keyword = filter.getKeyword() == null || filter.getKeyword().isBlank() ? null : filter.getKeyword();
-        Set<PersonStatus> status = filter.getStatus() == null || filter.getStatus().isEmpty() ? null : filter.getStatus();
+        Set<PersonStatus> status = filter.getStatus() == null || filter.getStatus().isEmpty() ? Set.of(PersonStatus.ACTIVE) : filter.getStatus();
         Set<PersonType> types = filter.getTypes() == null || filter.getTypes().isEmpty() ? null : filter.getTypes();
 
         List<Person> persons = searchRepository.findByFilters(email, keyword, status, types);
