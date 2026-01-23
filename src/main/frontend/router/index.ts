@@ -10,6 +10,7 @@ import RecycleBinView from "../src/views/RecycleBinView.vue";
 import MessageSenderView from "../src/views/MessageSenderView.vue";
 import AboutView from "../src/views/AboutView.vue";
 import SettingsView from "../src/views/SettingsView.vue";
+import OAuthCallbackView from "../src/views/OAuthCallbackView.vue";
 import NotFoundView from "../src/views/NotFoundView.vue";
 
 export const router = createRouter({
@@ -69,6 +70,11 @@ export const router = createRouter({
             path: "/settings",
             name: "settings",
             component: SettingsView
+        },
+        {
+            path: "/oauth-success",
+            name: "oauth-success",
+            component: OAuthCallbackView
         },
         {
             path: '/:catchAll(.*)',
